@@ -34,7 +34,22 @@ public class StringPermutation {
             return;
         }
         for (int i=0;i<str.length;i++){
-
+            if(cnt[i]==0)continue;
+            result[level]=str[i];
+            cnt[i]--;
+            pemutUtil(str,cnt,result,level+1,resultList);
+            cnt[i]++;
         }
+    }
+    public void printArray(char input[]){
+        for (char ch:input){
+            System.out.print(ch);
+        }
+        System.out.println();
+    }
+    public static void main(String []args){
+        StringPermutation sp=new StringPermutation();
+        sp.permuT("ABC".toCharArray()).forEach(s->System.out.println(s));
+
     }
 }
