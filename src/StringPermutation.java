@@ -50,6 +50,6 @@ public class StringPermutation {
     public static void main(String []args){
         StringPermutation sp=new StringPermutation();
         sp.permuT("ABC".toCharArray()).forEach(s->System.out.println(s));
-
+        Map<Integer,Integer> hm=new HashMap<>();
     }
 }
