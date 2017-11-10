@@ -1,139 +1,162 @@
 import java.util.*;
 
 public class Solution {
-    public int k;
-    public boolean isHappy(int n) {
-        int x=0,total=0;
-        Set<Integer> alrd=new HashSet<>();
-        while(true){
-            total=0;
-            while(n!=0){
-                x=n%10;
-                total+=Math.pow(x,2);
-                n=n/10;
-            }
 
-            System.out.println(total);
-            if(total==1){return true;}
-            else if(alrd.contains(total)){return false;}
-            alrd.add(total);
-            n=total;
-        }
-    }
     public static void main(String []args){
         Solution s=new Solution();
-//        System.out.println(s.isHappy(1111111));
-        //LexicographicalNumbers ln=new LexicographicalNumbers();
-        //List<Integer> l=ln.lexicalOrder(10);
-        //System.out.println("--"+-3%2);
-        //System.out.println("--"+-3/2);
+        //System.out.print(s.lengthOfLastWord("Note: is Run Code inconsistent with Submit Solution? If you are using global variables or C/C++, check this out."));
+        //System.out.println(s.lengthOfLastWord("   "));
+        //System.out.println(s.numDecodings("418913"));
+        List<List<Integer>> li=new ArrayList<>();
+        List<Integer> lo=new ArrayList<>();
+        lo.add(-1);li.add(lo);
+        lo=new ArrayList<>();lo.add(-2);lo.add(-3);li.add(lo);
+        //lo=new ArrayList<>();lo.add(-3);lo.add(1);lo.add(-1);li.add(lo);
 
-        //System.out.print(s.mypow(2,-3));
+        /*
+        lo.add(6);li.add(lo);
+        lo=new ArrayList<>();lo.add(8);lo.add(7);li.add(lo);
+        lo=new ArrayList<>();lo.add(3);lo.add(4);lo.add(2);li.add(lo);
+        lo=new ArrayList<>();lo.add(8);lo.add(9);lo.add(-1);lo.add(3);li.add(lo);
+        lo=new ArrayList<>();lo.add(21);lo.add(29);lo.add(-21);lo.add(30);lo.add(20);li.add(lo);
+        */
+//    [-1]
+//   [3,2]
+// [-3,1,-1]
+        for (int i=0;i<li.size();i++){
+            lo=li.get(i);
+            //System.out.println(lo);
 
-        //System.out.println(s.wordPattern("abbddc","haha hehe hehe huhu huhu lol"));
-        System.out.println(s.isIsomorphic("egg","tff"));
-        System.out.println(s.isIsomorphic("egg","trf"));
-
-        //            System.out.println(s.longestPalindrome("ccc"));
-    }
-    public int longestPalindrome(String s){
-        Map<Character,Integer> hm=new HashMap<Character, Integer>();
-        char k='c';int cnt=0,ret=0;
-        for(int i=0;i<s.length();i++){
-            k=s.charAt(i);
-            if(hm.containsKey(k)){
-                hm.remove(k);
-                cnt++;
-            }else{
-                hm.put(k,1);
-            }
         }
-        return cnt*2+1;
+        //System.out.println(li);
+        System.out.println(s.minimumTotal(li));
+
     }
+    public String countAndSay(int n) {
+        if (n <= 0)
+            return null;
 
-    public double mypow(double x,int n){
-        //int k=Math.abs(n);
-        double[] arr=new double[k+1];
-        for(int i=0;i<n;i++){
-            arr[i]=0;
-        }
-        return mypwH(x,n);
-    }
+        String ret = "1";
+        int i = 1;
 
-    public double mypwH(double x,int n){
-        if(n==1) return x;
-        if(n==-1) return 1/x;
-        if(n>0) {
-            if (n % 2 == 1) {
-                return mypwH(x, n / 2) * mypwH(x, (n / 2) + 1);
-                //System.out.println(arr[n]);
-            } else {
-                return mypwH(x, n / 2) * mypwH(x, n / 2);
-                //System.out.println(arr[n]);
-            }
-        }
-        else {
-            if (n % 2 == -1) {
-                return mypwH(x, n / 2) * mypwH(x, (n / 2) + 1);
-                //System.out.println(arr[n]);
-            } else {
-                return mypwH(x, n / 2) * mypwH(x, n / 2);
-                //System.out.println(arr[n]);
-            }
-        }
-    }
-
-    public boolean wordPattern(String pattern, String str) {
-        String []strL=str.split("\\s",0);
-        int pl=pattern.length();
-        if(pl!=strL.length)return false;
-
-        Map<Character,String> mp=new HashMap<>();
-
-        char c;
-        for(int i=0;i<pl;i++){
-            c=pattern.charAt(i);
-            if(mp.containsKey(c)){
-                if(!mp.get(c).equals(strL[i])){
-                    return false;
-                }
-            }else{
-                if(mp.containsValue(strL[i])){
-                    return false;
-                }
-                mp.put(c,strL[i]);
-            }
-        }
-        return true;
-    }
-
-    public boolean isIsomorphic(String s, String t) {
-        if(s.length()!=t.length())return false;
-        Map<Character,Character> mp=new HashMap<>();
-        char kc,vc;
-
-        for(int i=0;i<s.length();i++){
-            kc=s.charAt(i);
-            vc=t.charAt(i);
-            if(mp.containsKey(kc)){
-                if(mp.get(kc)!=vc){
-                    return false;
+        while (i < n) {
+            StringBuilder temp = new StringBuilder();
+            int count = 1;
+            for (int j = 1; j < ret.length(); j++) {
+                if (ret.charAt(j) == ret.charAt(j - 1)) {
+                    count++;
+                } else {
+                    temp.append(count);
+                    temp.append(ret.charAt(j - 1));
+                    count = 1;
                 }
             }
-            else {
-                if(mp.containsValue(vc)){
-                    return false;
-                }
-                mp.put(kc,vc);
+
+            temp.append(count);
+            temp.append(ret.charAt(ret.length() - 1));
+            ret = temp.toString();
+            i++;
+        }
+
+        return ret;
+    }
+
+    public int maxSubArray(int[] nums) {
+        int len=nums.length;
+        if (nums==null || len==0) {
+            return 0;
+        }
+        int sum,maxSum;
+        maxSum = sum = nums[0];
+        for (int i=1; i<len; ++i) {
+            if (sum >= 0) {
+                sum += nums[i]; }
+            else { sum = nums[i]; }
+            maxSum = Math.max(maxSum, sum);
+        }
+        return maxSum;
+    }
+
+
+    public int lengthOfLastWord(String s) {
+        s=s.trim();
+        if(s==null||s.equals(""))return 0;
+        Stack<String> st=new Stack<>();
+        for(String word:s.split(" ")){
+            st.push(word);
+        }
+        return st.pop().length();
+    }
+    // 1783121324
+    //[-2,1,-3,4,-1,2,1,-5,4]
+    public int numDecodings(String s) {
+        int len=s.length();
+        if(len == 0||s==null||s.equals("0")) {
+            return 0;
+        }
+        int ret;
+        int[] ways = new int[len+1];
+        ways[0] = 1;
+        if(s.charAt(0)=='0')ways[1]=0;
+        else ways[1]=1;
+        int single=0,doub=0;
+        for(int i = 2; i <= s.length(); i++) {
+            single = Character.getNumericValue(s.charAt(i-1));
+            doub = Character.getNumericValue(s.charAt(i-2));
+
+            doub=doub*10+single;
+
+            if(single > 0 && single < 10) {
+                ways[i] += ways[i-1];
+            }
+            if(doub > 9 && doub < 27) {
+                ways[i] += ways[i-2];
             }
         }
-        return true;
+
+        return ways[len];
     }
 
-    public List<Integer> findAnagrams(String s, String p) {
-        List<Integer> ret=new ArrayList<>();
-        if(s.length()<p.length())return ret;
+    //1234
+    public int minimumTotal(List<List<Integer>> triangle) {
+        int n=triangle.size();
+        if (n == 0) {
+            return 0;
+        }
+        int min = 0, prev = 0, curr = 0;
+        int[] ret = new int[n];
+        ret[0] = triangle.get(0).get(0);
+        for (int i = 1; i < n; i++) {
+            ret[i] = Integer.MAX_VALUE;
+        }
+        int len=0;
+        List<Integer> li;
+        for (int i = 1; i < n; i++) {
+            li = triangle.get(i);
+            len=li.size();
+            prev = ret[0];
+            ret[0] += li.get(0);
+            for(int j = 1; j < len; j++) {
+                curr = ret[j];
+                if (curr <= prev) {
+                    ret[j] += li.get(j);
+                } else {
+                    ret[j] = li.get(j) + prev;
+                }
+                prev = curr;
+            }
+        }
 
+        min = ret[0];
+        for (int i = 1; i < ret.length; i++) {
+            min=Math.min(min,ret[i]);
+        }
 
+        return min;
     }
+
 }
+
+//    [-1]
+//   [2, 3]
+//[1, -1, -3]
