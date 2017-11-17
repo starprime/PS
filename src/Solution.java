@@ -29,55 +29,21 @@ public class Solution {
 
         }
         //System.out.println(li);
-        System.out.println(s.minimumTotal(li));
+        //System.out.println(s.minimumTotal(li));
+        //System.out.println(s.pivotIndex(new int[]{1, 7, 3, 6, 5, 6}));
 
+        //System.out.println(s.removeDuplicates(new int[]{1, 2,2,3,4,5,5,6}));
+        int[] nums=new int[]{1,1,2};
+        //s.removeDuplicates(nums);
+        System.out.println("pwo "+s.myPow(3,2));
     }
+
     public String countAndSay(int n) {
-        if (n <= 0)
-            return null;
-
-        String ret = "1";
-        int i = 1;
-
-        while (i < n) {
-            StringBuilder temp = new StringBuilder();
-            int count = 1;
-            for (int j = 1; j < ret.length(); j++) {
-                if (ret.charAt(j) == ret.charAt(j - 1)) {
-                    count++;
-                } else {
-                    temp.append(count);
-                    temp.append(ret.charAt(j - 1));
-                    count = 1;
-                }
-            }
-
-            temp.append(count);
-            temp.append(ret.charAt(ret.length() - 1));
-            ret = temp.toString();
-            i++;
-        }
-
-        return ret;
+        return " ";
     }
-
     public int maxSubArray(int[] nums) {
-        int len=nums.length;
-        if (nums==null || len==0) {
-            return 0;
-        }
-        int sum,maxSum;
-        maxSum = sum = nums[0];
-        for (int i=1; i<len; ++i) {
-            if (sum >= 0) {
-                sum += nums[i]; }
-            else { sum = nums[i]; }
-            maxSum = Math.max(maxSum, sum);
-        }
-        return maxSum;
+        return 0;
     }
-
-
     public int lengthOfLastWord(String s) {
         s=s.trim();
         if(s==null||s.equals(""))return 0;
@@ -87,37 +53,19 @@ public class Solution {
         }
         return st.pop().length();
     }
-    // 1783121324
-    //[-2,1,-3,4,-1,2,1,-5,4]
     public int numDecodings(String s) {
-        int len=s.length();
-        if(len == 0||s==null||s.equals("0")) {
-            return 0;
+        int n=s.length();
+        int []dp=new int[n+1];
+        dp[0]=1;
+        dp[1]=(s.charAt(0)=='0')?0:1;
+
+        for(int i=2;i<s.length();i++){
+            int x=Character.getNumericValue(s.charAt(i-1));
+            int y=Character.getNumericValue(s.charAt(i-2));
+
         }
-        int ret;
-        int[] ways = new int[len+1];
-        ways[0] = 1;
-        if(s.charAt(0)=='0')ways[1]=0;
-        else ways[1]=1;
-        int single=0,doub=0;
-        for(int i = 2; i <= s.length(); i++) {
-            single = Character.getNumericValue(s.charAt(i-1));
-            doub = Character.getNumericValue(s.charAt(i-2));
-
-            doub=doub*10+single;
-
-            if(single > 0 && single < 10) {
-                ways[i] += ways[i-1];
-            }
-            if(doub > 9 && doub < 27) {
-                ways[i] += ways[i-2];
-            }
-        }
-
-        return ways[len];
+        return 0;
     }
-
-    //1234
     public int minimumTotal(List<List<Integer>> triangle) {
         int n=triangle.size();
         if (n == 0) {
@@ -126,12 +74,11 @@ public class Solution {
         int min = 0, prev = 0, curr = 0;
         int[] ret = new int[n];
         ret[0] = triangle.get(0).get(0);
-        for (int i = 1; i < n; i++) {
-            ret[i] = Integer.MAX_VALUE;
-        }
+        min = ret[0];
         int len=0;
         List<Integer> li;
         for (int i = 1; i < n; i++) {
+            ret[i]=Integer.MAX_VALUE;
             li = triangle.get(i);
             len=li.size();
             prev = ret[0];
@@ -148,13 +95,54 @@ public class Solution {
         }
 
         min = ret[0];
-        for (int i = 1; i < ret.length; i++) {
+        for (int i = 1; i < n; i++) {
             min=Math.min(min,ret[i]);
         }
 
         return min;
     }
+    public int pivotIndex(int[] nums) {
+        int len=nums.length;
+        int suml=0,sumr=0;
+        int i=0,j=len-1;
+        while(j>i){
+            //if(suml=sumr)
+        }
+        return 0;
+    }
+    public void removeDuplicates(int[] nums) {
+        int tn = 0, p = 0;
+        int c=1;
+        while (c<nums.length){
+            if(nums[c]==nums[tn]){
+                c++;
+            }else{
+                tn++;
+                nums[tn]=nums[c];
+                c++;
+            }
+        }
+        for(int i=0;i<nums.length;i++){
+            System.out.println(nums[i]);
+        }
+        System.out.println(tn+"\n --");
 
+        int []arr=Arrays.copyOfRange(nums,0,tn+1);
+        for(int i=0;i<arr.length;i++){
+            System.out.println(arr[i]);
+        }
+    }
+
+    public double myPow(double x, int n){
+        if(n==0)return 1;
+        if(n==1)return x;
+        if(n%2==0){
+            return myPow(x*x,n/2);
+        }else{
+            return x*myPow(x*x,(n-1)/2);
+        }
+
+    }
 }
 
 //    [-1]

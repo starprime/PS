@@ -1,5 +1,5 @@
 public class MatrixMultiDP {
-    static int [][]dp;
+    static int [][]dp;static int cntdp=0,cnt=0;
     public static void main(String []args){
         int arr[]=new int[]{1,2,3,4,5};
         int n=arr.length;
@@ -9,95 +9,73 @@ public class MatrixMultiDP {
                 dp[i][j]=0;
             }
         }
-        System.out.println(DPMatrixMulti(arr,1,arr.length-1));
+        System.out.println(matrixOrder(arr,1,n-1));
+        System.out.println(MatrixChainOrder(arr,1,n-1));
+
         System.out.println();
-        System.out.println(MatrixChainOrder(arr,n));
         for (int i=0;i<n;i++){
             System.out.println();
             for (int j=0;j<n;j++){
                 System.out.print("\t"+dp[i][j]);
             }
         }
+        System.out.println("\n for arr length -- "+arr.length);
+
+        System.out.println("\n"+cnt);
+
+        System.out.println("\n"+cntdp);
+
 
     }
-    public static int MatrixMulti(int []arr,int i,int p){
 
-        if(i==p)return 0;
-        int cnt=0;
-
+    public static int matrixOrder(int []arr,int i,int j){
+        if(i==j)return 0;
         int min=Integer.MAX_VALUE;
+        if(dp[i][j]!=0)return dp[i][j];
+        for(int k=i;k<j;k++){
+            cntdp++;
+            dp[i][k]=(dp[i][k]==0)?matrixOrder(arr,i,k):dp[i][k];
+            dp[k+1][j]=(dp[k+1][j]==0)?matrixOrder(arr,k+1,j):dp[k+1][j];
 
-        for(int k=i;k<p;k++){
-            cnt=MatrixMulti(arr,i,k)+MatrixMulti(arr,k+1,p)+arr[i-1]*arr[k]*arr[p];
+            int cnt=dp[i][k]+dp[k+1][j]+arr[i-1]*arr[k]*arr[j];
+
+            min=Math.min(min,cnt);
         }
-
-        if(min>cnt){
-            min=cnt;
-        }
-
+        dp[i][j]=min;
         return min;
+
     }
 
-    public static int DPMatrixMulti(int []arr,int i,int p){
-
-        if(i==p)return 0;
-        int cnt=0;
-
-
-
-        int min=Integer.MAX_VALUE;
-
-        for(int k=i;k<p;k++){
-            if(dp[i][k]==0){
-                dp[i][k]=DPMatrixMulti(arr,i,k);
-            }
-            if(dp[k+1][p]==0){
-                dp[k+1][p]=DPMatrixMulti(arr,k+1,p);
-            }
-            cnt=dp[i][k]+dp[k+1][p]+arr[i-1]*arr[k]*arr[p];
-        }
-
-        if(min>cnt){
-            min=cnt;
-        }
-
-        return min;
-    }
-    static int MatrixChainOrder(int p[], int n)
+    static int MatrixChainOrder(int p[], int i, int j)
     {
-        /* For simplicity of the program, one extra row and one
-        extra column are allocated in m[][].  0th row and 0th
-        column of m[][] are not used */
-        int m[][] = new int[n][n];
+        if (i == j)
+            return 0;
 
-        int i, j, k, L, q;
+        int min = Integer.MAX_VALUE;
 
-        /* m[i,j] = Minimum number of scalar multiplications needed
-        to compute the matrix A[i]A[i+1]...A[j] = A[i..j] where
-        dimension of A[i] is p[i-1] x p[i] */
-
-        // cost is zero when multiplying one matrix.
-        for (i = 1; i < n; i++)
-            m[i][i] = 0;
-
-        // L is chain length.
-        for (L=2; L<n; L++)
-        {
-            for (i=1; i<n-L+1; i++)
-            {
-                j = i+L-1;
-                if(j == n) continue;
-                m[i][j] = Integer.MAX_VALUE;
-                for (k=i; k<=j-1; k++)
-                {
-                    // q = cost/scalar multiplications
-                    q = m[i][k] + m[k+1][j] + p[i-1]*p[k]*p[j];
-                    if (q < m[i][j])
-                        m[i][j] = q;
-                }
-            }
+        // place parenthesis at different places between first
+        // and last matrix, recursively calculate count of
+        // multiplications for each parenthesis placement and
+        // return the minimum count
+        for (int k=i; k<j; k++)
+        {   cnt++;
+            int count = MatrixChainOrder(p, i, k) +
+                    MatrixChainOrder(p, k+1, j) +
+                    p[i-1]*p[k]*p[j];
+            System.out.println((i-1)+"--"+k+"--"+(j)+"--"+p[i-1]*p[k]*p[j]);
+            if (count < min)
+                min = count;
         }
 
-        return m[1][n-1];
+        // Return minimum count
+        return min;
     }
 }
+/*
+         0  1   2   3   4
+     0   0	0	0	0	0
+     1   0	0	6	18	38
+     2   0	0	0	24	64
+     3   0	0	0	0	60
+     4   0	0	0	0	0
+     */

@@ -3,9 +3,7 @@ import com.sun.corba.se.impl.orbutil.ObjectUtility;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by skuma115 on 6/23/2017.
- */
+
 public class Trie{
     private class TrieNode {
         Map<Character, TrieNode> child;
