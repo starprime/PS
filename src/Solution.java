@@ -12,14 +12,6 @@ public class Solution {
         lo.add(-1);li.add(lo);
         lo=new ArrayList<>();lo.add(-2);lo.add(-3);li.add(lo);
         //lo=new ArrayList<>();lo.add(-3);lo.add(1);lo.add(-1);li.add(lo);
-
-        /*
-        lo.add(6);li.add(lo);
-        lo=new ArrayList<>();lo.add(8);lo.add(7);li.add(lo);
-        lo=new ArrayList<>();lo.add(3);lo.add(4);lo.add(2);li.add(lo);
-        lo=new ArrayList<>();lo.add(8);lo.add(9);lo.add(-1);lo.add(3);li.add(lo);
-        lo=new ArrayList<>();lo.add(21);lo.add(29);lo.add(-21);lo.add(30);lo.add(20);li.add(lo);
-        */
 //    [-1]
 //   [3,2]
 // [-3,1,-1]
@@ -35,7 +27,127 @@ public class Solution {
         //System.out.println(s.removeDuplicates(new int[]{1, 2,2,3,4,5,5,6}));
         int[] nums=new int[]{1,1,2};
         //s.removeDuplicates(nums);
-        System.out.println("pwo "+s.myPow(3,2));
+        //System.out.println("pwo "+s.myPow(3,2));
+        //System.out.println(s.numberOfBoomerangs(new int[][]{{0,0},{1,0},{-1,0},{0,1},{0,-1}}));
+        //System.out.println(s.triangleNumber(new int[]{1,2,3,4,5,6}));
+        //System.out.println(s.triangleNumber2(new int[]{1,2,3,4,5,6}));
+        //System.out.println(s.uniquePaths(23,12));
+
+    }
+    public List<Integer> findClosestElements(List<Integer> arr, int k, int x) {
+        Collections.sort(arr);
+        List<Integer> res=new ArrayList();
+        int ind=arr.indexOf(x);
+        int i=Math.max(0,ind-1);
+        int j=Math.min(ind+1,arr.size());
+        res.add(x);
+        while(k>res.size()&&j<arr.size()&&i>=0){
+            System.out.println(i+"-"+j+"-"+ind);
+            if(Math.abs(arr.get(ind)-arr.get(i))<=Math.abs(arr.get(ind)-arr.get(j))){
+                res.add(arr.get(i));i--;
+            }else{
+                res.add(arr.get(j));j++;
+            }
+        }Collections.sort(res);
+        return res;
+    }
+
+    public int triangleNumber(int[] nums) {
+        Arrays.sort(nums);
+        //a+b>c
+        int j,k,ret=0;
+        for(int i=0;i<nums.length;i++){
+            int a=nums[i];
+            j=i+1;k=i+2;
+            while (k<nums.length){
+                if(k==j){k++;continue;}
+                if(nums[k]<nums[j]+a){
+                    System.out.println(a+" - "+nums[j]+" - "+nums[k]);
+                    ret++;
+                    j++;
+                    k++;
+                }else{
+                    j++;
+                }
+            }
+        }
+        return ret;
+    }
+
+    public int uniquePaths(int m, int n) {
+        int [][]dp=new int[m+1][n+1];
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                dp[i][j]=0;
+            }
+        }
+        return uniquePathshelper(m,n,dp);
+
+    }
+
+    public int uniquePathshelper(int m, int n,int [][]dp) {
+        if(m==1)return 1;
+        if(n==1)return 1;
+        if(dp[m-1][n]==0)dp[m-1][n]=uniquePathshelper(m-1,n,dp);
+        if(dp[m][n-1]==0)dp[m][n-1]=uniquePathshelper(m,n-1,dp);
+        return dp[m-1][n]+dp[m][n-1];
+    }
+
+
+    public int triangleNumber2(int[] nums) {
+        Arrays.sort(nums);
+        //a+b>c
+        int j,k,ret=0;
+        for(int i=2;i<nums.length;i++){
+            int c=nums[i];
+            j=0;k=i-1;
+            while (k>j){
+                int a=nums[j];
+                int b=nums[k];
+                if(c<b+a){
+                    System.out.println(a+" - "+b+" - "+c+" --> "+(k-j));
+                    ret+=k-j;
+                    k--;
+                }else{
+                    j++;
+                }
+            }
+        }
+        return ret;
+    }
+
+    public int numberOfBoomerangs(int[][] points) {
+        int ret=0;int dist;
+        int []iit;
+        int []jit;
+        Map<Integer,Integer> mp=new HashMap<>();
+        for(int i=0;i<points.length;i++){
+            iit=points[i];
+            for(int j=0;j<points.length;j++){
+                if(i==j)continue;;
+                dist=0;
+                jit=points[j];
+                if(iit[0]==jit[0]&&iit[1]==jit[1]){continue;}
+                dist=getDist(iit,jit);
+                mp.put(dist,mp.getOrDefault(dist,0)+1);
+            }
+            System.out.println(mp);
+            for(int val:mp.values()){
+                ret+=val*(val-1);
+            }
+            mp.clear();
+        }
+        return ret;
+    }
+
+    public int getDist(int []i,int []j){
+        int dist;
+        int id=Math.abs(i[0]-j[0]);
+        int jd=Math.abs(i[1]-j[1]);
+        id=id*id;
+        jd=jd*jd;
+        dist=id+jd;
+        return dist;
     }
 
     public String countAndSay(int n) {

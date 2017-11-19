@@ -75,7 +75,6 @@ public class Trie{
         }
         return searchRec(nd,word,index+1);
     }
-
     public boolean delRec(String word){
         return true;//delRec(root,word,0);
     }
