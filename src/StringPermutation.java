@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 public class StringPermutation {
+
     public List<String> permuT(char in[]){
         Map<Character,Integer> coMa=new HashMap<>();
         for(char c:in){
@@ -28,6 +29,7 @@ public class StringPermutation {
         pemutUtil(str,cnt,res,0,reLi);
         return reLi;
     }
+
     public void pemutUtil(char []str,int []cnt,char []result,int level,List<String> resultList){
         if(result.length==level){
             resultList.add(new String(result));
@@ -41,12 +43,14 @@ public class StringPermutation {
             cnt[i]++;
         }
     }
+
     public void printArray(char input[]){
         for (char ch:input){
             System.out.print(ch);
         }
         System.out.println();
     }
+
     public static void main(String []args){
         StringPermutation sp=new StringPermutation();
         sp.permuT("ABC".toCharArray()).forEach(s->System.out.println(s));

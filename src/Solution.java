@@ -9,17 +9,13 @@ public class Solution {
         //System.out.println(s.numDecodings("418913"));
         List<List<Integer>> li=new ArrayList<>();
         List<Integer> lo=new ArrayList<>();
-        lo.add(-1);li.add(lo);
-        lo=new ArrayList<>();lo.add(-2);lo.add(-3);li.add(lo);
+        //lo.add(-1);li.add(lo);
+        //lo=new ArrayList<>();lo.add(-2);lo.add(-3);li.add(lo);
         //lo=new ArrayList<>();lo.add(-3);lo.add(1);lo.add(-1);li.add(lo);
 //    [-1]
 //   [3,2]
 // [-3,1,-1]
-        for (int i=0;i<li.size();i++){
-            lo=li.get(i);
-            //System.out.println(lo);
 
-        }
         //System.out.println(li);
         //System.out.println(s.minimumTotal(li));
         //System.out.println(s.pivotIndex(new int[]{1, 7, 3, 6, 5, 6}));
@@ -32,10 +28,45 @@ public class Solution {
         //System.out.println(s.triangleNumber(new int[]{1,2,3,4,5,6}));
         //System.out.println(s.triangleNumber2(new int[]{1,2,3,4,5,6}));
         //System.out.println(s.uniquePaths(23,12));
+        lo.add(1);lo.add(2);lo.add(3);lo.add(4);lo.add(5);
+        //System.out.println(s.findClosestElements(lo,4,-1));
+        //int []arr=new int[]{ 10, 20, 80, 100, 200, 400, 500, 3, 2, 1};
+        //System.out.println(s.UniModMax(arr,0,arr.length-1));
+        int []arr=new int[]{ 4,3,2,7,8,2,3,1};
+        System.out.println(s.findDuplicates(arr));
+
 
     }
+    public List<Integer> findDuplicates(int[] nums) {
+        List<Integer> res = new ArrayList<>();
+        for (int i = 0; i < nums.length; ++i) {
+            int index = Math.abs(nums[i])-1;
+            if (nums[index] < 0)
+                res.add(Math.abs(index+1));
+            nums[index] = -nums[index];
+        }
+        return res;
+    }
+    public int UniModMax(int []arr,int lo,int hi){
+        if(lo==hi)return arr[lo];
+        int mid=(lo+hi)/2;
+
+        if(lo+1==hi){
+            return (arr[lo]>arr[hi])?arr[lo]:arr[hi];
+        }
+
+        if(arr[mid]>arr[mid-1]&&arr[mid]>arr[mid+1]){
+            return arr[mid];
+        }
+        if(arr[mid]<arr[mid+1]&&arr[mid]>arr[mid-1]){
+            return UniModMax(arr,mid+1,hi);
+        }else {
+            return UniModMax(arr,lo,mid-1);
+        }
+    }
+
+
     public List<Integer> findClosestElements(List<Integer> arr, int k, int x) {
-        Collections.sort(arr);
         List<Integer> res=new ArrayList();
         int ind=arr.indexOf(x);
         int i=Math.max(0,ind-1);

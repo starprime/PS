@@ -5,7 +5,8 @@ public class MinCostPolyTriang {
     static double [][]dp;
     static int cnt=0,cntdp=0;
     public static void main(String []args){
-        int [][]points=new int[][]{{0, 0},{0, 3},{0, 1}, {1, 0}, {2, 0}, {2, 1}, {1, 2}, {0, 2},{0, 3},{2, 2}, {4, 2}, {3, 2},{1, 3},{2, 3},{3, 3}};
+        //int [][]points=new int[][]{{0, 0},{0, 3},{0, 1}, {1, 0}, {2, 0}, {2, 1}, {1, 2}, {0, 2},{0, 3},{2, 2}, {4, 2}, {3, 2},{1, 3},{2, 3},{3, 3}};
+        int [][]points=new int[][]{{0, 0},{1, 0},{0,1},{2, 1}};
         int n=points.length;
         dp=new double[n][n];
         for (int i=0;i<n;i++){
@@ -17,6 +18,7 @@ public class MinCostPolyTriang {
         System.out.println(MCPTDP(points,0,points.length-1)+"--"+cntdp);
 
         System.out.println(MCPT(points,0,points.length-1)+"---"+cnt);
+
 
     }
 
