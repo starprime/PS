@@ -21,22 +21,44 @@ public class Solution {
         //System.out.println(s.pivotIndex(new int[]{1, 7, 3, 6, 5, 6}));
 
         //System.out.println(s.removeDuplicates(new int[]{1, 2,2,3,4,5,5,6}));
-        int[] nums=new int[]{1,1,2};
+        //int[] nums=new int[]{1,1,2};
         //s.removeDuplicates(nums);
         //System.out.println("pwo "+s.myPow(3,2));
         //System.out.println(s.numberOfBoomerangs(new int[][]{{0,0},{1,0},{-1,0},{0,1},{0,-1}}));
         //System.out.println(s.triangleNumber(new int[]{1,2,3,4,5,6}));
         //System.out.println(s.triangleNumber2(new int[]{1,2,3,4,5,6}));
         //System.out.println(s.uniquePaths(23,12));
-        lo.add(1);lo.add(2);lo.add(3);lo.add(4);lo.add(5);
+        //lo.add(1);lo.add(2);lo.add(3);lo.add(4);lo.add(5);
         //System.out.println(s.findClosestElements(lo,4,-1));
         //int []arr=new int[]{ 10, 20, 80, 100, 200, 400, 500, 3, 2, 1};
         //System.out.println(s.UniModMax(arr,0,arr.length-1));
-        int []arr=new int[]{ 4,3,2,7,8,2,3,1};
-        System.out.println(s.findDuplicates(arr));
+        //int []arr=new int[]{ 4,3,2,7,8,2,3,1};
+        //System.out.println(s.findDuplicates(arr));
+        int []arr=new int[]{ 1,2,3};
+        //System.out.println(s.subsets(arr));
+        //System.out.println(s.reconstructQueue(new int[][]{{7,0}, {4,4}, {7,1}, {5,0}, {6,1}, {5,2}}));
 
+        System.out.println(s.isAnagram("cat","rat"));
 
     }
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> res=new ArrayList<>();
+        Arrays.sort(nums);
+        subSetHelp(res,new ArrayList<Integer>(),0,nums);
+        return res;
+    }
+
+    public void subSetHelp(List<List<Integer>> res,List<Integer> e,int lo,int []nums){
+        if(e.size()==nums.length){
+        res.add(new ArrayList<>(e));}
+        for(int i=lo;i<nums.length;i++){
+            if(i>lo&&nums[i]==nums[i-1])continue;
+            e.add(nums[i]);
+            subSetHelp(res,e,i+1,nums);
+            if(e.size()>0)e.remove(e.size()-1);
+        }
+    }
+
     public List<Integer> findDuplicates(int[] nums) {
         List<Integer> res = new ArrayList<>();
         for (int i = 0; i < nums.length; ++i) {
@@ -284,6 +306,79 @@ public class Solution {
         }else{
             return x*myPow(x*x,(n-1)/2);
         }
+
+    }
+
+    public int[][] reconstructQueue(int[][] people) {
+        if( people==null || people.length==0 || people[0].length==0 ){
+            return new int[0][0];
+        }
+
+        Arrays.sort(people, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                if(o2[0]==o1[0])return o1[1]-o2[1];
+                return o2[0]-o1[0];
+            }
+        });
+        int n=people.length;
+        ArrayList<int[]> li=new ArrayList<>();
+
+        for(int i=0;i<n;i++){
+            li.add(people[i][1],new int[]{people[i][0],people[i][1]});
+        }
+
+        int[][] ret=new int[people.length][2];
+        int i=0;
+        for(int k[]:li){
+            ret[i][0]=k[0];
+            ret[i][1]=k[1];
+            i++;
+        }
+        return ret;
+    }
+
+    int sum=0;
+    HashSet<Integer> st=new HashSet<>();
+    public int getImportance(List<Employee> employees, int id) {
+
+
+        employees.forEach(employee -> {if(employee.id==id){
+            sum+=employee.importance;
+            List<Integer> li=employee.subordinates;
+            for(int l : li){
+                getImportanceHelper(employees,l);
+            }
+        }
+        });
+        return sum;
+    }
+
+    public void getImportanceHelper(List<Employee> employees, int id){
+        if(!st.contains(id)){
+            employees.forEach(employee -> {if(employee.id==id){
+                st.add(id);
+                sum+=employee.importance;
+                List<Integer> li=employee.subordinates;
+                for(int l : li){
+                    getImportanceHelper(employees,l);
+                }
+            }
+            });
+        }
+    }
+
+    class Employee {
+
+        public int id;
+
+        public int importance;
+
+        public List<Integer> subordinates;
+    }
+
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> li=new ArrayList<>();
 
     }
 }

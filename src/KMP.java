@@ -6,11 +6,14 @@
 public class KMP
 {
     public static void main(String [] args){
-        String str="abxabcabcaby";
-        String patt="abcaby";
+        //String str="abxabcabcaby";
+        //String patt="abcaby";
+        String str="AAAAABAAABA";
+        String patt="AAAA";
         //String patt="aabaabaaa";
         KMP kmp=new KMP();
-        System.out.print(kmp.KMPS(patt.toCharArray(),str.toCharArray()));
+        System.out.println(kmp.getPatternArr(patt.toCharArray()));
+        //System.out.print(kmp.KMPS(patt.toCharArray(),str.toCharArray()));
     }
     public boolean KMPS(char [] patt,char [] haystack){
         int i=0,j=0;
@@ -29,6 +32,7 @@ public class KMP
             }
         }return false;
     }
+    /*
     public int[] getPatternArr(char [] patt){
         int []retArr=new int[patt.length];
         int i=0,j=0;
@@ -38,6 +42,27 @@ public class KMP
                 retArr[i]=++j;
                 i++;
             }else{
+                if(j!=0){
+                    j=retArr[j-1];
+                }else{
+                    retArr[i]=0;
+                    i++;
+                }
+            }
+        }
+        return retArr;
+    }*/
+
+    public int[] getPatternArr(char [] patt){
+        int []retArr=new int[patt.length];
+        int i=1,j=0;
+        retArr[0]=0;
+        for(i=1;i<patt.length;){
+            if(patt[j]==patt[i]){
+                j++;
+                retArr[i]=j;
+                i++;
+            }else {
                 if(j!=0){
                     j=retArr[j-1];
                 }else{
