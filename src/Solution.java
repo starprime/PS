@@ -34,11 +34,16 @@ public class Solution {
         //System.out.println(s.UniModMax(arr,0,arr.length-1));
         //int []arr=new int[]{ 4,3,2,7,8,2,3,1};
         //System.out.println(s.findDuplicates(arr));
-        int []arr=new int[]{ 1,2,3};
+        int []arr=new int[]{ 1,2,1};
         //System.out.println(s.subsets(arr));
         //System.out.println(s.reconstructQueue(new int[][]{{7,0}, {4,4}, {7,1}, {5,0}, {6,1}, {5,2}}));
 
-        System.out.println(s.isAnagram("cat","rat"));
+        //System.out.println(s.isAnagram("cat","rat"));
+        //System.out.println(s.permuteUnique(arr));
+        //System.out.println(s.longestPalindrome("abca"));
+        //System.out.println(s.reverseWords("ds asasds jdsfd"));
+        //System.out.println(s.countBinarySubstrings("00110011"));
+        System.out.println(s.canConstruct("aaa", "aab"));
 
     }
     public List<List<Integer>> subsets(int[] nums) {
@@ -377,12 +382,150 @@ public class Solution {
         public List<Integer> subordinates;
     }
 
-    public List<List<Integer>> permute(int[] nums) {
+    public List<List<Integer>> permuteUnique(int[] nums) {
         List<List<Integer>> li=new ArrayList<>();
+        Arrays.sort(nums);
+        backTrack(li,new ArrayList<Integer>(),nums,new boolean[nums.length]);
+        return li;
+    }
+
+    public void backTrack(List<List<Integer>> li,List<Integer> temp,int []nums,boolean [] used){
+
+        if(temp.size()==nums.length){
+            li.add(new ArrayList<>(temp));
+        }
+        else {
+            for (int i = 0; i < nums.length; i++) {
+                if (used[i]) continue;
+                temp.add(nums[i]);
+                backTrack(li, temp, nums, used);
+                temp.remove(temp.size() - 1);
+            }
+        }
 
     }
-}
 
-//    [-1]
-//   [2, 3]
-//[1, -1, -3]
+    int max=0,lo=0;String ret;
+
+    public String longestPalindrome(String s) {
+        int  len = s.length();
+        if(len<2)return s;
+        for(int i=0;i<len-1;i++){
+            palindromeHelper(s,i,i+1);
+            palindromeHelper(s,i,i);
+        }
+
+        return s.substring(lo,max+lo);
+    }
+
+    public void palindromeHelper(String s,int x,int y){
+        while(x>=0 && y<s.length() && s.charAt(x)==s.charAt(y)){
+            x--;
+            y++;
+        }
+        if(y-x-1>max){
+            max=y-x-1;
+            lo=x+1;
+        }
+    }
+
+    int ntMaCnt=0;
+
+    public boolean validPalindrome(String s) {
+        int len =s.length();
+        if(len<2)return true;
+
+        for(int i=0;i<len/2;i++){
+            return validPalindromeHelper(s,i,len-i)||validPalindromeHelper(s,i+1,len-i+1);
+        }
+        return true;
+    }
+    public boolean validPalindromeHelper(String s,int i,int j){
+        return true;
+    }
+
+    public String reverseWords(String s) {
+        int len=s.length();
+        Stack<String> stc=new Stack<String>();
+        StringBuilder sb = new StringBuilder(len);
+        for(int i=len-1;i>=0;i--){
+            sb.append(s.charAt(i));
+        }
+        String str=sb.toString();
+        String []at=str.split(" ");
+        for(String st:at){
+            stc.push(st);
+        }
+        System.out.println(stc);
+
+        StringBuilder ret=new StringBuilder(len);
+
+        while(!stc.empty()){
+            ret.append(stc.pop());
+            ret.append(" ");
+        }
+        String re= ret.toString();
+        return re.substring(0,re.length()-1);
+    }
+
+    int noi=0;
+    public int islandPerimeter(int[][] grid) {
+        if(grid.length==0)return 0;
+        int m=grid.length;
+        int n=grid[0].length;
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(grid[i][j]==1){
+                    islnadBFS(grid,i,j);
+                }
+            }
+        }
+        return noi;
+
+    }
+
+    public void islnadBFS(int [][] grid,int i,int j){
+        if(i<0||j<0)return;
+        if(i>=grid.length||j>=grid[0].length)return;
+        if(grid[i][j]==0)return;
+        int lo=4;
+    }
+
+    public int countBinarySubstrings(String s) {
+        int len=s.length();
+        int cnt=0,ret=0;
+        for(int i=1;i<len;i++){
+            if(s.charAt(i)!=s.charAt(i-1)){
+                ret+=Math.abs(cnt);
+                cnt=0;
+            }
+
+                if(s.charAt(i)=='0'){
+                    cnt--;
+                }
+                if(s.charAt(i)=='1'){
+                    cnt++;
+                }
+
+
+        }
+        return ret;
+    }
+    public boolean canConstruct(String ransomNote, String magazine) {
+        int []arr=new int[26];
+
+        for(int i=0;i<magazine.length();i++){
+            arr[magazine.charAt(i)-'a']++;
+        }
+
+        for(int i=0;i<ransomNote.length();i++){
+            arr[ransomNote.charAt(i)-'a']--;
+        }
+
+        for(int i=0;i<26;i++){
+            if(arr[i]<0)return false;
+        }
+        return true;
+    }
+
+}
