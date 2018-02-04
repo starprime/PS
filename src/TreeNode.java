@@ -1,8 +1,8 @@
 public class TreeNode{
-    int key;
+    int val;
     TreeNode left,right;
     public TreeNode(int item){
-        key=item;
+        val=item;
         left=right=null;
     }
 }

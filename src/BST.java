@@ -11,22 +11,22 @@ public class BST{
     }
   public TreeNode Search(TreeNode root,int key){
         if(root==null) {System.out.println("Key not found");}
-        else if(root.key>key){return Search(root.left,key);}
-        else if(root.key<key){return Search(root.right,key);}
+        else if(root.val>key){return Search(root.left,key);}
+        else if(root.val<key){return Search(root.right,key);}
         return root;
     }
 
     public TreeNode insertRec(TreeNode root,int key){
-//        if(root.key==key){System.out.println("Key already there");return  root;}
+//        if(root.val==key){System.out.println("Key already there");return  root;}
         if(root==null){root=new TreeNode(key);System.out.println(" - "+key);return root;}
-		else if(root.key>key){return insertRec(root.left,key);}
-        else if(root.key<key){return insertRec(root.right,key);}
+		else if(root.val>key){return insertRec(root.left,key);}
+        else if(root.val<key){return insertRec(root.right,key);}
         return root;
     }
     public void inorderTrav(TreeNode nd){
         if(nd!=null){
             inorderTrav(nd.left);
-            System.out.println(nd.key);
+            System.out.println(nd.val);
             inorderTrav(nd.right);
         }
     }

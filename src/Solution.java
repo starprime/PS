@@ -1,7 +1,8 @@
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
+
 import java.util.*;
 
 public class Solution {
-
     public static void main(String []args){
         Solution s=new Solution();
         //System.out.print(s.lengthOfLastWord("Note: is Run Code inconsistent with Submit Solution? If you are using global variables or C/C++, check this out."));
@@ -34,18 +35,221 @@ public class Solution {
         //System.out.println(s.UniModMax(arr,0,arr.length-1));
         //int []arr=new int[]{ 4,3,2,7,8,2,3,1};
         //System.out.println(s.findDuplicates(arr));
-        int []arr=new int[]{ 1,2,1};
+        int []arr=new int[]{73, 74, 75, 71, 69, 72, 76, 73};
+        int []het=new int[]{4,2,3};
         //System.out.println(s.subsets(arr));
         //System.out.println(s.reconstructQueue(new int[][]{{7,0}, {4,4}, {7,1}, {5,0}, {6,1}, {5,2}}));
-
         //System.out.println(s.isAnagram("cat","rat"));
         //System.out.println(s.permuteUnique(arr));
         //System.out.println(s.longestPalindrome("abca"));
         //System.out.println(s.reverseWords("ds asasds jdsfd"));
         //System.out.println(s.countBinarySubstrings("00110011"));
-        System.out.println(s.canConstruct("aaa", "aab"));
+        //System.out.println(s.canConstruct("aaa", "aab"));
+        //System.out.println(s.minCostClimbingStairs(arr));
+        //System.out.println(s.maximumProduct(arr));
+        //System.out.println(s.intersect(new int[]{1,2,2,1},new int[]{2,2}));
+        //System.out.println(s.findClosestElements(arr,4,3));
+        //System.out.println(s.canPlaceFlowers(arr,2));
+        //System.out.println(s.findUnsortedSubarray(arr));
+        //System.out.println(s.findRadius(arr,het));
+        //s.rotate(arr,3);
+        //System.out.println(s.checkPossibility(het));
+        //System.out.println("star".substring(1,"star".length()-2));
+        //System.out.println(s.palanDr("star"));
+        //s.printArray(s.dailyTemperatures(arr));
+        String [] st=new String[]{"w","wo","wor","worl", "world"};
+        //System.out.println(s.longestWord(st));
+        System.out.println(s.frequencySort("aaaddbc"));
+    }
+
+    Map<Integer,Integer> mp=new HashMap<>();
+    public int[] findFrequentTreeSum(TreeNode root) {
+        ffts(root);
+        int max=Integer.MIN_VALUE;
+        for(int k:mp.values()){
+            max=Math.max(max,k);
+        }
+        ArrayList<Integer> li=new ArrayList<>();
+        for(Map.Entry<Integer,Integer> ret:mp.entrySet()){
+            if(ret.getValue()==max){
+                li.add(ret.getKey());
+            }
+        }
+        int []ret=new int[li.size()];
+        for(int i=0;i<li.size();i++){
+            ret[i]=li.get(i);
+        }
+        return ret;
+    }
+    public void ffts(TreeNode root){
+        int lef=(root.left!=null)?root.left.val:0;
+        int rig=(root.right!=null)?root.right.val:0;
+
+        mp.put(root.val+rig,mp.getOrDefault(root.val+rig,0));
+        mp.put(root.val+lef,mp.getOrDefault(root.val+lef,0));
+
+        mp.put(rig,mp.getOrDefault(rig,0));
+        mp.put(lef,mp.getOrDefault(lef,0));
+        ffts(root.left);
+        ffts(root.right);
+    }
+
+    public String frequencySort(String s) {
+        HashMap<Character,Integer> mp =new HashMap<>();char c;
+        for(int i=0;i<s.length();i++){
+            c=s.charAt(i);
+            mp.put(c,mp.getOrDefault(c,0)+1);
+        }
+        System.out.println(mp);
+        int max=Integer.MIN_VALUE;
+        for(int val:mp.values()){
+            System.out.println(val);
+            max=Math.max(max,val);
+        }
+        System.out.println(max);
+        char []arr=new char[max+1];
+        for(int j=0;j<max;j++)arr[j]='0';
+        for(Map.Entry<Character, Integer> ret:mp.entrySet()){
+            arr[ret.getValue()]=ret.getKey();
+        }
+        printArray(arr);
+        StringBuilder st=new StringBuilder();int j=0;
+        for(int i=arr.length-1;i>-1;i--){
+            if(arr[i]!='0'){
+                j=i;
+                while(j>-1){
+                    st.append(arr[i]);
+                    j--;
+                }
+            }
+        }
+        return st.toString();
 
     }
+
+    public int[] dailyTemperatures(int[] temperatures) {
+        Stack<Integer> st=new Stack<>();
+        st.add(0);;int []ret=new int[temperatures.length];
+        for(int i=1;i<temperatures.length;i++){
+        while(!st.empty()&&temperatures[i]>temperatures[st.peek()]){
+                int ind=st.pop();
+                ret[ind]=i-ind;
+            }
+            st.push(i);
+        }
+        return ret;
+    }
+
+    public void printArray(int []nums){
+        for(int i=0;i<nums.length;i++){
+            System.out.println(nums[i]);
+        }
+    }
+    public void printArray(char []chars){
+        for(int i=0;i<chars.length;i++){
+            System.out.println(chars[i]);
+        }
+    }
+
+
+    public int palanDr(String st){
+        return  palHelper(st);
+    }
+
+    public int palHelper(String st){
+        System.out.println(st);
+
+        int n=0;
+        if(st.length()==1)return 1;
+        if(st.charAt(0)==st.charAt(st.length()-1)&&st.length()>2){
+            n = 1 + palHelper(st.substring(1,st.length()-1));
+            return n + palHelper(st.substring(0,st.length()-1))+palHelper(st.substring(1,st.length()));
+        }else{
+            return palHelper(st.substring(0,st.length()-2))+palHelper(st.substring(1,st.length()-1));
+        }
+    }
+
+    public void rotate(int[] nums, int k) {
+
+    }
+
+
+    public boolean checkPossibility(int[] nums) {
+        int cnt=0;int sec=0;
+        for(int i=1;i<nums.length;i++){
+            if(nums[i-1]>nums[i]){
+                cnt++;
+                sec=nums[i];
+                nums[i]=nums[i-1];
+                nums[i-1]=sec;
+            }
+        }
+        return cnt<=1;
+    }
+
+    public int findUnsortedSubarray(int[] nums) {
+        int []arr=Arrays.copyOf(nums,nums.length);
+        Arrays.sort(arr);
+        int i=0,j=nums.length-1;
+        while (i<nums.length&&arr[i]==nums[i])i++;
+        while (j>i&&arr[j]==nums[j])j--;
+        System.out.println(i+" -- "+j);
+        return (i==nums.length-2)?0:j-i+1;
+    }
+
+    public int findRadius(int[] houses, int[] heaters) {
+        Arrays.sort(heaters);
+        int val=heaters[0];int rad=0;
+        double x=  4.0;
+        for(int i=1;i<heaters.length;i++){
+            rad= (int) Math.ceil((double) (heaters[i]-val)/x);
+            val=heaters[i];
+        }
+        return rad;
+    }
+
+    public int strStr(String haystack, String needle) {
+        if(haystack.length()==0 && needle.length()!=0) return -1;
+        if(haystack.length()==0||needle.length()==0) return 0;
+        int ret=0,lenH=haystack.length(),lenN=needle.length(),indN=0,got=0;
+        if(lenH<lenN)return -1;
+        char c='a',n=needle.charAt(0);boolean flg=false;
+        for(int i=0;i<lenH;i++){
+            c=haystack.charAt(i);
+            if(flg){
+                n=needle.charAt(indN);
+                if(c!=n){
+                    flg=false;
+                    got=0;
+                    indN=0;
+                    n=needle.charAt(0);
+                }
+            }
+            if(c==n){
+                got++;
+                ret=i;
+                indN++;
+                flg=true;
+            }
+            if(got==lenN){
+                return ret-lenN+1;
+            }
+        }return -1;
+    }
+
+    public String convertToTitle(int n) {
+        int i=0;
+        StringBuilder st=new StringBuilder();
+        while (n>0){
+            n--;
+            i=n%26;
+            st.insert(0,(char)(i+65));
+            n=n/26;
+        }
+        String ret= st.toString();
+        return ret;
+    }
+
     public List<List<Integer>> subsets(int[] nums) {
         List<List<Integer>> res=new ArrayList<>();
         Arrays.sort(nums);
@@ -73,6 +277,8 @@ public class Solution {
             nums[index] = -nums[index];
         }
         return res;
+
+
     }
     public int UniModMax(int []arr,int lo,int hi){
         if(lo==hi)return arr[lo];
@@ -270,15 +476,6 @@ public class Solution {
         }
 
         return min;
-    }
-    public int pivotIndex(int[] nums) {
-        int len=nums.length;
-        int suml=0,sumr=0;
-        int i=0,j=len-1;
-        while(j>i){
-            //if(suml=sumr)
-        }
-        return 0;
     }
     public void removeDuplicates(int[] nums) {
         int tn = 0, p = 0;
@@ -506,11 +703,10 @@ public class Solution {
                 if(s.charAt(i)=='1'){
                     cnt++;
                 }
-
-
         }
         return ret;
     }
+
     public boolean canConstruct(String ransomNote, String magazine) {
         int []arr=new int[26];
 
@@ -528,4 +724,114 @@ public class Solution {
         return true;
     }
 
+    public int minCostClimbingStairs(int[] cost) {
+        int []dp=new int[cost.length];
+        for(int i=0;i<dp.length;i++){
+            dp[i]=-1;
+        }
+        return Math.min(minCCSH(dp,cost,cost.length-1),minCCSH(dp,cost,cost.length-2));
+    }
+    public int minCCSH(int []dp,int []cost,int i){
+        if(i==-1){return 0;}
+        if(i==0){return cost[0];}
+        if(dp[i]==-1){
+            dp[i] = Math.min(minCCSH(dp,cost,i-1),minCCSH(dp,cost,i-2))+cost[i];
+        }
+        return dp[i];
+    }
+    public int maximumProduct(int[] nums) {
+        int max1=Integer.MIN_VALUE,max2=Integer.MIN_VALUE,max3=Integer.MIN_VALUE;
+        int min1=Integer.MAX_VALUE,min2=Integer.MAX_VALUE;
+        int maxp=Integer.MIN_VALUE;
+
+        maxp=nums[0]*nums[1]*nums[2];
+
+        for(int i=3;i<nums.length;i++){
+            if(i>max3){
+                max1=max2;
+                max2=max3;
+                max3=i;
+            }else if(i>max2){
+                max1=max2;
+                max2=i;
+            }else if(i>max3){
+                max3=i;
+            }
+            if(i<min2){
+                min1=min2;
+                min2=i;
+            }else if(i<min1){
+                min1=i;
+            }
+            maxp=Math.max(max3*min1*min2,max3*max1*max2);
+        }
+        return maxp;
+    }
+
+    public int[] intersect(int[] nums1, int[] nums2){
+        HashMap<Integer,Integer> mp=new HashMap<>();
+        ArrayList<Integer> li=new ArrayList<>();
+
+        for(int i=0;i<nums1.length;i++){
+            mp.put(nums1[i],mp.getOrDefault(nums1[i],0)+1);
+        }
+
+        for(int i=0;i<nums2.length;i++){
+            if(mp.containsKey(nums2[i])&&mp.get(nums2[i])>0){
+                li.add(nums2[i]);
+                mp.put(nums2[i],mp.getOrDefault(nums2[i],0)-1);
+            }
+        }
+        int []ret=new int[li.size()];
+        for(int i=0;i<li.size();i++){
+            ret[i]=li.get(i);
+        }
+        return ret;
+    }
+    public int pivotIndex(int[] nums) {
+        int sum=0;
+
+        for(int i=0;i<nums.length;i++)sum+=nums[i];
+        int left=0;
+        for(int i=0;i<nums.length;i++){
+            if(i!=0)left+=nums[i-1];
+            if(sum -nums[i]-left==left)return i;
+        }
+        return -1;
+    }
+
+    public List<Integer> findClosestElements(int[] arr, int k, int x) {
+        int i=Arrays.binarySearch(arr,x);
+        int m=i-1;int n=i+1;
+        ArrayList<Integer> ret=new ArrayList<>();
+        while(m>-1&&n<arr.length&&k!=0){
+            if(arr[i]-arr[m]>=arr[n]-arr[i]){
+                ret.add(arr[n]);
+                n++;k--;
+            }else if(arr[i]-arr[m]<arr[n]-arr[i]){
+                ret.add(arr[m]);
+                m--;k--;
+            }
+        }
+        return ret;
+    }
+
+    public List<Integer> largestValues(TreeNode root) {
+        Queue<TreeNode> qu=new LinkedList<>();
+        ArrayList<Integer> li=new ArrayList<>();
+        int max;
+        qu.add(root);
+        while (!qu.isEmpty()){
+            int el=qu.size();
+            max=Integer.MIN_VALUE;
+            for(int i=0;i<el;i++){
+                TreeNode nd=qu.poll();
+                max=Math.max(max,nd.val);
+                qu.add(nd.left);
+                qu.add(nd.right);
+            }
+        }
+        return li;
+    }
 }
+//1, 7, 3, 6, 5, 6

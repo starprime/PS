@@ -15,13 +15,13 @@ public class Trie{
         }
     }
     private final TrieNode root;
-    public Trie(){
+    private Trie(){
         root=new TrieNode();
     }
     public static void main(String [] args){
         String word="lolmax";
         Trie t=new Trie();
-        t.recInsert(word);
+        t.insert(word);
         System.out.println(t.search(word));
         System.out.println(t.searchRec(word));
         //t.delWord(word);
@@ -52,9 +52,10 @@ public class Trie{
         }
         recInsert(nd,word,indx+1);
     }
+
     public boolean search(String word){
         TrieNode cur=root;char ch;
-        for(int i=1;i<word.length();i++){
+        for(int i=0;i<word.length();i++){
             ch=word.charAt(i);
             TrieNode nd=cur.child.get(ch);
             if(nd==null){
@@ -63,6 +64,7 @@ public class Trie{
             cur=nd;
         }return cur.eow;
     }
+
     public boolean searchRec(String word){
         return searchRec(root,word,0);
     }
