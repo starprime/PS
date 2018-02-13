@@ -59,7 +59,45 @@ public class Solution {
         //s.printArray(s.dailyTemperatures(arr));
         String [] st=new String[]{"w","wo","wor","worl", "world"};
         //System.out.println(s.longestWord(st));
-        System.out.println(s.frequencySort("aaaddbc"));
+        //System.out.println(s.frequencySort("aaaddbc"));
+        LogSystem ls=new LogSystem();
+        //System.out.println(ls.strn2Int("2017:01:01:23:59:59"));
+        //System.out.println(Long.toString(Long.parseLong("20170101235959")));
+        System.out.println(s.maxChunksToSorted(new int[]{2,0,1}));
+    }
+    public int maxChunksToSorted(int[] arr) {
+        int []maxArr=new int[arr.length];
+        int []minArr=new int[arr.length];
+        int arrLen=arr.length;
+
+        maxArr[0]= arr[0];
+        for(int i=1;i<arrLen;i++){
+            if(arr[i]<=arr[i-1]){
+                System.out.println(arr[i-1]+"#");
+                maxArr[i]=arr[i-1];
+            }else{
+                maxArr[i]=arr[i];
+            }
+        }
+
+        minArr[arrLen-1] = arr[arrLen-1];
+        printArray(maxArr);
+        for(int i=arrLen-2;i>=0;i--){
+            if(arr[i]>arr[i+1]){
+                minArr[i]=arr[i+1];
+            }else{
+                minArr[i]=arr[i];
+            }
+        }
+        printArray(minArr);
+        int ret=arrLen+1;
+        for(int i=0;i<arr.length;i++){
+            if(maxArr[i]>minArr[i]){
+                ret--;
+            }
+        }
+        return ret;
+
     }
 
     Map<Integer,Integer> mp=new HashMap<>();
@@ -142,8 +180,9 @@ public class Solution {
 
     public void printArray(int []nums){
         for(int i=0;i<nums.length;i++){
-            System.out.println(nums[i]);
+            System.out.print(nums[i]+" , ");
         }
+        System.out.println();
     }
     public void printArray(char []chars){
         for(int i=0;i<chars.length;i++){
@@ -568,6 +607,9 @@ public class Solution {
             }
             });
         }
+    }
+
+    public void insert(String word) {
     }
 
     class Employee {

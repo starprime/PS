@@ -61,6 +61,44 @@ public class Solution_Mac {
 
 
     }
+
+
+    int b=0;
+    public boolean PredictTheWinner(int []nums){
+        int len=nums.length;
+        boolean fora=true;
+
+    }
+    public int preHelp(int []nums,int i,int j,boolean fora){
+        if(fora){
+            return
+        }else {
+
+        }
+
+    }
+
+    public int leastBricks(List<List<Integer>> wall) {
+        if(wall.size()==0)return 0;
+        Map<Integer,Integer> mp=new HashMap<>();
+
+        for(List<Integer> li:wall){
+            int rp=0;
+            for(int i:li){
+                rp+=i;
+                mp.put(rp,mp.getOrDefault(rp,0)+1);
+            }
+        }
+        System.out.println(mp);
+
+        int max=0;
+        for( Map.Entry<Integer, Integer> ret :mp.entrySet()){
+            max = (ret.getValue()>max)?ret.getValue():max;
+        }
+        return wall.size() - max;
+    }
+
+
     public void printLL(ListNode head){
         while (head!=null){
             System.out.println(head.val);
