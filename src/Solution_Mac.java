@@ -48,34 +48,53 @@ public class Solution_Mac {
         List<String> li=new ArrayList<>();
         li.add("12:12");li.add("00:13");//li.add("06:02");li.add("21:00");
         //System.out.println(s.findMinDifference(li));
-
-
-        HitCounter counter = new HitCounter();
-        counter.hit(1);
-        counter.hit(2);
-        counter.hit(3);
-        System.out.println(counter.getHits(4));
-        counter.hit(300);
-        System.out.println(counter.getHits(300));
-        System.out.println(counter.getHits(301));
-
+        int [][]matrix=new int[][]{
+                {1,   4,  7, 11, 15},
+                {2,   5,  8, 12, 19},
+                {3,   6,  9, 16, 22},
+                {10, 13, 14, 17, 24},
+                {18, 21, 23, 26, 30}
+        };
+        //matrix=new int[][]{{1,1}};
+        //System.out.println(s.searchMatrix(matrix,1));
+        /*
+        List<Integer> lir=new ArrayList<>();
+        lir.add(1);
+        lir.add(1,0);
+        System.out.println(lir);
+        lir.add(0,4);
+        System.out.println(lir);
+        lir.add(2,4);
+        System.out.println(lir);
+        */
+        System.out.println(s.frequencySort("tree"));
 
     }
 
+    public boolean searchMatrix(int[][] matrix, int target) {
+        int row=0,col=matrix[0].length-1;
+        while(row>=0&&col<matrix[0].length&&row<matrix.length&&col>=0){
+            int val=matrix[row][col];
+            System.out.println(val+" -- "+row+" -- "+col);
+            if(target>val){
+                row++;
+            }else if(target<val){
+                col--;
+            }else{
+                return true;
+            }
+        }
+        return false;
+    }
 
     int b=0;
     public boolean PredictTheWinner(int []nums){
         int len=nums.length;
         boolean fora=true;
-
+        return fora;
     }
     public int preHelp(int []nums,int i,int j,boolean fora){
-        if(fora){
-            return
-        }else {
-
-        }
-
+        return 1;
     }
 
     public int leastBricks(List<List<Integer>> wall) {
@@ -413,8 +432,47 @@ HashSet<String> s;
         System.out.println(i+" - - "+ret);
         return ret;
     }
+    class Pair implements Comparable<Integer>{
+        char c;
+        int n;
+        public Pair(char c,int n){
+            this.c=c;
+            this.n=n;
+        }
+        @Override
+        public int compareTo(Integer o) {
+            return 0;
+        }
+    }
 
-    public String frequencySort(String s) {
+    public String frequencySort(String str){
+        Map<Character,Integer> mp=new HashMap<>();
+        for(int i=0;i<str.length();i++){
+            char c=str.charAt(i);
+            mp.put(c,mp.getOrDefault(c,0)+1);
+        }
+        PriorityQueue<Map.Entry<Character,Integer>> prQ = new PriorityQueue<>(
+                new Comparator<Map.Entry<Character, Integer>>() {
+                    @Override
+                    public int compare(Map.Entry<Character, Integer> o1, Map.Entry<Character, Integer> o2) {
+                        return o2.getValue()-o1.getValue();
+                    }
+                }
+        );
+
+        prQ.addAll(mp.entrySet());
+        StringBuilder s=new StringBuilder();
+        while (!prQ.isEmpty()){
+            Map.Entry e=prQ.poll();
+            //System.out.println(e.getKey()+" - "+e.getValue());
+            for(int i=0;i<(int)e.getValue();i++){
+                s.append(e.getKey());
+            }
+        }
+        return s.toString();
+    }
+
+    public String frequencySort(String s,int n) {
         HashMap<Character,Integer> mp =new HashMap<>();char c;
         for(int i=0;i<s.length();i++){
             c=s.charAt(i);

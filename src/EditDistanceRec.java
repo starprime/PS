@@ -1,6 +1,3 @@
-/**
- * Created by skuma115 on 7/9/2017.
- */
 public class EditDistanceRec {
     public static void main(String [] args){
         String a="GEEK";
@@ -11,7 +8,4 @@ public class EditDistanceRec {
         int bl=brr.length;
         EditDistanceRec edr=new EditDistanceRec();
     }
-
-
-
 }
