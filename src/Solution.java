@@ -63,7 +63,7 @@ public class Solution {
         LogSystem ls=new LogSystem();
         //System.out.println(ls.strn2Int("2017:01:01:23:59:59"));
         //System.out.println(Long.toString(Long.parseLong("20170101235959")));
-        System.out.println(s.maxChunksToSorted(new int[]{2,0,1}));
+        System.out.println(s.maxChunksToSorted(new int[]{1,0,2,3,4}));
     }
     public int maxChunksToSorted(int[] arr) {
         int []maxArr=new int[arr.length];
@@ -72,9 +72,9 @@ public class Solution {
 
         maxArr[0]= arr[0];
         for(int i=1;i<arrLen;i++){
-            if(arr[i]<=arr[i-1]){
-                System.out.println(arr[i-1]+"#");
-                maxArr[i]=arr[i-1];
+            if(arr[i]<=maxArr[i-1]){
+                System.out.println(arr[i-1]+"# "+i);
+                maxArr[i]=maxArr[i-1];
             }else{
                 maxArr[i]=arr[i];
             }
@@ -83,8 +83,8 @@ public class Solution {
         minArr[arrLen-1] = arr[arrLen-1];
         printArray(maxArr);
         for(int i=arrLen-2;i>=0;i--){
-            if(arr[i]>arr[i+1]){
-                minArr[i]=arr[i+1];
+            if(arr[i]>minArr[i+1]){
+                minArr[i]=minArr[i+1];
             }else{
                 minArr[i]=arr[i];
             }
@@ -395,7 +395,6 @@ public class Solution {
         if(dp[m][n-1]==0)dp[m][n-1]=uniquePathshelper(m,n-1,dp);
         return dp[m-1][n]+dp[m][n-1];
     }
-
 
     public int triangleNumber2(int[] nums) {
         Arrays.sort(nums);
@@ -875,5 +874,43 @@ public class Solution {
         }
         return li;
     }
+
+    static int stickers(String word) {
+        ArrayList<Character> h1 =  new ArrayList<>();
+        HashSet<Character> h2 = new HashSet<>();
+        HashMap<Character, Integer> map = new HashMap<>();
+        HashMap<Character, Integer> wpMap = new HashMap<>();
+        String w = "wpengine";
+        for(int i = 0; i < w.length(); i++) {
+           char x=  w.charAt(i);
+            h1.add(w.charAt(i));
+            if(wpMap.containsKey(x)) map.put(x, map.get(x) + 1);
+            else map.put(x, 1);
+        }
+        for(int i = 0; i < word.length(); i++) {
+            char x = word.charAt(i);
+            h2.add(x);
+            if(map.containsKey(x))
+                map.put(x, map.get(x) + 1);
+            else
+                map.put(x, 1);
+        }
+        //if(h2.retainAll(h1) != 0) return  -1;
+        int inter = 0;
+        for(char x: h2) {
+            if(h1.contains(x)) inter++;
+        }
+        if(inter != word.length()) return -1;
+
+        int result = 0;
+        int left = word.length();
+        for(Map.Entry<Character, Integer> entry: map.entrySet()) {
+            int wpCount = wpMap.get(entry.getKey());
+            result = Math.max(result, entry.getValue() % wpCount + entry.getValue() / wpCount);
+        }
+        return result;
+    }
+
+
 }
 //1, 7, 3, 6, 5, 6
