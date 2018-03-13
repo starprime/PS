@@ -582,7 +582,6 @@ public class Solution {
     HashSet<Integer> st=new HashSet<>();
     public int getImportance(List<Employee> employees, int id) {
 
-
         employees.forEach(employee -> {if(employee.id==id){
             sum+=employee.importance;
             List<Integer> li=employee.subordinates;

@@ -67,8 +67,50 @@ public class Solution_Mac {
         lir.add(2,4);
         System.out.println(lir);
         */
-        System.out.println(s.frequencySort("tree"));
+        //System.out.println(s.frequencySort("tree"));
+        //char []chrArr = new char[]{'A','A','A','B','B','B'};
+        //System.out.println(s.leastInterval(chrArr,2));
 
+
+    }
+
+
+
+    public int leastInterval(char[] tasks, int n) {
+
+        Map<Character,Integer> mp = new HashMap<>();
+        for(char c:tasks){
+            mp.put(c,1+mp.getOrDefault(c,0));
+        }
+
+        PriorityQueue<Map.Entry<Character,Integer>> pq = new PriorityQueue<>(
+                (a,b) -> a.getValue() != b.getValue()?b.getValue() - a.getValue(): a.getKey() - b.getKey()
+        );
+
+        pq.addAll(mp.entrySet());
+        int ret=0;
+        while(!pq.isEmpty()) {
+            List<Map.Entry<Character,Integer>> li = new ArrayList<>();
+            int itr=n+1;
+            System.out.println(pq+" - "+ret);
+
+            while (itr>0&&!pq.isEmpty()){
+                Map.Entry<Character,Integer> tmp = pq.poll();
+                int val = tmp.getValue();
+                    val--;
+                    tmp.setValue(val);
+                    li.add(tmp);
+                ret++;
+                itr--;
+            }
+            for(Map.Entry<Character,Integer> va:li){
+                if(va.getValue()>0){
+                pq.add(va);}
+            }
+            if(pq.isEmpty())break;
+            ret+=itr;
+        }
+        return ret;
     }
 
     public boolean searchMatrix(int[][] matrix, int target) {
@@ -595,14 +637,9 @@ HashSet<String> s;
         }System.out.println();
     }
 
-    public int deleteAndEarn(int[] nums) {
-        Map<Integer,Integer> mp = new HashMap<>();
-        for(int i=0;i<nums.length;i++){
-            mp.put(nums[i],1+mp.getOrDefault(nums[i],0));
-        }
 
 
-    }
+
 
 
 

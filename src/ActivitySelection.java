@@ -1,6 +1,7 @@
 /**
  * Created by skuma115 on 8/13/2017.
  */
+
 public class ActivitySelection {
     public static void main(String []args){
         int s[] =  {1, 3, 0, 5, 8, 5};
