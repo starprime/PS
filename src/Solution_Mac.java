@@ -129,6 +129,27 @@ public class Solution_Mac {
         return false;
     }
 
+
+        System.out.println(s.frequencySort("tree"));
+
+    }
+
+    public boolean searchMatrix(int[][] matrix, int target) {
+        int row=0,col=matrix[0].length-1;
+        while(row>=0&&col<matrix[0].length&&row<matrix.length&&col>=0){
+            int val=matrix[row][col];
+            System.out.println(val+" -- "+row+" -- "+col);
+            if(target>val){
+                row++;
+            }else if(target<val){
+                col--;
+            }else{
+                return true;
+            }
+        }
+        return false;
+    }
+
     int b=0;
     public boolean PredictTheWinner(int []nums){
         int len=nums.length;
