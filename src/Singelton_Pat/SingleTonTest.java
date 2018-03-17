@@ -1,4 +1,4 @@
-package SingeltonPat;
+package Singelton_Pat;
 
 /**
  * Created by star on 3/12/18.

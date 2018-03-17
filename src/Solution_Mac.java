@@ -71,12 +71,25 @@ public class Solution_Mac {
         //char []chrArr = new char[]{'A','A','A','B','B','B'};
         //System.out.println(s.leastInterval(chrArr,2));
 
+        System.out.println(s.reconstructQueue(new int[][]{{7,0}, {4,4}, {7,1}, {5,0}, {6,1}, {5,2}}));
+
+    }
+
+    public int[][] reconstructQueue(int[][] people) {
+        Arrays.sort(people, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                if(o2[0]==o1[0])return o1[1]-o2[1];
+                return o2[0]-o1[0];
+            }
+        });
+        printArray(people);
+        return people;
 
     }
 
 
-
-    public int leastInterval(char[] tasks, int n) {
+        public int leastInterval(char[] tasks, int n) {
 
         Map<Character,Integer> mp = new HashMap<>();
         for(char c:tasks){
@@ -657,7 +670,6 @@ HashSet<String> s;
             }
         }System.out.println();
     }
-
 
 
 
