@@ -67,6 +67,7 @@ public class Solution_Mac {
         lir.add(2,4);
         System.out.println(lir);
         */
+<<<<<<< HEAD
         //System.out.println(s.frequencySort("tree"));
         //char []chrArr = new char[]{'A','A','A','B','B','B'};
         //System.out.println(s.leastInterval(chrArr,2));
@@ -129,6 +130,28 @@ public class Solution_Mac {
         return false;
     }
 
+=======
+        System.out.println(s.frequencySort("tree"));
+
+    }
+
+    public boolean searchMatrix(int[][] matrix, int target) {
+        int row=0,col=matrix[0].length-1;
+        while(row>=0&&col<matrix[0].length&&row<matrix.length&&col>=0){
+            int val=matrix[row][col];
+            System.out.println(val+" -- "+row+" -- "+col);
+            if(target>val){
+                row++;
+            }else if(target<val){
+                col--;
+            }else{
+                return true;
+            }
+        }
+        return false;
+    }
+
+>>>>>>> 97aaad7341635321eadf03c3499f3bf1976702a8
     int b=0;
     public boolean PredictTheWinner(int []nums){
         int len=nums.length;
@@ -486,6 +509,7 @@ HashSet<String> s;
             return 0;
         }
     }
+<<<<<<< HEAD
 
     public String frequencySort(String str){
         Map<Character,Integer> mp=new HashMap<>();
@@ -514,6 +538,36 @@ HashSet<String> s;
         return s.toString();
     }
 
+=======
+
+    public String frequencySort(String str){
+        Map<Character,Integer> mp=new HashMap<>();
+        for(int i=0;i<str.length();i++){
+            char c=str.charAt(i);
+            mp.put(c,mp.getOrDefault(c,0)+1);
+        }
+        PriorityQueue<Map.Entry<Character,Integer>> prQ = new PriorityQueue<>(
+                new Comparator<Map.Entry<Character, Integer>>() {
+                    @Override
+                    public int compare(Map.Entry<Character, Integer> o1, Map.Entry<Character, Integer> o2) {
+                        return o2.getValue()-o1.getValue();
+                    }
+                }
+        );
+
+        prQ.addAll(mp.entrySet());
+        StringBuilder s=new StringBuilder();
+        while (!prQ.isEmpty()){
+            Map.Entry e=prQ.poll();
+            //System.out.println(e.getKey()+" - "+e.getValue());
+            for(int i=0;i<(int)e.getValue();i++){
+                s.append(e.getKey());
+            }
+        }
+        return s.toString();
+    }
+
+>>>>>>> 97aaad7341635321eadf03c3499f3bf1976702a8
     public String frequencySort(String s,int n) {
         HashMap<Character,Integer> mp =new HashMap<>();char c;
         for(int i=0;i<s.length();i++){

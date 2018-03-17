@@ -131,7 +131,9 @@ public class Solution {
         ffts(root.left);
         ffts(root.right);
     }
+    public int integerBreak(int n) {
 
+    }
     public String frequencySort(String s) {
         HashMap<Character,Integer> mp =new HashMap<>();char c;
         for(int i=0;i<s.length();i++){
