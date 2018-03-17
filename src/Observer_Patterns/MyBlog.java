@@ -1,4 +1,4 @@
-package ObserverPatterns;
+package Observer_Patterns;
 
 import java.util.HashSet;
 import java.util.Iterator;

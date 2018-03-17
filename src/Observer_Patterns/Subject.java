@@ -1,7 +1,7 @@
 /**
  * Created by star on 3/12/18.
  */
-package ObserverPatterns;
+package Observer_Patterns;
 
 
 public interface Subject {

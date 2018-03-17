@@ -1,4 +1,4 @@
-package ObserverPatterns;
+package Observer_Patterns;
 
 /**
  * Created by star on 3/12/18.

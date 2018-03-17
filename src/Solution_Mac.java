@@ -68,16 +68,32 @@ public class Solution_Mac {
         System.out.println(lir);
         */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> feature_branch
         //System.out.println(s.frequencySort("tree"));
         //char []chrArr = new char[]{'A','A','A','B','B','B'};
         //System.out.println(s.leastInterval(chrArr,2));
 
+        System.out.println(s.reconstructQueue(new int[][]{{7,0}, {4,4}, {7,1}, {5,0}, {6,1}, {5,2}}));
+
+    }
+
+    public int[][] reconstructQueue(int[][] people) {
+        Arrays.sort(people, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                if(o2[0]==o1[0])return o1[1]-o2[1];
+                return o2[0]-o1[0];
+            }
+        });
+        printArray(people);
+        return people;
 
     }
 
 
-
-    public int leastInterval(char[] tasks, int n) {
+        public int leastInterval(char[] tasks, int n) {
 
         Map<Character,Integer> mp = new HashMap<>();
         for(char c:tasks){
@@ -130,7 +146,11 @@ public class Solution_Mac {
         return false;
     }
 
+<<<<<<< HEAD
 =======
+=======
+
+>>>>>>> feature_branch
         System.out.println(s.frequencySort("tree"));
 
     }
@@ -151,7 +171,10 @@ public class Solution_Mac {
         return false;
     }
 
+<<<<<<< HEAD
 >>>>>>> 97aaad7341635321eadf03c3499f3bf1976702a8
+=======
+>>>>>>> feature_branch
     int b=0;
     public boolean PredictTheWinner(int []nums){
         int len=nums.length;
@@ -510,6 +533,7 @@ HashSet<String> s;
         }
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     public String frequencySort(String str){
         Map<Character,Integer> mp=new HashMap<>();
@@ -539,6 +563,8 @@ HashSet<String> s;
     }
 
 =======
+=======
+>>>>>>> feature_branch
 
     public String frequencySort(String str){
         Map<Character,Integer> mp=new HashMap<>();
@@ -567,7 +593,10 @@ HashSet<String> s;
         return s.toString();
     }
 
+<<<<<<< HEAD
 >>>>>>> 97aaad7341635321eadf03c3499f3bf1976702a8
+=======
+>>>>>>> feature_branch
     public String frequencySort(String s,int n) {
         HashMap<Character,Integer> mp =new HashMap<>();char c;
         for(int i=0;i<s.length();i++){
@@ -690,7 +719,6 @@ HashSet<String> s;
             }
         }System.out.println();
     }
-
 
 
 

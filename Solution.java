@@ -131,7 +131,7 @@ public class Solution {
         ffts(root.left);
         ffts(root.right);
     }
-    
+
     public String frequencySort(String s) {
         HashMap<Character,Integer> mp =new HashMap<>();char c;
         for(int i=0;i<s.length();i++){
@@ -396,6 +396,7 @@ public class Solution {
         return dp[m-1][n]+dp[m][n-1];
     }
 
+
     public int triangleNumber2(int[] nums) {
         Arrays.sort(nums);
         //a+b>c
@@ -581,6 +582,7 @@ public class Solution {
     int sum=0;
     HashSet<Integer> st=new HashSet<>();
     public int getImportance(List<Employee> employees, int id) {
+
 
         employees.forEach(employee -> {if(employee.id==id){
             sum+=employee.importance;
@@ -873,43 +875,5 @@ public class Solution {
         }
         return li;
     }
-
-    static int stickers(String word) {
-        ArrayList<Character> h1 =  new ArrayList<>();
-        HashSet<Character> h2 = new HashSet<>();
-        HashMap<Character, Integer> map = new HashMap<>();
-        HashMap<Character, Integer> wpMap = new HashMap<>();
-        String w = "wpengine";
-        for(int i = 0; i < w.length(); i++) {
-           char x=  w.charAt(i);
-            h1.add(w.charAt(i));
-            if(wpMap.containsKey(x)) map.put(x, map.get(x) + 1);
-            else map.put(x, 1);
-        }
-        for(int i = 0; i < word.length(); i++) {
-            char x = word.charAt(i);
-            h2.add(x);
-            if(map.containsKey(x))
-                map.put(x, map.get(x) + 1);
-            else
-                map.put(x, 1);
-        }
-        //if(h2.retainAll(h1) != 0) return  -1;
-        int inter = 0;
-        for(char x: h2) {
-            if(h1.contains(x)) inter++;
-        }
-        if(inter != word.length()) return -1;
-
-        int result = 0;
-        int left = word.length();
-        for(Map.Entry<Character, Integer> entry: map.entrySet()) {
-            int wpCount = wpMap.get(entry.getKey());
-            result = Math.max(result, entry.getValue() % wpCount + entry.getValue() / wpCount);
-        }
-        return result;
-    }
-
-
 }
 //1, 7, 3, 6, 5, 6
