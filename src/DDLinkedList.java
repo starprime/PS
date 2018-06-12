@@ -1,3 +1,6 @@
+/**
+ * Created by star on 6/10/18.
+ */
 
 public class DDLinkedList{
     DDLinkedListNode head;
@@ -19,16 +22,6 @@ public class DDLinkedList{
         head=nw;
         return;
     }
-
-    public void walkTh() {
-        DDLinkedListNode tmp = head;
-        while (tmp != null){
-            System.out.println(tmp.val);
-            tmp=tmp.next;
-        }
-        return;
-    }
-
     public void append(int data){
         DDLinkedListNode lst = head;
         while (lst.next != null){
@@ -40,7 +33,14 @@ public class DDLinkedList{
         nw.prev = lst;
         return;
     }
-
+    public void walkTh() {
+        DDLinkedListNode tmp = head;
+        while (tmp != null){
+            System.out.println(tmp.val);
+            tmp=tmp.next;
+        }
+        return;
+    }
     public DDLinkedListNode getNodeByVal(int val){
         DDLinkedListNode lst = head;
         while (lst.next != null){
@@ -50,7 +50,6 @@ public class DDLinkedList{
         System.out.println("Node is Null");
         return null;
     }
-
     public void insertAfter(DDLinkedListNode nd,int val){
         DDLinkedListNode nxt = nd.next;
         DDLinkedListNode nw = new DDLinkedListNode(val);
@@ -63,7 +62,17 @@ public class DDLinkedList{
             nw.next=null;
         }
         return;
-
+    }
+    public void removeEnd(){
+        DDLinkedListNode lst = head;
+        while(lst.next!=null){
+            lst=lst.next;
+        }
+        System.out.println(lst.val);
+        DDLinkedListNode prv =lst.prev;
+        prv.next=null;
+        lst.prev=null;
+        return;
     }
 
     public static void main(String [] args){
@@ -74,6 +83,8 @@ public class DDLinkedList{
         DDLinkedListNode bw = dl.getNodeByVal(32);
         dl.insertAfter(bw,11);
         dl.walkTh();
+        dl.removeEnd();
+        dl.walkTh();
     }
-
 }
+

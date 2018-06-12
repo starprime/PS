@@ -1,48 +1,136 @@
-/**
- * Created by star on 2/12/18.
- */
+import java.util.HashMap;
+
 class LRUCache {
 
+    int cap;
+    int curr;
+    DDLinkedList dl;
+    HashMap<Integer,Integer> mp;
 
+    class DDLinkedList {
+        DDLinkedListNode head;
+
+        class DDLinkedListNode {
+            int val;
+            DDLinkedListNode next;
+            DDLinkedListNode prev;
+
+            public DDLinkedListNode(int val) {
+                this.val = val;
+            }
+        }
+        public void push(int data){
+            DDLinkedListNode nw = new DDLinkedListNode(data);
+            nw.next=head;
+            nw.prev=null;
+            if(head!=null){head.prev=nw;
+                head.next=null;}
+            head=nw;
+            return;
+        }
+        public int removeEnd(){
+            if(head==null)return -1;
+            DDLinkedListNode lst = head;
+            while(lst.next!=null){
+                lst=lst.next;
+            }
+            int ret = lst.val;
+            if(lst==head)return ret;
+            DDLinkedListNode prv =lst.prev;
+            prv.next=null;
+            lst.prev=null;
+            return ret;
+        }
+        public void bringToFront(int val){
+            if(head.val==val)return;
+            DDLinkedListNode tmp=head;
+            while (tmp!=null){
+                if(tmp.val==val)break;
+                tmp=tmp.next;
+            }
+            if(tmp!=null){
+                DDLinkedListNode prv = tmp.prev;
+                DDLinkedListNode nxt = tmp.next;
+
+                if(nxt==null) prv.next=null;
+                else{
+                    prv.next=nxt;
+                    nxt.prev=prv;
+                }
+            }
+            push(val);
+        }
+
+        public void removeNode(int val){
+            if(head.val==val){
+                head=null;
+                return;
+            }
+
+            DDLinkedListNode dd = head;
+
+            while(dd!=null){
+                if(dd.val==val)break;
+                dd=dd.next;
+            }
+
+            if(dd!=null){
+                DDLinkedListNode prv = dd.prev;
+                DDLinkedListNode nxt = dd.next;
+                prv.next=nxt;
+                if(nxt!=null)nxt.prev=prv;
+            }
+
+            return;
+        }
+
+        public DDLinkedListNode DDLinkedList(){return head;}
+    }
     public LRUCache(int capacity) {
-
+        this.cap=capacity;
+        curr=0;
+        dl = new DDLinkedList();
+        mp = new HashMap<>();
     }
 
     public int get(int key) {
-
-        return 1;
+        if(mp.containsKey(key)){
+            dl.removeNode(key);
+            int ret = mp.get(key);
+            mp.remove(key);
+            return ret;
+        }
+        return -1;
     }
 
     public void put(int key, int value) {
+        if(mp.containsKey(key)){
+            mp.replace(key,value);
+            dl.bringToFront(value);
+            return;
+        }
+        if(curr<cap){
+            dl.push(key);
+            curr++;
+        }else if(curr==cap){
+            int k = dl.removeEnd();
+            if(k>0)mp.remove(k);
+            dl.push(value);
+            curr++;
+        }
+        mp.put(key,value);
+    }
 
+    public static void main(String [] args){
+        LRUCache lr = new LRUCache(2);
+        lr.put(1,1);
+        lr.put(2,2);
+        System.out.println(lr.get(1));
+        lr.put(3,3);
+        System.out.println(lr.get(2));
+        lr.put(4,4);
+        System.out.println(lr.get(1));
+        System.out.println(lr.get(3));
+        System.out.println(lr.get(4));
     }
 }
-/*
-Design and implement a data structure for Least Recently Used (LRU) cache. It should support the following operations: get and put.
-
-get(key) - Get the value (will always be positive) of the key if the key exists in the cache, otherwise return -1.
-put(key, value) - Set or insert the value if the key is not already present. When the cache reached its capacity, it should invalidate the least recently used item before inserting a new item.
-
-Follow up:
-Could you do both operations in O(1) time complexity?
-
-Example:
-
-LRUCache cache = new LRUCache( 2 /* capacity);
-
-        cache.put(1, 1);
-        cache.put(2, 2);
-        cache.get(1);       // returns 1
-        cache.put(3, 3);    // evicts key 2
-        cache.get(2);       // returns -1 (not found)
-        cache.put(4, 4);    // evicts key 1
-        cache.get(1);       // returns -1 (not found)
-        cache.get(3);       // returns 3
-        cache.get(4);       // returns 4
- */
-/**
- * Your LRUCache object will be instantiated and called as such:
- * LRUCache obj = new LRUCache(capacity);
- * int param_1 = obj.get(key);
- * obj.put(key,value);
- */
