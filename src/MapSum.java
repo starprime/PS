@@ -2,6 +2,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 class MapSum {
+
     public static void main(String []args){
         MapSum ms=new MapSum();
         ms.insert("apple",3);
@@ -10,6 +11,7 @@ class MapSum {
         System.out.println(ms.sum("ap"));
 
     }
+
     MapSum() {
         nd=new TrieNode();
     }
@@ -23,11 +25,10 @@ class MapSum {
             eow = false;
             val=Integer.MIN_VALUE;
         }
-
     }
+
     private final TrieNode nd;
     /** Initialize your data structure here. */
-
     public void insert(String key, int val) {
         TrieNode cur=nd;char c;
         for(int i=0;i<key.length();i++){
@@ -57,6 +58,7 @@ class MapSum {
         }
         return recSum(curr)+curr.val;
     }
+
     public int recSum(TrieNode curr){
         int sum=0;
         for(Map.Entry<Character, TrieNode> k :curr.mp.entrySet()){
@@ -66,7 +68,6 @@ class MapSum {
         }
         return sum;
     }
-
 }
 
 /**

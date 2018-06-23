@@ -1,6 +1,64 @@
-//        int arr[]={21,23,762,5236,765,232,123,74,2,3};
+public class HeapSort{
+    public HeapSort(int []arr){
+        int len = arr.length;
+
+        for(int i = len/2-1;i>=0;i--){
+            heapify(arr,len,i);
+        }
+
+        for(int i = len -1;i>=0;i--){
+            swap(arr,i,0);
+            heapify(arr,i,0);
+        }
+    }
+
+    public void heapify(int [] arr, int n,int i){
+
+        printArr(arr);
+        int high = i;
+        int l = i*2+1;
+        int r = i*2+2;
+
+        if(l<n && arr[l] > arr[high]){
+            high = l;
+        }
+
+        if(r < n && arr[r] > arr[high]){
+            high = r;
+        }
+
+        if(high != i){
+            swap(arr,high,i);
+            heapify(arr,n,high);
+        }
+
+    }
+
+    public void swap(int []arr,int x,int y){
+        int swp=arr[x];
+        arr[x]=arr[y];
+        arr[y]=swp;
+    }
+    public static void main(String [] args){
+        int arr[]={21,23,762,5236,765,232,123,74,2,3};
+        HeapSort hr =new  HeapSort(arr);
+        hr.printArr(arr);
+    }
+    public void printArr(int []arr){
+        System.out.println();
+        for(int i:arr){
+            System.out.print(i+" ");
+        }
+    }
+
+}
+
+
+/*
+// int arr[]={21,23,762,5236,765,232,123,74,2,3};
 // Java program for implementation of Heap Sort
 // Java program for implementation of Heap Sort
+
 public class HeapSort
 {
     public void sort(int arr[])
@@ -52,7 +110,9 @@ public class HeapSort
         }
     }
 
-    /* A utility function to print array of size n */
+    */
+/* A utility function to print array of size n *//*
+
     static void printArray(int arr[])
     {
         int n = arr.length;
@@ -74,6 +134,8 @@ public class HeapSort
         printArray(arr);
     }
 }
+
+*/
 /*
 public class HeapTopDown {
     public static void main(String [] args){
