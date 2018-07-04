@@ -1,4 +1,4 @@
-import com.sun.xml.internal.ws.api.ha.StickyFeature;
+import CTCT.LL.ListNode;
 
 import java.util.*;
 
@@ -43,7 +43,7 @@ public class Solution_Mac {
         int []longarr =new int[]{10,9,2,5,3,7,101,19,11};
         //System.out.println(s.longestIncSub(longarr));
         //System.out.println(s.inorderTraversal(s.buildTree(ino,pos)));
-        ListNode head=new ListNode(2);head.next=new ListNode(1);head.next.next=new ListNode(5);head.next.next.next=new ListNode(3);
+        //ListNode head=new ListNode(2);head.next=new ListNode(1);head.next.next=new ListNode(5);head.next.next.next=new ListNode(3);
         //s.printLL(s.sortList(head));
         List<String> li=new ArrayList<>();
         li.add("12:12");li.add("00:13");//li.add("06:02");li.add("21:00");
