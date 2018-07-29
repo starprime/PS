@@ -1,5 +1,7 @@
 package CTCT.GraphAndTrees.TopologicalSort;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Random;
 
 /**
@@ -16,21 +18,47 @@ public class Tree_Node_Weighted {
         this.val = val;
     }
     public static void main(String []args){
-        Tree_Node_Weighted nd = new Tree_Node_Weighted(23);
-        int i = 0;
+        Tree_Node_Weighted nd = new Tree_Node_Weighted(1);
+        int i = 2;
         Random rn = new Random();
-        while (i<101){
-            nd.add(rn.nextInt(500));
+        while (i<15){
+            nd.add(i);
             i++;
         }
 
-        //inorder(nd);
+        inorder(nd);
         System.out.println(nd.left.left_sum);
         System.out.println(nd.left.right_sum);
         System.out.println(nd.size());
         System.out.println(nd.data());
-        System.out.println(nd.left.right.right.right.val);
+        preorder(nd);
+        printLevelOrderBFS(nd);
 
+    }
+    public static void printLevelOrderBFS(Tree_Node_Weighted root){
+        Queue<Tree_Node_Weighted> queue = new LinkedList<Tree_Node_Weighted>();
+        queue.add(root);
+        int currentLevelCount = 1;
+        int nextLevelCount = 0;
+
+        while(!queue.isEmpty()){
+            Tree_Node_Weighted n = queue.remove();
+            System.out.print(n.val + " ");
+            if(n.left != null){
+                queue.add(n.left);
+                nextLevelCount++;
+            }
+            if(n.right != null){
+                queue.add(n.right);
+                nextLevelCount++;
+            }
+            currentLevelCount--;
+            if(currentLevelCount == 0){
+                System.out.println("");
+                currentLevelCount = nextLevelCount;
+                nextLevelCount = 0;
+            }
+        }
     }
 
     public int random(){
@@ -80,5 +108,11 @@ public class Tree_Node_Weighted {
         System.out.print(node.val+" -> ");
         inorder(node.right);
         return;
+    }
+    public static void preorder(Tree_Node_Weighted node){
+        if(node==null)return;
+        System.out.print(node.val+" -> ");
+        preorder(node.left);
+        preorder(node.right);
     }
 }
