@@ -10,7 +10,7 @@ public class Searching_N_Sorting {
         String [] arr = new String[]{"eat", "tea", "tan", "ate", "nat", "bat"};
         //System.out.println(groupAnagrams(arr));
         int [] arrInt = new int[]{1,2,4,5,6,7,0};
-        System.out.println(search(arrInt,3));
+        System.out.println(search(arrInt,7));
     }
     static public int search(int[] nums, int target) {
         if(nums.length==0)return -1;
@@ -20,9 +20,9 @@ public class Searching_N_Sorting {
         }
         int pivot = getPivot(nums,0,nums.length-1);
         System.out.println(pivot);
-        if(target>=nums[0]&&target<nums[pivot-1]){
+        if(target>=nums[0]&&target<=nums[pivot-1]){
             return binarySearch(nums,0,pivot-1,target);
-        }else if(target>nums[pivot]&&target<=nums[nums.length-1]){
+        }else if(target>=nums[pivot]&&target<=nums[nums.length-1]){
             return binarySearch(nums,pivot,nums.length-1,target);
         }else if(target==nums[pivot]){
             return pivot;
@@ -31,13 +31,15 @@ public class Searching_N_Sorting {
         }
     }
     static public int binarySearch(int[] nums,int l,int r,int target){
+        System.out.println(l+" - "+r);
         int mid = (l+r)/2;
-        while (l<=r){
+        while (l<r){
             mid = (l+r)/2;
+            System.out.println(l+" - "+r+" - "+mid);
             if(nums[mid]>target){
                 r = mid;
             }else if(nums[mid]<target){
-                l = mid;
+                l = mid+1;
             }else if(nums[mid]==target){
                 return mid;
             }
