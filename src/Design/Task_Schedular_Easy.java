@@ -31,8 +31,27 @@ import java.util.Map;
  */
 public class Task_Schedular_Easy {
     Map<Integer,Integer> mp;
-    public Task_Schedular_Easy(){
+    int cooldown;
+    public Task_Schedular_Easy(int cooldown){
         mp = new HashMap<>();
+        this.cooldown = cooldown;
+    }
+    public int schedule_Task(int []arr){
+        int intrRet = 0;
+        int cnt = 0;
+        while (cnt<arr.length){
+            if(mp.containsKey(arr[cnt])){
+                if(intrRet-mp.get(arr[cnt])>=cooldown){
+                    mp.put(arr[cnt],intrRet);
+                    cnt++;
+                }
+            }else {
+                mp.put(arr[cnt],intrRet);
+                cnt++;
+            }
+            intrRet++;
+        }
+        return intrRet;
     }
 
 }
