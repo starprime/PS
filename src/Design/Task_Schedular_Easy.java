@@ -1,5 +1,6 @@
 package Design;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,14 +37,19 @@ public class Task_Schedular_Easy {
         mp = new HashMap<>();
         this.cooldown = cooldown;
     }
+
     public int schedule_Task(int []arr){
+
         int intrRet = 0;
         int cnt = 0;
         while (cnt<arr.length){
+
             if(mp.containsKey(arr[cnt])){
-                if(intrRet-mp.get(arr[cnt])>=cooldown){
+                if(intrRet-mp.get(arr[cnt])>=cooldown+1){
                     mp.put(arr[cnt],intrRet);
                     cnt++;
+                }else {
+                    intrRet+=cooldown-(intrRet-mp.get(arr[cnt]));
                 }
             }else {
                 mp.put(arr[cnt],intrRet);
@@ -51,7 +57,32 @@ public class Task_Schedular_Easy {
             }
             intrRet++;
         }
+
         return intrRet;
     }
 
+    class Process {
+        public int  proc;
+        public int lr;
+
+        // A parameterized student constructor
+        public Process(int proc, int lr) {
+
+            this.proc = proc;
+            this.lr = lr;
+        }
+
+    }
+
+    class ProcessComparator implements Comparator<Process> {
+
+        @Override
+        public int compare(Process s1, Process s2) {
+            if(s1.lr>=s2.lr){
+                return 1;
+            }else{
+                return -1;
+            }
+        }
+    }
 }
