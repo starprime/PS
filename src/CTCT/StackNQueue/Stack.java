@@ -40,6 +40,16 @@ public class Stack {
 
     }
 
+    public int popAt(int indx){
+        List<Integer> li = st.get(indx);
+        int sze = li.size();
+        if(sze == 0){
+            st.remove(indx);
+            return -1;
+        }
+        return li.remove(sze-1);
+    }
+
     public int pop(){
 
         List<Integer> li = st.get(nthStack);
@@ -50,16 +60,15 @@ public class Stack {
             li = st.get(nthStack);
             ptr = li.size();
         }
-        int ret = li.remove(ptr-1);
 
-        return ret;
+        return li.remove(ptr-1);
 
     }
 
     public int getSize(){
-
         int ret = 0;
-        for(int i = 0;i<nthStack;i++){
+        for(int i = 0;i<=nthStack;i++){
+            System.out.println(st.get(i).size());
             ret+=st.get(i).size();
         }
         return ret;
