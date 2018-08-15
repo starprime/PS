@@ -8,8 +8,8 @@ public class Solution {
         //System.out.print(s.lengthOfLastWord("Note: is Run Code inconsistent with Submit Solution? If you are using global variables or C/C++, check this out."));
         //System.out.println(s.lengthOfLastWord("   "));
         //System.out.println(s.numDecodings("418913"));
-        List<List<Integer>> li=new ArrayList<>();
-        List<Integer> lo=new ArrayList<>();
+        //List<List<Integer>> li=new ArrayList<>();
+        //List<Integer> lo=new ArrayList<>();
         //lo.add(-1);li.add(lo);
         //lo=new ArrayList<>();lo.add(-2);lo.add(-3);li.add(lo);
         //lo=new ArrayList<>();lo.add(-3);lo.add(1);lo.add(-1);li.add(lo);
@@ -57,14 +57,48 @@ public class Solution {
         //System.out.println("star".substring(1,"star".length()-2));
         //System.out.println(s.palanDr("star"));
         //s.printArray(s.dailyTemperatures(arr));
-        String [] st=new String[]{"w","wo","wor","worl", "world"};
+        //String [] st=new String[]{"w","wo","wor","worl", "world"};
         //System.out.println(s.longestWord(st));
         //System.out.println(s.frequencySort("aaaddbc"));
-        LogSystem ls=new LogSystem();
+        //LogSystem ls=new LogSystem();
         //System.out.println(ls.strn2Int("2017:01:01:23:59:59"));
         //System.out.println(Long.toString(Long.parseLong("20170101235959")));
-        System.out.println(s.maxChunksToSorted(new int[]{1,0,2,3,4}));
+        //System.out.println(s.maxChunksToSorted(new int[]{1,0,2,3,4}));
+        //System.out.println(s.evalRPN(new String[]{"2","1","+","3","*"}));
     }
+
+
+    public int evalRPN(String[] tokens) {
+        Stack<Integer> st = new Stack<>();
+        for(String s:tokens){
+            if(isOperator(s)){
+                int p1 = st.pop();
+                int p2 = st.pop();
+                int res = operate(p1,p2,s);
+                st.push(res);
+            }else{
+                st.push(Integer.valueOf(s));
+            }
+        }
+        return st.pop();
+    }
+
+    public boolean isOperator(String p){
+        return p.equals("+")||p.equals("-")||p.equals("/")||p.equals("*");
+    }
+
+    public int operate(int p1,int p2,String p){
+        if(p.equals("+"))return p1+p2;
+        else if(p.equals("*"))return p1*p2;
+        else if(p.equals("/")){
+            if(p1==0||p2==0) return 0;
+            else return p1/p2;
+        }
+
+        else return p1 - p2;
+
+    }
+
     public int maxChunksToSorted(int[] arr) {
         int []maxArr=new int[arr.length];
         int []minArr=new int[arr.length];
