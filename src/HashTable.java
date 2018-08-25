@@ -38,20 +38,24 @@ public class HashTable<K,V> {
     }
 
     public void put(K key,V value){
-        int hash = getBucketIndex(key);
-        HashNode<K,V> head = bucketArr.get(hash);
-        while (head!=null){
+        int hash = getBucketIndex(key); // get hash
+        HashNode<K,V> head = bucketArr.get(hash);  // get head for hash
+        while (head!=null){ // this case if key is already present in the hashtable , replace and return
             if(head.key.equals(key)){
                 head.value=value;
                 return;
             }
             head=head.next;
         }
-        siz++;
-        head = bucketArr.get(hash);
-        HashNode<K,V> newNode = new HashNode<K, V>(key,value);
-        newNode.next=head; //i think its redudenant
-        bucketArr.set(hash,newNode);
+        // other wise insert new
+        // get head for key
+        siz++; // increase size offcourse
+        head = bucketArr.get(hash); // // get head for hash
+        HashNode<K,V> newNode = new HashNode<K, V>(key,value); // make a node
+        newNode.next=head; //i think its redudenant , putting on top of the list recent key,value
+        bucketArr.set(hash,newNode); // setting for hash
+        // if size has increased over a limit 70%
+        // then increase the size
 
         if((1.0*siz)/numOfBucket >= 0.7){
             ArrayList<HashNode<K,V>> temp = bucketArr;
@@ -67,6 +71,7 @@ public class HashTable<K,V> {
             }
         }
     }
+
     public V get(K key){
         int hash = getBucketIndex(key);
         HashNode<K,V> head = bucketArr.get(hash);
@@ -78,6 +83,7 @@ public class HashTable<K,V> {
         }
         return null;
     }
+
     public V remove(K key){
         int hash = getBucketIndex(key);
         HashNode<K,V> head = bucketArr.get(hash);

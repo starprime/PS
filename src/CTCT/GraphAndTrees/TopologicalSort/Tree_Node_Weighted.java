@@ -1,8 +1,6 @@
 package CTCT.GraphAndTrees.TopologicalSort;
 
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by star on 7/4/18.
@@ -31,10 +29,13 @@ public class Tree_Node_Weighted {
         System.out.println(nd.left.right_sum);
         System.out.println(nd.size());
         System.out.println(nd.data());
-        preorder(nd);
-        printLevelOrderBFS(nd);
+        //preorder(nd);
+        //printLevelOrderBFS(nd);
+
 
     }
+
+
     public static void printLevelOrderBFS(Tree_Node_Weighted root){
         Queue<Tree_Node_Weighted> queue = new LinkedList<Tree_Node_Weighted>();
         queue.add(root);

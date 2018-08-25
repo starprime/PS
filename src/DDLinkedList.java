@@ -4,6 +4,7 @@
 
 public class DDLinkedList{
     DDLinkedListNode head;
+
     class DDLinkedListNode {
         int val;
         DDLinkedListNode next;
@@ -36,9 +37,10 @@ public class DDLinkedList{
     public void walkTh() {
         DDLinkedListNode tmp = head;
         while (tmp != null){
-            System.out.println(tmp.val);
+            System.out.print(tmp.val+",");
             tmp=tmp.next;
         }
+        System.out.println();
         return;
     }
     public DDLinkedListNode getNodeByVal(int val){
@@ -63,6 +65,20 @@ public class DDLinkedList{
         }
         return;
     }
+    public int removeEndVal(){
+        if(head==null)return -1;
+        DDLinkedListNode lst = head;
+        while(lst.next!=null){
+            lst=lst.next;
+        }
+        int ret = lst.val;
+        if(lst==head)return ret;
+        DDLinkedListNode prv =lst.prev;
+        prv.next=null;
+        lst.prev=null;
+        return ret;
+    }
+
     public void removeEnd(){
         DDLinkedListNode lst = head;
         while(lst.next!=null){
@@ -75,10 +91,56 @@ public class DDLinkedList{
         return;
     }
 
+
+
+    public void removeNode(int val){
+        if(head.val==val){
+            head=null;
+            return;
+        }
+
+        DDLinkedListNode dd = head;
+
+        while(dd!=null){
+            if(dd.val==val)break;
+            dd=dd.next;
+        }
+
+        if(dd!=null){
+            DDLinkedListNode prv = dd.prev;
+            DDLinkedListNode nxt = dd.next;
+            prv.next=nxt;
+            if(nxt!=null)nxt.prev=prv;
+        }
+
+        return;
+    }
+    public void bringToFront(int val){
+        if(head.val==val)return;
+        DDLinkedListNode tmp=head;
+        while (tmp!=null){
+            if(tmp.val==val)break;
+            tmp=tmp.next;
+        }
+        if(tmp!=null){
+            DDLinkedListNode prv = tmp.prev;
+            DDLinkedListNode nxt = tmp.next;
+
+            if(nxt==null) prv.next=null;
+            else{
+                prv.next=nxt;
+                nxt.prev=prv;
+            }
+        }
+        push(val);
+    }
+
+
     public static void main(String [] args){
         DDLinkedList dl = new DDLinkedList();
         dl.push(23);
         dl.push(32);
+        dl.walkTh();
         dl.append(4);
         DDLinkedListNode bw = dl.getNodeByVal(32);
         dl.insertAfter(bw,11);
