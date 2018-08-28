@@ -108,7 +108,7 @@ class Pramp_Sol {
     static String[][] wordCountEngine(String document) {
         // your code goes here
         String []chunks = document.split(" ");
-
+        PrintArray.printArray(chunks);
         for(int i = 0;i<chunks.length;i++){
             chunks[i] = removepunctuation(chunks[i]);
         }
@@ -117,6 +117,7 @@ class Pramp_Sol {
         for(int i = 0;i<chunks.length;i++){
 
             String s = chunks[i];
+            if (s.isEmpty())continue;
             if(mp.containsKey(s)){
                 int [] nt = mp.get(s);
                 nt[1]++;
@@ -140,26 +141,20 @@ class Pramp_Sol {
                         return o2.getValue()[1] - o1.getValue()[1];
                     }
             }
-
         });
 
 
-        String[][] array = new String[list.size()][];
+        String[][] array = new String[list.size()][2];
         String[] blankArray = new String[0];
 
         for (int i=0; i < list.size(); i++) {
-            System.out.println(list.get(i));
+            array[i][0] = list.get(i).getKey();
+            array[i][1] = Integer.toString(list.get(i).getValue()[1]);
         }
-
-        System.out.println(list);
-
-        return new String [0][0];
-
-
+        PrintArray.printArray(array);
+        return array;
 
         }
-
-
     static String removepunctuation(String str){
         StringBuilder sb = new StringBuilder();
         for(char c:str.toCharArray()){
@@ -307,7 +302,7 @@ class Pramp_Sol {
 
     }
 
-    /*
+    /**
     both consumed -> true
     t  a c d
     p  a . .
@@ -334,24 +329,200 @@ class Pramp_Sol {
 
     */
     static boolean recChk(String text,int i,String pat,int j){
-        if(i==text.length() && j==pat.length()) return true;
-        if(j==pat.length()) return false;
-        //if(pat.charAt(j)=='*')return reChk(text,i,pat,j+1);
 
-        if((text.charAt(i)==pat.charAt(j) || (pat.charAt(j)=='.')) && (pat.charAt(j+1)=='*')){
+        if ( i==text.length() && j==pat.length()) return true;
+        if ( j==pat.length()) return false;
+        if (pat.charAt(j)=='*') return recChk(text,i,pat,j+1);
+
+        if (( text.charAt(i) == pat.charAt(j) || ( pat.charAt(j) == '.')) && ( (pat.charAt(j+1) == '*') ) ){
+            if(i == text.length()-1)return true;
             return recChk(text,i+1,pat,j);
-        }else if((text.charAt(i)!=pat.charAt(j)) && (pat.charAt(j+1)=='*'))
-        { return recChk(text,i,pat,j+2);
+        } else if((text.charAt(i)!=pat.charAt (j)) && ((j<pat.length() -2) && (pat.charAt(j+1)=='*'))) {
+            return recChk(text,i,pat,j+2);
         }
 
-    else if((text.charAt(i)==pat.charAt(j)) || (pat.charAt(j)=='.')){
+        else if ((text.charAt(i)==pat.charAt(j)) || (pat.charAt(j)=='.')) {
             return recChk(text,i+1,pat,j+1);
-        }else{
+            }
+        else{
             return false;
+        }
+
+    }
+
+//    static String getShortestUniqueSubstring(char[] arr, String str) {
+//        // your code goes here
+//        Set<Character> set = new HashSet<>();
+//        for(char c:arr){
+//            set.add(c);
+//        }
+//
+//        Hashtable<Character, Integer> mp = new Hashtable<>();
+//        int len = arr.length;
+//        int i = 0, j = 1;
+//        int uniq = 0;
+//    /**
+//    arr: [x,a,y,z]
+//    x x b x a a a x x x y y y y y z  a y z y y y x a  a a
+//          i
+//                              j
+//    if curr is getting new
+//    when to update tail
+//
+//    // when next and presnt are same
+//    // when next and presnt are different
+//
+//    find element which is not present arr
+//
+//    when counter is 0
+//       x x b y x a a a x x x y y y y y z  a y z y y y x a  a a
+//       i                       j
+//    */
+//        int strt = 0;
+//        while(uniq < arr.length){
+//
+//            char ic = str.charAt(i);  //tailIndex
+//            char curr = str.charAt(j);  //headIndex
+//            char prv = str.charAt(j - 1);
+//            if(curr == prv){  //     when both are same
+//
+//            }else{
+//                uniq++;
+//
+//                if(mp.containsKey(curr)){
+//
+//                }
+//
+//                if(set.contains(jc)){
+//                    mp.put(jc,j - 1);
+//                }
+//
+//            }
+//
+//
+//        }
+//
+//    }
+    static int[] meetingPlanner(int[][] slotsA, int[][] slotsB, int dur) {
+        // your code goes here
+        int lenA = slotsA.length;
+        int lenB = slotsB.length;
+
+        int i = 0, j = 0;
+
+        while (i<lenA && j<lenB){
+
+            int []slt = checkSlot(slotsA[i],slotsB[j],dur);
+            if(slt[0]!=Integer.MIN_VALUE)return slt;
+            else{ // increment index with condition
+                if(slotsA[i][1]>slotsB[j][1]){
+                    j++;
+                }else{
+                    i++;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    static public int[] checkSlot(int [] A,int []B,int dur){
+
+        int start = Math.max(A[0],B[0]);
+        int end = Math.min(A[1],B[1]);
+
+        int []ret = {Integer.MIN_VALUE,Integer.MIN_VALUE};
+        if (end - start >= dur){
+            ret[0] = start;
+            ret[1] = end;
+        }
+        return ret;
+
+    }
+
+    static int[] findDuplicates(int[] arr1, int[] arr2) {
+
+    // your code goes here
+    int len1 = arr1.length;
+    int len2 = arr2.length;
+
+
+    if(len1 > len2){
+
+        if ((Math.log(len1)*len2) >(len1 + len2)){
+            return simple(arr1,arr2);
+        }else{
+            return binary(arr1,arr2);
+        }
+    }else {
+        if ((Math.log(len2)*len1) >(len1 + len2)){
+            return simple(arr1,arr2);
+        }else{
+            return binary(arr2,arr1);
         }
     }
 
+
+}
+
+    static int [] simple(int []arr1,int [] arr2){
+        List<Integer> li = new ArrayList<>();
+        int i = 0, j = 0;
+        System.out.println("In Simple");
+        while(i < arr1.length && j < arr2.length){
+            if(arr1[i]==arr2[j]){
+                li.add(arr1[i]);
+                i++;j++;
+            }else if (arr1[i] > arr2[j]){
+                j++;
+            }else{
+                i++;
+            }
+        }
+        System.out.println(li);
+        int [] ret = new int[li.size()];
+
+        for(int k = 0; k <li.size(); k++){
+            ret[k] = li.get(k);
+        }
+        return ret;
+
+    }
+
+    static int[] binary(int [] arr1, int[] arr2){
+        List<Integer> li = new ArrayList<>();
+        System.out.println("In Binary");
+
+
+        for(int i=0;i<arr1.length;i++){
+            int val = arr1[i];
+
+            if(Arrays.binarySearch(arr2, val)>=0){
+                li.add(val);
+            }
+
+        }
+        int [] ret = new int[li.size()];
+        for(int i = 0;i<li.size();i++){
+            ret[i] = li.get(i);
+        }
+        return ret;
+
+    }
+
+    static void print(Object o){
+        System.out.println(o);
+    }
+
     public static void main(String[] args) {
+
+//        int []arr1 = {1,2,3,5,6,7};
+//        int []arr2 = {7,8,9,10,11,12};
+//        int []res = findDuplicates(arr1,arr2);
+//        if(res!=null)PrintArray.printArray(res);
+//        else System.out.println(res);
+        //System.out.println(isMatch(new String("aa"),new String("a")));
+
         //int[] arr = {10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
         //int[] res = pancakeSort(arr);
         //System.out.println(numOfPathsToDest(2));
@@ -363,15 +534,28 @@ class Pramp_Sol {
         //int [] arr = {1, 4, 5, 2, 3, 7, 8, 6, 10, 9};
         //System.out.println(Arrays.toString(arr));
 
-        int [] [] inputMatrix  = { {1,    2,   3,  4,    5},
-                {6,    7,   8,  9,   10},
-                {11,  12,  13,  14,  15},
-                {16,  17,  18,  19,  20} };
+//        int [] [] inputMatrix  = { {1,    2,   3,  4,    5},
+//                {6,    7,   8,  9,   10},
+//                {11,  12,  13,  14,  15},
+//                {16,  17,  18,  19,  20} };
 
         //System.out.println(Arrays.toString(spiralCopy(inputMatrix)));
+//        int [][] slotsA = {{10, 50}, {60, 120}, {140, 210}};
+//        int [][] slotsB =  {{0, 15}, {60, 70}};
+//
+//        int [] res = meetingPlanner(slotsA,slotsB,80);
+//        if(res!=null)System.out.println(res[0]+" , "+res[1]);
+//        else System.out.println(res);
 
-        System.out.println(wordCountEngine(new String("Practice makes perfect. you'll only yet Perfect by practice. just practice!")));
+//        System.out.println(wordCountEngine(new String(
+//                "Every book is a quotation; and every house is a quotation out of all forests, and mines, and stone quarries; and every man is a quotation from all his ancestors. ")));
         //System.out.println(removepunctuation(new String("Practice")));
+
+        TreeSet<Integer> st = new TreeSet<>();
+        int [] nums = {1,5,9,1,5,9,2};
+        for(int i:nums)st.add(i);
+        print(st.size());
+
     }
 
 }
