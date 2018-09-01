@@ -552,10 +552,11 @@ class Pramp_Sol {
         //System.out.println(removepunctuation(new String("Practice")));
 
         TreeSet<Integer> st = new TreeSet<>();
-        int [] nums = {1,5,9,1,5,9,2};
+        int [] nums = {1,5,9,1,5,9,};
         for(int i:nums)st.add(i);
-        print(st.size());
-
+        // print(st.size());
+        print(st.ceiling(3));
+        System.out.println(st);
     }
 
 }
