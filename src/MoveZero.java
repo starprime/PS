@@ -3,8 +3,8 @@
  */
 class PushZero
 {
-    static void pushZerosToEnd(int arr[], int n)
-    {
+    static void moveZeros(int arr[])
+    {   int n = arr.length;
         int count = 0;
 
         for (int i = 0; i < n; i++)
@@ -15,12 +15,35 @@ class PushZero
             arr[count++] = 0;
     }
 
-    /*Driver function to check for above functions*/
+    public static void moveZeros2(int[] nums) {
+        int cntr=0,strt=0;
+        for(int j=0,i=0;j<nums.length;j++){
+            if(nums[j]==0&&cntr==0){
+                i=j;
+                strt=i;
+                cntr++;
+            }else if(nums[j]!=0){
+                swap(nums,strt,j);
+                strt=strt+1;
+                i=j;
+            }else if(nums[j]==0&&cntr!=0){
+                cntr++;
+                i=j;
+            }
+        }
+    }
+
+    public static void swap(int[] nums,int a,int b){
+        int temp=nums[a];
+        nums[a]=nums[b];
+        nums[b]=temp;
+    }
+
     public static void main (String[] args)
     {
-        int arr[] = {1, 9, 8, 4, 0, 0, 2, 7, 0, 6, 0, 9};
+        int arr[] = {0,1,0,3,12};
         int n = arr.length;
-        pushZerosToEnd(arr, n);
+        moveZeros2(arr);
         System.out.println("Array after pushing zeros to the back: ");
         for (int i=0; i<n; i++)
             System.out.print(arr[i]+" ");
