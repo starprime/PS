@@ -3,17 +3,20 @@ package Threading;
 /**
  * Created by star on 8/31/18.
  */
+
 public class ThreadComm {
 
     public static void main(String[] args) {
 
         ResourceCarrier carrier = new ResourceCarrier();
+
         ThingNeedingResource thingNeedingResource
                 = new ThingNeedingResource(carrier);
         ThingNeedingResource thingNeedingResource2
                 = new ThingNeedingResource(carrier);
         ThingNeedingResource thingNeedingResource3
                 = new ThingNeedingResource(carrier);
+
         ResourceCreator resourceCreator = new ResourceCreator(carrier);
 
         new Thread(thingNeedingResource).start();
@@ -23,20 +26,20 @@ public class ThreadComm {
     }
 
 }
+
+// this is some resource
 class ResourceCarrier {
     private boolean resourceReady;
-
-
-
     public boolean isResourceReady() {
         return resourceReady;
     }
 
     public void resourceIsReady() {
         resourceReady = true;
-
     }
 }
+
+    // have resource object
  class ResourceCreator implements Runnable {
     private ResourceCarrier carrier;
 
@@ -51,7 +54,7 @@ class ResourceCarrier {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
+        }// only one thread has access
         synchronized (carrier) {
             carrier.resourceIsReady();
             carrier.notifyAll();
