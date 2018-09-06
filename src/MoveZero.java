@@ -1,21 +1,22 @@
 /**
  * Created by star on 9/5/18.
  */
-class PushZero
-{
-    static void moveZeros2(int arr[])
-    {   int n = arr.length;
-        int count = 0;
 
-        for (int i = 0; i < n; i++) // if the value in array is not 0 the we move it forward step
-            if (arr[i] != 0) //
-                arr[count++] = arr[i];
+class PushZero {
 
-        while (count < n) // for rest of the digit put zero
-            arr[count++] = 0;
+    static void moveZeros2(int arr[]){   int n = arr.length;
+        int cntr = 0;
+        // cntr will keep track
+        for (int i = 0; i < n; i++) // travers the array
+            if (arr[i] != 0) // If element at i is  not zero,
+                            //  replace the element at index 'cntr' with this element
+                arr[cntr++] = arr[i]; //
+        // after moving all element to front
+        while (cntr < n) // for rest of the digit put zero from cntr
+            arr[cntr++] = 0;
     }
 
-    public static void moveZeros1(int[] nums) {
+    static void moveZeros1(int[] nums) {
         int cntr=0,strt=0;
         for(int j=0,i=0;j<nums.length;j++){
             if(nums[j]==0&&cntr==0){ // if nums index is zero store it in start
