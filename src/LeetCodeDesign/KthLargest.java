@@ -1,3 +1,5 @@
+package LeetCodeDesign;
+
 import java.util.*;
 
 /**

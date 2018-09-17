@@ -1,3 +1,5 @@
+import LeetCodeDesign.MyCircularQueue;
+
 import java.lang.reflect.Array;
 import java.util.*;
 
@@ -57,9 +59,207 @@ public class Sol_After_Summer {
         //String str = "aedbdeddac";
         //System.out.println(s.partitionLabels(str));
         //System.out.println(s.generateParenthesis(3));
-        String [] wordList = new String[]{"hot","dot","dog","lot","log","cog"};
-        List<String> li = new ArrayList<>();li.add("hot");li.add("dot");li.add("dog");li.add("lot");li.add("log");li.add("cog");
-        System.out.println(s.ladderLength("hit","dot",li));
+        //String [] wordList = new String[]{"hot","dot","dog","lot","log","cog"};
+        //List<String> li = new ArrayList<>();li.add("hot");li.add("dot");li.add("dog");li.add("lot");li.add("log");li.add("cog");
+        //System.out.println(s.ladderLength("hit","dot",li));
+//
+//        int [][] arr = {{1, 10}, {2, 7}, {3, 19}, {8, 12}, {10, 20}, {11, 30}};
+//        Interval [] intervals = new Interval[arr.length];
+//
+//        for(int i=0; i < intervals.length;i++){
+//            intervals[i] = new Interval(arr[i][0],arr[i][1]);
+//        }
+//        System.out.println(s.minMeetingRooms(intervals));
+
+        //System.out.println(s.reorganizeString("aaab"));
+        List<Integer> pid = new ArrayList<>();pid.add(1);pid.add(3);pid.add(10);pid.add(5);
+        List<Integer> ppid = new ArrayList<>();ppid.add(3);ppid.add(0);ppid.add(5);ppid.add(3);
+        //System.out.println(s.killProcess(pid,ppid,5));
+
+//        MyCircularQueue queue = new MyCircularQueue(3);
+//        queue.enQueue(6);
+//        System.out.println(queue.Rear());
+//        System.out.println(queue.deQueue());
+
+        List<Integer> room = new ArrayList<>();
+        room.add(1);room.add(3);
+
+        List<List<Integer>> rooms = new ArrayList<>();
+
+        System.out.println(rooms.size());
+        rooms.add(rooms.size(),room);room.clear();
+        room.add(3);room.add(0);room.add(1);
+        rooms.add(rooms.size(),room);room.clear();
+        room.add(2);
+        rooms.add(rooms.size(),room);room.clear();
+        room.add(0);
+        rooms.add(rooms.size(),room);room.clear();
+        System.out.println(rooms);
+
+        //System.out.println(s.canVisitAllRooms(rooms));
+    }
+
+    public boolean canVisitAllRooms(List<List<Integer>> rooms) {
+        Set<Integer> visited = new HashSet<>();
+
+        roomsCheck(rooms,visited,0);
+        if(rooms.size() == visited.size())return true;
+        else return false;
+    }
+    public void roomsCheck(List<List<Integer>> rooms,Set<Integer> visited,int room){
+        if(rooms.size() == visited.size())return;
+        List<Integer> canG = rooms.get(room);
+        for(int i = 0;i<canG.size();i++){
+            roomsCheck(rooms,visited,canG.get(i));
+            if(rooms.size() == visited.size())return;
+        }
+        return;
+    }
+
+    class MultiChar{
+        char c;
+        int val;
+        public MultiChar(char c,int val){
+            this.c = c;
+            this.val = val;
+        }
+    }
+    public String reorganizeString(String S) {
+        int [] arr = new int[26];
+
+        for(char c:S.toCharArray()){
+            arr[c-'a']++;
+        }
+
+        PriorityQueue<MultiChar> tmp = new PriorityQueue<>((a,b) -> (a.val==b.val)?a.c - b.c:b.val-a.val);
+
+        for(int i=0;i<arr.length;i++){
+            if(arr[i]!=0){
+                if(arr[i]>(S.length() + 1)/2)return "";
+                tmp.add(new MultiChar((char)(i+'a'),arr[i]));
+            }
+        }
+
+        StringBuilder sb = new StringBuilder();
+
+        while (tmp.size()>=2){
+            MultiChar c = tmp.poll();
+            MultiChar d = tmp.poll();
+
+            sb.append(c.c);
+            sb.append(d.c);
+
+            if(--c.val>0)tmp.add(c);
+            if(--d.val>0)tmp.add(d);
+
+        }
+
+        if(tmp.size()>0)sb.append(tmp.poll().c);
+
+        return sb.toString();
+
+    }
+    public List<Integer> killProcess(List<Integer> pid, List<Integer> ppid, int kill) {
+        List<Integer> li = new ArrayList<>();
+        int indx = findIndex(ppid,kill);
+        li.add(kill);
+
+        while(indx!=-1) {
+            int ch = pid.get(indx);
+            List<Integer> chK = killProcess(pid, ppid, ch);
+
+            for (int i = 0; i < chK.size(); i++) {
+                li.add(chK.get(i));
+            }
+            ppid.remove(indx);
+            ppid.add(indx, -1);
+            indx = findIndex(ppid, kill);
+        }
+
+        return li;
+
+    }
+
+
+    public int findIndex(List<Integer> list,int val){
+        for(int i  = 0;i<list.size();i++){
+            if(list.get(i)==val){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+
+    public int minMeetingRooms(Interval[] intervals) {
+        Queue<Integer> qu = new PriorityQueue<Integer>(intervals.length, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o1 - o2;
+            }
+        });
+
+        qu.offer(intervals[0].end);
+
+        Arrays.sort(intervals,new Comparator<Interval>(){
+            public int compare(Interval a,Interval b){
+                return a.start - b.start;
+            }
+        });
+
+        for(int i = 1;i<intervals.length;i++){
+            if(qu.peek()<=intervals[i].start){
+                qu.poll();
+                qu.offer(intervals[i].end);
+            }else{
+                qu.offer(intervals[i].end);
+            }
+        }
+
+        return qu.size();
+    }
+
+    public int kthSmallest(int[][] matrix, int k) {
+
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+
+        boolean [][]visited = new boolean[rows][cols];
+        PriorityQueue<coordinate> qu = new PriorityQueue<>((a,b)->(a.val - b.val));
+        qu.offer(new coordinate(0,0,matrix[0][0]));
+
+        int cnt = 0;
+        while (!qu.isEmpty()){
+
+            coordinate cor = qu.poll();
+
+            if(++cnt==k){
+                return cor.val;
+            }
+
+            visited[cor.x][cor.y] = true;
+
+            if(!(visited[cor.x+1][cor.y]) && (cor.x+1<rows)){
+                qu.offer(new coordinate(cor.x+1,cor.y,matrix[cor.x+1][cor.y]));
+            }
+
+            if(!(visited[cor.x][cor.y+1]) && (cor.y+1<cols)){
+                qu.offer(new coordinate(cor.x,cor.y+1,matrix[cor.x][cor.y+1]));
+            }
+
+        }
+        throw null;
+    }
+
+    class coordinate{
+        int x;
+        int y;
+        int val;
+        public coordinate(int _x,int _y,int _val){
+            x=_x;
+            y=_y;
+            val=_val;
+        }
     }
 
     public int ladderLength(String begin,String end,List<String> li){
