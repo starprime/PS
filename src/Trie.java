@@ -102,6 +102,15 @@ public class Trie{
         }return cur.eow;
     }
 
+    public boolean searchReg(char [] arr,TrieNode nd){
+        TrieNode cur = nd;
+        char ch;
+
+
+        return cur.eow;
+    }
+
+
     public boolean startsWith(String word) {
         TrieNode tmp = root;
         TrieNode nd;

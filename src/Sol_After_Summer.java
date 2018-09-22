@@ -2,6 +2,7 @@ import LeetCodeDesign.MyCircularQueue;
 
 import java.lang.reflect.Array;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by star on 8/10/18.
@@ -98,12 +99,159 @@ public class Sol_After_Summer {
 //        room.add(0);
 //        rooms.add(room);room.clear();
 //        System.out.println(rooms);
-        String [] words = {"w","wo","wor","worla", "world"};
-        System.out.println(s.longestWord(words));
+//        String [] words = {"2","1"};
+//        //System.out.println(s.longestWord(words));
+//        System.out.println(Arrays.toString(words));
+//
+//        Arrays.sort(words);
+//        System.out.println(Arrays.toString(words));
+        List<String> li = new ArrayList<>();
+        List<List<String>> items  = new ArrayList<>();
+        li.add("asd");
+        li.add("1");
+        li.add("3");
+        items.add(li);
+        li = new ArrayList<>();
+        li.add("sew");
+        li.add("4");
+        li.add("3");
+        items.add(li);
+        li = new ArrayList<>();
+        li.add("poasd");
+        li.add("0");
+        li.add("98327");
+        items.add(li);
+        li = new ArrayList<>();
+        li.add("sumi");
+        li.add("98374");
+        li.add("232");
+        items.add(li);
+        li = new ArrayList<>();
+        li.add("iru");
+        li.add("253");
+        li.add("64");
+        items.add(li);
+        System.out.println(items);
+        System.out.println("aans "+fetchItemsToDisplay(items,1,0,2,0));
+        // asd 1 3
+        // seew 4 3
+        // poasd 0 986273
+
 
 
         //System.out.println(s.canVisitAllRooms(rooms));
     }
+
+    public static int deleteProducts(List<Integer> ids, int m) {
+        // Write your code here
+        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+        for(int ele:ids){
+            map.put(ele, map.getOrDefault(ele,0)+1);
+        }
+        List<Map.Entry<Integer, Integer>> list = new LinkedList<Map.Entry<Integer, Integer>>(map.entrySet());
+        Collections.sort(list, new Comparator<Map.Entry<Integer, Integer> >() {
+            public int compare(Map.Entry<Integer, Integer> o1,
+                               Map.Entry<Integer, Integer> o2)
+            {
+                return (o1.getValue()).compareTo(o2.getValue());
+            }
+        });
+        for(Map.Entry<Integer, Integer> entry:list){
+            System.out.println(entry.getKey()+" "+entry.getValue());
+            if(m>=entry.getValue()){
+                map.remove(entry.getKey());
+                m = m- entry.getValue();
+            }
+            else{
+                map.put(entry.getKey(), entry.getValue()-m);
+                m = entry.getValue()-m;
+            }
+            if(m<1)
+                break;
+        }
+
+        return map.size();
+
+    }
+
+    public static List<String> fetchItemsToDisplay(List<List<String>> items, int sortParameter, int sortOrder, int itemPerPage, int pageNumber) {
+        // Write your code here
+        Map<String,String> map = new HashMap<>();
+
+        for(List<String> li:items){
+            map.put(li.get(0),li.get(sortParameter));
+        }
+
+        List<Map.Entry<String, String>> list = new LinkedList<Map.Entry<String, String>>(map.entrySet());
+
+        if(sortOrder == 0){
+            Collections.sort(list, new Comparator<Map.Entry<String, String> >() {
+                public int compare(Map.Entry<String, String> o1,
+                                   Map.Entry<String, String> o2)
+                {
+                    if(sortParameter == 0){
+                        return (o1.getValue()).compareTo(o2.getValue());
+                    }else{
+                        return Integer.parseInt(o1.getValue()) - Integer.parseInt(o2.getValue());
+                    }
+
+                }
+            });
+        }else{
+            Collections.sort(list, new Comparator<Map.Entry<String, String> >() {
+                public int compare(Map.Entry<String, String> o1,
+                                   Map.Entry<String, String> o2)
+                {
+                    if(sortParameter == 0){
+                        return (o2.getValue()).compareTo(o1.getValue());
+                    }else{
+                        return Integer.parseInt(o2.getValue()) - Integer.parseInt(o1.getValue());
+                    }
+                }
+            });
+        }
+
+        System.out.println(list);
+
+        List<String> result = new ArrayList<>();
+        int index = (itemPerPage * pageNumber);
+        System.out.println(index);
+        for(int i = index;i<index+itemPerPage  && i < list.size();i++){
+            result.add(list.get(i).getKey());
+        }
+
+        return result;
+    }
+
+    public static void fetch(List<List<String>> items, int sortParameter, int sortOrder, int itemPerPage, int pageNumber) {
+        Map<String, String> treemap ;
+
+        if(sortOrder == 0)
+            treemap = new TreeMap<String, String>();
+        else
+            treemap = new TreeMap<String, String>(Collections.reverseOrder());
+        for(List<String> item : items)
+        {
+            treemap.put(item.get(sortParameter) , item.get(0));
+        }
+        Set set = treemap.entrySet();
+        Iterator i = set.iterator();
+        // Display elements
+        int noOfPreviousPages =  pageNumber;
+        int discard = noOfPreviousPages * itemPerPage;
+        int count = 0;
+        while(i.hasNext()) {
+            Map.Entry me = (Map.Entry)i.next();
+            count++;
+            if(count <= discard)
+                continue;
+            if(count > discard + itemPerPage)
+                break;
+            System.out.println(me.getValue());
+        }
+
+    }
+
 
     class TrieNode{
         char c;
@@ -177,7 +325,6 @@ public class Sol_After_Summer {
 
         }
     }
-
 
     public String longestWord(String[] words) {
         Trie trie = new Trie();
