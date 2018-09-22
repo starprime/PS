@@ -81,22 +81,112 @@ public class Sol_After_Summer {
 //        System.out.println(queue.Rear());
 //        System.out.println(queue.deQueue());
 
-        List<Integer> room = new ArrayList<>();
-        room.add(1);room.add(3);
+//        List<Integer> room = new ArrayList<>();
+//        room.add(1);room.add(3);
+//
+//        List<List<Integer>> rooms = new ArrayList<>();
+//
+//        System.out.println(rooms.size());
+//        rooms.add(room);room.clear();
+//        System.out.println(rooms.size());
+//        room.add(3);room.add(0);room.add(1);
+//        rooms.add(room);room.clear();
+//        System.out.println(rooms.size());
+//        room.add(2);
+//        rooms.add(room);room.clear();
+//        System.out.println(rooms.size());
+//        room.add(0);
+//        rooms.add(room);room.clear();
+//        System.out.println(rooms);
+        String [] words = {"w","wo","wor","worla", "world"};
+        System.out.println(s.longestWord(words));
 
-        List<List<Integer>> rooms = new ArrayList<>();
-
-        System.out.println(rooms.size());
-        rooms.add(rooms.size(),room);room.clear();
-        room.add(3);room.add(0);room.add(1);
-        rooms.add(rooms.size(),room);room.clear();
-        room.add(2);
-        rooms.add(rooms.size(),room);room.clear();
-        room.add(0);
-        rooms.add(rooms.size(),room);room.clear();
-        System.out.println(rooms);
 
         //System.out.println(s.canVisitAllRooms(rooms));
+    }
+
+    class TrieNode{
+        char c;
+        boolean isEnd;
+        TreeMap<Character,TrieNode> child = new TreeMap<>();
+        public TrieNode(char c){
+            this.c = c;
+            this.isEnd = false;
+        }
+    }
+
+    class Trie{
+        TrieNode root;
+
+        public Trie(){
+            root = new TrieNode('0');
+        }
+
+        public void insert(String str){
+
+            TrieNode tmp = root;
+            int i;
+            for(i = 0;i<str.length()-1;i++){
+                char c = str.charAt(i);
+                if(!tmp.child.containsKey(c)){
+                    TrieNode nd = new TrieNode(c);
+                    tmp.child.put(c,nd);
+                    tmp = nd;
+                }else{
+                    tmp = tmp.child.get(c);
+                }
+            }
+            char c = str.charAt(i);
+            if(!tmp.child.containsKey(c)){
+                TrieNode nw = new TrieNode(c);
+                nw.isEnd = true;
+                tmp.child.put(c,nw);
+            }else{
+                TrieNode old = tmp.child.get(c);
+                old.isEnd = true;
+            }
+
+        }
+
+        public String dfs(){
+            int mxL = 0;
+            Queue<TrieNode> qu = new LinkedList<>();
+            qu.add(root);
+            StringBuilder sb = new StringBuilder();
+
+            String ret="";
+
+            while (!qu.isEmpty()){
+                sb.append(root.c);
+                TrieNode tmp = qu.poll();
+
+                Iterator<TrieNode> it = root.child.values().iterator();
+
+                while (it.hasNext()){
+                    TrieNode nd = it.next();
+                    qu.add(nd);
+                }
+
+                if(sb.length()>mxL){
+                    mxL = sb.length();
+                    ret = sb.toString();
+                }
+                sb.deleteCharAt(sb.length()-1);
+            }
+            return ret;
+
+        }
+    }
+
+
+    public String longestWord(String[] words) {
+        Trie trie = new Trie();
+
+        for(String st:words){
+            trie.insert(st);
+        }
+
+        return trie.dfs();
     }
 
     public boolean canVisitAllRooms(List<List<Integer>> rooms) {

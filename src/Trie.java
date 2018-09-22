@@ -5,6 +5,7 @@ import java.util.Map;
 
 
 public class Trie{
+
     private class TrieNode {
         Map<Character, TrieNode> child;
         Boolean eow;
@@ -22,10 +23,12 @@ public class Trie{
         String word="lolmax";
         Trie t=new Trie();
         t.insert(word);
-        System.out.println(t.search(word));
-        System.out.println(t.searchRec(word));
-        //t.delWord(word);
-        System.out.println(t.searchRec(word));
+//      System.out.println(t.search(word));
+//      System.out.println(t.searchRec(word));
+//      t.delWord(word);
+//      System.out.println(t.searchRec(word));
+
+        System.out.println(t.startsWith("lol"));
     }
     public void insert(String word){
         TrieNode currnt=root;
@@ -52,19 +55,6 @@ public class Trie{
         }
         recInsert(nd,word,indx+1);
     }
-
-    public boolean search(String word){
-        TrieNode cur=root;char ch;
-        for(int i=0;i<word.length();i++){
-            ch=word.charAt(i);
-            TrieNode nd=cur.child.get(ch);
-            if(nd==null){
-                return false;
-            }
-            cur=nd;
-        }return cur.eow;
-    }
-
     public boolean searchRec(String word){
         return searchRec(root,word,0);
     }
@@ -99,4 +89,37 @@ public class Trie{
                 return current.eow;
             }return true;
     }
+
+    public boolean search(String word){
+        TrieNode cur=root;char ch;
+        for(int i=0;i<word.length();i++){
+            ch=word.charAt(i);
+            TrieNode nd=cur.child.get(ch);
+            if(nd==null){
+                return false;
+            }
+            cur=nd;
+        }return cur.eow;
+    }
+
+    public boolean startsWith(String word) {
+        TrieNode tmp = root;
+        TrieNode nd;
+        char ch;
+        int i;
+
+        for(i = 0;i < word.length();i++){
+
+            ch = word.charAt(i);
+            nd = tmp.child.get(ch);
+
+            if(nd == null){
+                return false;
+            }
+            tmp = nd;
+        }
+
+        return true;
+    }
+
 }
