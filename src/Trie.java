@@ -1,7 +1,6 @@
 import com.sun.corba.se.impl.orbutil.ObjectUtility;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 
 public class Trie{
@@ -28,8 +27,10 @@ public class Trie{
 //      t.delWord(word);
 //      System.out.println(t.searchRec(word));
 
-        System.out.println(t.startsWith("lol"));
+        System.out.println(t.searchReg("lol..."));
     }
+
+
     public void insert(String word){
         TrieNode currnt=root;
         char ch;
@@ -101,11 +102,36 @@ public class Trie{
             cur=nd;
         }return cur.eow;
     }
-
-    public boolean searchReg(char [] arr,TrieNode nd){
+    public boolean searchReg(String str) {
+        return searchReg(str,root);
+    }
+    public boolean searchReg(String str,TrieNode nd){
         TrieNode cur = nd;
-        char ch;
 
+        for(int i = 0;i<str.length();i++){
+            char c = str.charAt(i);
+            if(c=='.'){
+
+                if(str.length() == 1)return cur.eow;
+                // using for-each loop for iteration over Map.entrySet()
+                for (Map.Entry<Character,TrieNode> entry : cur.child.entrySet()){
+
+                    if(i+1<str.length() && searchReg(str.substring(i),entry.getValue())){
+                        return true;
+                    }
+
+                }
+
+            }else{
+                TrieNode temp = cur.child.get(c);{
+                    if(temp == null){
+                        return false;
+                    }else {
+                        cur = temp;
+                    }
+                }
+            }
+        }
 
         return cur.eow;
     }

@@ -1,6 +1,7 @@
 import LeetCodeDesign.MyCircularQueue;
 
 import java.lang.reflect.Array;
+import java.net.Inet4Address;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -73,8 +74,8 @@ public class Sol_After_Summer {
 //        System.out.println(s.minMeetingRooms(intervals));
 
         //System.out.println(s.reorganizeString("aaab"));
-        List<Integer> pid = new ArrayList<>();pid.add(1);pid.add(3);pid.add(10);pid.add(5);
-        List<Integer> ppid = new ArrayList<>();ppid.add(3);ppid.add(0);ppid.add(5);ppid.add(3);
+//        List<Integer> pid = new ArrayList<>();pid.add(1);pid.add(3);pid.add(10);pid.add(5);
+//        List<Integer> ppid = new ArrayList<>();ppid.add(3);ppid.add(0);ppid.add(5);ppid.add(3);
         //System.out.println(s.killProcess(pid,ppid,5));
 
 //        MyCircularQueue queue = new MyCircularQueue(3);
@@ -105,42 +106,658 @@ public class Sol_After_Summer {
 //
 //        Arrays.sort(words);
 //        System.out.println(Arrays.toString(words));
-        List<String> li = new ArrayList<>();
-        List<List<String>> items  = new ArrayList<>();
-        li.add("asd");
-        li.add("1");
-        li.add("3");
-        items.add(li);
-        li = new ArrayList<>();
-        li.add("sew");
-        li.add("4");
-        li.add("3");
-        items.add(li);
-        li = new ArrayList<>();
-        li.add("poasd");
-        li.add("0");
-        li.add("98327");
-        items.add(li);
-        li = new ArrayList<>();
-        li.add("sumi");
-        li.add("98374");
-        li.add("232");
-        items.add(li);
-        li = new ArrayList<>();
-        li.add("iru");
-        li.add("253");
-        li.add("64");
-        items.add(li);
-        System.out.println(items);
-        System.out.println("aans "+fetchItemsToDisplay(items,1,0,2,0));
+//        List<String> li = new ArrayList<>();
+//        List<List<String>> items  = new ArrayList<>();
+//        li.add("asd");
+//        li.add("1");
+//        li.add("3");
+//        items.add(li);
+//        li = new ArrayList<>();
+//        li.add("sew");
+//        li.add("4");
+//        li.add("3");
+//        items.add(li);
+//        li = new ArrayList<>();
+//        li.add("poasd");
+//        li.add("0");
+//        li.add("98327");
+//        items.add(li);
+//        li = new ArrayList<>();
+//        li.add("sumi");
+//        li.add("98374");
+//        li.add("232");
+//        items.add(li);
+//        li = new ArrayList<>();
+//        li.add("iru");
+//        li.add("253");
+//        li.add("64");
+//        items.add(li);
+//        System.out.println(items);
+//        System.out.println("aans "+fetchItemsToDisplay(items,1,0,2,0));
         // asd 1 3
         // seew 4 3
         // poasd 0 986273
 
+//        String [] st = {"abc", "bcd", "acef", "xyz", "az", "ba", "a", "z"};
+//
+//        System.out.println(s.groupStrings(st));
+//
+//        int mat[][] =
+//        {
+//            {1, 2, 3, 4},
+//            {5, 6, 7, 8},
+//            {9, 10, 11, 12},
+//            {13, 14, 15, 16}
+//        };
+//        s.rotate(mat);
+//        PrintArray.printArray(mat);
+//        String st = "3[a2[ca]]";
+//        System.out.println(s.decodeString(st));
+
+//        List<Integer> schoolSeatsArray = new ArrayList<>();
+//        schoolSeatsArray.add(1);schoolSeatsArray.add(3);schoolSeatsArray.add(1);schoolSeatsArray.add(2);
+//        List<Integer> studentScoreArray = new ArrayList<>();
+//        studentScoreArray.add(990);studentScoreArray.add(780);studentScoreArray.add(830);studentScoreArray.add(860);studentScoreArray.add(920);
+//        List<List<Integer>> studentSchoolPreferencesArray = new ArrayList<>();
+//
+//        // 3,2,1    3,0,0   2,0,1   0,1,3   0,2,3
+//        List<Integer> pref = new ArrayList<>();
+//        pref.add(3);pref.add(2);pref.add(1);studentSchoolPreferencesArray.add(pref);pref = new ArrayList<>();
+//        pref.add(3);pref.add(0);pref.add(0);studentSchoolPreferencesArray.add(pref);pref = new ArrayList<>();
+//        pref.add(2);pref.add(0);pref.add(1);studentSchoolPreferencesArray.add(pref);pref = new ArrayList<>();
+//        pref.add(0);pref.add(1);pref.add(3);studentSchoolPreferencesArray.add(pref);pref = new ArrayList<>();
+//        pref.add(0);pref.add(2);pref.add(3);studentSchoolPreferencesArray.add(pref);pref = new ArrayList<>();
+//        System.out.println(studentSchoolPreferencesArray);
+//
+//        System.out.println(allocateSchools(schoolSeatsArray,studentScoreArray,studentSchoolPreferencesArray));
+//        System.out.println(s.decodeString("3[z]2[2[y]pq4[2[jk]e1[f]]]ef"));
+        int [][]edge = {{0,1},{0,2},{1,2}};
+        //System.out.println(s.validTree(4,edge));
+
+        int [][]mat = { {1, 2, 3, 4},
+                        {5, 6, 7, 8},
+                        {9,10,11,12}};
+
+        System.out.println(s.spiralOrder(mat));
 
 
-        //System.out.println(s.canVisitAllRooms(rooms));
     }
+    List<List<Integer>> ClosestXdestinations(int numDestinations,
+                                             List<List<Integer>> allLocations,
+                                             int numDeliveries)
+    {
+        TreeMap<Double,List<List<Integer>>> treeMap = new TreeMap<>();
+        List<List<Integer>> ret = new ArrayList<>();
+
+        // WRITE YOUR CODE HERE
+        for(int i = 0; i < numDestinations;i++){
+            // calculate distance from 0,0
+            Double dis = EucLidianDistance(allLocations.get(i));
+
+            List<List<Integer>> tempLi;
+            //
+            if(treeMap.containsKey(dis)){
+                tempLi = treeMap.get(dis);
+                tempLi.add(allLocations.get(i));
+                //treeMap.put(dis,tempLi);//
+            }else {
+                tempLi = new ArrayList<>();
+                tempLi.add(allLocations.get(i));
+                treeMap.put(dis,tempLi);
+            }
+        }
+
+        int k =0;
+
+        for(Map.Entry<Double, List<List<Integer>>> entry:treeMap.entrySet() ){
+            List<List<Integer>> tmpLit = entry.getValue();
+            if(k == numDeliveries)break;
+            for(int i = 0;i<tmpLit.size();i++){
+                ret.add(tmpLit.get(i));
+                if(++k == numDeliveries)break;
+            }
+        }
+
+        return ret;
+
+    }
+
+    static List<Integer> freqQuery(List<List<Integer>> queries) {
+        Map<Integer,Integer> mp = new HashMap<>();
+        Map<Integer,Integer> freq = new HashMap<>();
+        List<Integer> ret = new ArrayList<>();
+        for(List<Integer> li:queries){
+            if(li.get(0) == 1){
+                addOp(li.get(1),mp,freq);
+            }else if(li.get(0) == 2){
+                subOp(li.get(1),mp,freq);
+            }else if(li.get(0) == 3){
+                if(freq.get(li.get(1)) == 0){
+                    ret.add(0);
+                }else {
+                    ret.add(1);
+                }
+            }
+        }
+        return ret;
+    }
+
+    static void addOp(int n,Map<Integer,Integer> mp,Map<Integer,Integer> freq){
+        mp.put(n,mp.getOrDefault(n,0)+1);
+        freq.put(mp.get(n),freq.getOrDefault(mp.get(n),0)+1);
+    }
+
+    static void subOp(int n,Map<Integer,Integer> mp,Map<Integer,Integer> freq){
+        if(mp.get(n) > 0){
+            freq.put(mp.get(n),freq.getOrDefault(mp.get(n),1)-1);
+        }
+        mp.put(n,mp.getOrDefault(n,1)-1);
+        freq.put(mp.get(n),freq.getOrDefault(mp.get(n),0)+1);
+    }
+
+    public int smallIndx(int [] arr, int end){
+        for(int i = end-1;i>=0;i--){
+            if(arr[i] > arr[i+1]){
+                return i+1;
+            }
+        }
+        return -1;
+    }
+
+
+
+    // create PointsOnMap class to represent a point and distnce of it from 0,0
+    private class PointsOnMap{
+        private int x;
+        private int y;
+        private int distance;
+        public PointsOnMap(int x,int y,int d){
+            this.x = x;
+            this.y = y;
+            this.distance = d;
+        }
+    }
+    // METHOD SIGNATURE BEGINS, THIS METHOD IS REQUIRED
+    int removeObstacle(int numRows, int numColumns, List<List<Integer>> lot)
+    {
+
+
+
+        // to keep track of already visited items
+        boolean[][] visited = new boolean[numRows][numColumns];
+        // traverse through the matrix to set trenches as visited nodes
+        // we dont need to visit them
+        for (int i = 0; i < numRows; i++) {
+            for (int j = 0; j < numColumns; j++)
+            {
+
+                if (lot.get(i).get(j) == 0){
+                    visited[i][j] = true;
+                    continue;
+                }
+            }
+        }
+
+        // starting point in the PointsOnMap
+        PointsOnMap startingPoint = new PointsOnMap(0,0,0);
+
+        // BFS is used here its best to find shortest path.
+        Queue<PointsOnMap> queue = new LinkedList<>();
+
+        queue.offer(startingPoint);
+
+        visited[0][0] = true;
+
+        while (!queue.isEmpty()) {
+            PointsOnMap p = queue.poll();
+
+            // Destination found;
+            if (lot.get(p.x).get(p.y) == 9)
+                return p.distance;
+
+            // moving up
+            if (p.x - 1 >= 0 &&
+                    visited[p.x - 1][p.y] == false) {
+                queue.offer(new PointsOnMap(p.x - 1, p.y, p.distance + 1));
+                visited[p.x - 1][p.y] = true;
+            }
+
+            // moving down
+            if (p.x + 1 < numRows &&
+                    visited[p.x + 1][p.y] == false) {
+                queue.offer(new PointsOnMap(p.x + 1, p.y, p.distance + 1));
+                visited[p.x + 1][p.y] = true;
+            }
+
+            // moving left
+            if (p.x - 1 >= 0 &&
+                    visited[p.x][p.y - 1] == false) {
+                queue.offer(new PointsOnMap(p.x, p.y - 1, p.distance + 1));
+                visited[p.x][p.y - 1] = true;
+            }
+
+            // moving right
+            if (p.y + 1 < numColumns &&
+                    visited[p.x][p.y + 1] == false) {
+                queue.offer(new PointsOnMap(p.x, p.y + 1, p.distance + 1));
+                visited[p.x][p.y + 1] = true;
+            }
+        }
+        return -1;
+    }
+
+
+    
+
+
+
+
+    public List<Integer> spiralOrder(int[][] matrix) {
+
+            List ans = new ArrayList();
+            if (matrix.length == 0) return ans;
+            int R = matrix.length, C = matrix[0].length;
+            boolean[][] seen = new boolean[R][C];
+            int[] dr = {0, 1, 0, -1};
+            int[] dc = {1, 0, -1, 0};
+            int r = 0, c = 0, di = 0;
+
+            for (int i = 0; i < R * C; i++) {
+                ans.add(matrix[r][c]);
+                seen[r][c] = true;
+                // increase row or column depending upon current value of direction
+                int cr = r + dr[di];
+                int cc = c + dc[di];
+                // check for the limits and udpdate cc , cr
+                if (0 <= cr && cr < R && 0 <= cc && cc < C && !seen[cr][cc]){
+                    r = cr;
+                    c = cc;
+                } else { // update direction
+                    di = (di + 1) % 4;
+                    r += dr[di];
+                    c += dc[di];
+                }
+            }
+
+            return ans;
+    }
+
+    public List<List<String>> accountsMerge(List<List<String>> accounts) {
+        Map<String,Integer> mp = new HashMap<>();
+
+        int []val = new int[accounts.size()];
+        Arrays.fill(val,-1);
+
+        for(int i = 0 ;i < accounts.size();i++) {
+
+            List<String> li = accounts.get(i);
+
+            for(int j = 1;j<li.size();j++){
+
+                if(!mp.containsKey(li.get(j))){
+
+                    mp.put(li.get(j),i);
+                    if(val[i] == -1)val[i] = i;
+
+                }else{
+                    val[i] = mp.get(li.get(j));
+                }
+
+            }
+
+        }
+
+        List<List<String>> ret = new ArrayList<>();
+
+        for(int i = 0; i < val.length;i++) {
+            List<String> li = accounts.get(i);
+            for(int j = 1;j < li.size(); j++){
+                List<String> tmp;
+                if( ret.get(val[i]) == null ){
+                    tmp = new ArrayList<>();
+                }else{
+                    tmp = ret.remove(val[i]);
+                }
+                tmp.add(li.get(j));
+                ret.add(val[i],tmp);
+            }
+        }
+
+        System.out.println(ret);
+        System.out.println(mp);
+
+
+        for(int i:val)System.out.println(i);
+        return accounts;
+
+    }
+
+
+
+    Map<Integer, Integer> dist;
+    public int networkDelayTime(int[][] times, int N, int K) {
+        Map<Integer,List<int[]>> grph = new HashMap<>();
+        Set<Integer> st = new HashSet<>();
+
+        int cntr = 0;
+
+        for(int []edge:times){
+            if(!dist.containsKey(edge[0])){
+                List<int[]> tmp = new ArrayList<int[]>();
+                tmp.add(new int[]{edge[1],edge[2]});
+                grph.put(edge[0],tmp);
+            }else {
+                List<int[]> tmp = grph.get(edge[0]);
+                tmp.add(new int[]{edge[1],edge[2]});
+                grph.put(edge[0],tmp);
+            }
+        }
+
+        int curr = K;
+        dist = new HashMap<>();
+        for(int []edge:times) {
+            dist.put(edge[0], Integer.MAX_VALUE);
+        }
+
+        boolean [] seen = new boolean[N+1];
+
+
+
+
+        System.out.println(grph);
+
+        System.out.println(dist);
+
+        return 6;
+    }
+
+
+    public boolean validTree(int n, int[][] edges) {
+        // initialize n isolated islands
+        int[] nums = new int[n];
+        Arrays.fill(nums, -1);
+
+        // perform union find
+        for (int i = 0; i < edges.length; i++) {
+            PrintArray.printArray(nums);
+            int x = find(nums, edges[i][0]);
+            int y = find(nums, edges[i][1]);
+
+            // if two vertices happen to be in the same set
+            // then there's a cycle
+            if (x == y) return false;
+
+            // union
+            nums[x] = y;
+        }
+        System.out.println(" ---- ");
+        PrintArray.printArray(nums);
+
+        return edges.length == n - 1;
+    }
+
+    int find(int nums[], int i) {
+        if (nums[i] == -1) return i;
+        return find(nums, nums[i]);
+    }
+
+
+    public String decodeString(String s) {
+        StringBuilder sb = new StringBuilder();
+
+        Stack<Integer> numb = new Stack<>();
+        Stack<String> lett = new Stack<>();
+        int i = 0;
+        String num="";
+        while(i < s.length()) {
+            char c = s.charAt(i);
+            if(Character.isDigit(c)){
+                num+=String.valueOf(c);
+            }
+            else if(Character.isLetter(c)){
+                if(numb.size()==0)sb.append(c);
+                else {
+                    String tm = lett.pop();
+                    tm += c;
+                    lett.push(tm);
+                }
+            }else if(c == '['){
+                if(num!=""){
+                    numb.push(Integer.valueOf(num));
+                    num="";
+                }
+                String tm = String.valueOf(s.charAt(++i));
+                lett.push(tm);
+            }else if(c == ']'){
+                String st=lett.pop();
+                StringBuilder sr = new StringBuilder();
+                int j = numb.pop();
+                for(;j>0;j--)sr.append(st);
+                if(numb.size()>0){
+                    String tm = lett.pop();
+                    tm+=sr.toString();
+                    lett.push(tm);
+                }else if(numb.size()==0){
+                    sb.append(sr.toString());
+                }
+            }
+            i++;
+        }
+        return sb.toString();
+    }
+
+    public String winner(String erica, String bob) {
+
+        int n = erica.length();
+        char[] ericaArr = erica.toCharArray();
+        char[] bobArr = bob.toCharArray();
+
+        //erica scores and counts
+        int ericaScore = 0;
+        int ericaHard = 0;
+        int ericaMedium = 0;
+        int ericaEasy = 0;
+
+        //bob scores and counts
+        int bobScore = 0;
+        int bobHard = 0;
+        int bobMedium = 0;
+        int bobEasy = 0;
+
+
+        //result
+        String result = null;
+        for (int i =0; i < n; i++)
+        {
+
+
+            //keeping count and score of hard easy and med questions for bob and erica
+
+            if(ericaArr[i] == 'H')
+            {
+                ericaHard += 1;
+                ericaScore += 5;
+            }
+            else if(ericaArr[i] == 'M')
+            {
+                ericaMedium += 1;
+                ericaScore += 3;
+            }
+            else if(ericaArr[i] == 'E')
+            {
+                ericaEasy += 1;
+                ericaScore += 1;
+            }
+            else if(ericaArr[i] == 'S')
+            {
+                //ericaHard += 1;
+                //ericaScore += 0;
+            }
+
+
+            if(bobArr[i] == 'H')
+            {
+                bobHard += 1;
+                bobScore += 5;
+            }
+
+            else if(bobArr[i] == 'M')
+            {
+                bobMedium += 1;
+                bobScore += 3;
+            }
+            else if(bobArr[i] == 'E')
+            {
+                bobEasy += 1;
+                bobScore += 1;
+            }
+            else if(bobArr[i] == 'S')
+            {
+                //bobHard += 1;
+                //bobScore += 0;
+            }
+
+        }
+
+        if (ericaScore > bobScore)
+        {
+            result =  "Erica";
+        }
+        else if (ericaScore < bobScore)
+        {
+            result =  "Bob";
+        }
+        else if(ericaScore == bobScore)
+        {
+            if(ericaHard > bobHard)
+            {
+                result =  "Erica";
+            }
+            else if(bobHard > ericaHard)
+            {
+                result =  "Bob";
+            }
+            else if(ericaMedium > bobMedium)
+            {
+                result =  "Erica";
+            }
+            else if(ericaMedium < bobMedium)
+            {
+                result =  "Bob";
+            }
+            else if(ericaEasy > bobEasy)
+            {
+                result =  "Erica";
+            }
+            else if(ericaEasy < bobEasy)
+            {
+                result =  "Bob";
+            }
+            else
+            {
+                result =  "Tie";
+            }
+        }
+
+        return result;
+    }
+
+    static List<Integer> allocateSchools(List<Integer> schoolSeatsArray, List<Integer> studentScoreArray, List<List<Integer>> studentSchoolPreferencesArray) {
+        List<Integer> res = new ArrayList<>();
+
+        int [] schoolSeatsAvailable = new int[schoolSeatsArray.size()];
+        for(int i = 0;i<schoolSeatsArray.size();i++){
+            schoolSeatsAvailable[i] = schoolSeatsArray.get(i);
+        }
+
+        PrintArray.printArray(schoolSeatsAvailable);
+        TreeMap<Integer,Integer> score = new TreeMap<>();
+        for(int i = 0;i<studentScoreArray.size();i++){
+            score.put(studentScoreArray.get(i),i);
+        }
+        System.out.println(score);
+
+        int studentUnallocated = 0;
+
+        while (!score.isEmpty()){
+            int val = score.lastEntry().getValue();
+            List<Integer> pref =  studentSchoolPreferencesArray.get(val);
+            boolean gotSeat = false;
+
+            for(int i = 0;i<pref.size();i++) {
+                if (schoolSeatsAvailable[pref.get(i)] > 0) {
+                    schoolSeatsAvailable[pref.get(i)]--;
+                    gotSeat = true;
+                    break;
+                }
+            }
+
+            if(!gotSeat){
+                studentUnallocated=1+studentUnallocated;
+            }
+            score.remove(score.lastKey());
+            //PrintArray.printArray(schoolSeatsAvailable);
+        }
+
+        System.out.println(studentUnallocated);
+        int seatRem = 0;
+        for(int i:schoolSeatsAvailable){
+            seatRem+=i;
+        }
+        res.add(0,seatRem);
+        res.add(1,studentUnallocated);
+        return res;
+    }
+
+    public void rotate(int[][] matrix) {
+
+        int rows = matrix[0].length;
+
+        for( int i = 0; i < rows/2; i++ ){
+            for( int j = i; j < rows - i - 1 ; j++ ){
+                int tmp = matrix[i][j];
+
+                matrix[i][j] = matrix[rows - j - 1][i];
+                matrix[rows - j - 1][i] = matrix[rows - i - 1][rows - j - 1];
+                matrix[rows - i - 1][rows - j - 1] = matrix[j][rows - i -1];
+
+                matrix[j][rows - i -1] = tmp;
+            }
+        }
+    }
+
+    public void swap(int [][] mat,int i1,int j1,int i2,int j2){
+        int tmp = mat[i1][j1];
+        mat[i1][j1] = mat[i2][j2];
+        mat[i2][j2] = tmp;
+    }
+
+    public List<List<String>> groupStrings(String[] strings) {
+        List<List<String>> ret = new ArrayList<>();
+        Map<Integer,List<String>> mp = new TreeMap<>();
+
+        for(String st:strings){
+            int len = st.length();
+            if(mp.containsKey(len)){
+                List<String> li = mp.get(len);
+                li.add(st);
+                mp.put(len,li);
+            }else{
+                List<String> li = new ArrayList<>();
+                li.add(st);
+                mp.put(len,li);
+            }
+        }
+
+        for (Map.Entry<Integer,List<String>> entry : mp.entrySet()){
+            ret.add(entry.getKey()-1,entry.getValue());
+        }
+
+
+
+        return ret;
+    }
+
 
     public static int deleteProducts(List<Integer> ids, int m) {
         // Write your code here
