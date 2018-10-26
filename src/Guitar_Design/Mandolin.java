@@ -1,10 +1,11 @@
 package Guitar_Design;
 
-/**
- * Created by star on 10/25/18.
- */
+
 public class Mandolin extends Instrument {
-    Style style;
+
+    public Mandolin(String serialNumber, double price, InstrumentSpec instrumentSpec) {
+        super(serialNumber, price, instrumentSpec);
+    }
 
     @Override
     String getSerialNumber() {
@@ -26,11 +27,5 @@ public class Mandolin extends Instrument {
         this.price = price;
     }
 
-    public String getStyle(){
-        return style.getString();
-    }
 
-    public void setStyle(Style style){
-        this.style = style;
-    }
 }
