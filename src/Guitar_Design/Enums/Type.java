@@ -1,4 +1,4 @@
-package Guitar_Design;
+package Guitar_Design.Enums;
 
 /**
  * Created by star on 10/25/18.

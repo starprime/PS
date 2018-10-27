@@ -1,7 +1,11 @@
 package Guitar_Design;
 
-import java.util.ArrayList;
+import Guitar_Design.Specs.GuitarSpec;
+import Guitar_Design.Specs.InstrumentSpec;
+import Guitar_Design.Specs.MandolinSpec;
+
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -13,7 +17,7 @@ public class Inventory {
     public Inventory() {
 
     }
-    public void addInstruments(InstrumentSpec instrumentSpec,String serialNumber,double price){
+    public void addInstruments(InstrumentSpec instrumentSpec, String serialNumber, double price){
 
         Instrument instrument = null;
 
@@ -36,20 +40,22 @@ public class Inventory {
         return null;
     }
 
-    public List<Instrument> search(InstrumentSpec instrumentSpec){
+    public List<Instrument> search(InstrumentSpec searchSpec){
 
-        List<Instrument> ret = new ArrayList<>();
+        List<Instrument> ret = new LinkedList<>();
 
         for(Iterator<Instrument> it = instruments.iterator(); it.hasNext();){
             Instrument instrument = it.next();
-            if(instrument.instrumentSpec instanceof GuitarSpec && instrumentSpec instanceof GuitarSpec && instrument.instrumentSpec.matches(instrumentSpec)){
-                ret.add(instrument);
-            }else if(instrument.instrumentSpec instanceof MandolinSpec && instrumentSpec instanceof MandolinSpec && instrument.instrumentSpec.matches(instrumentSpec)){
+//            if(instrument.instrumentSpec instanceof GuitarSpec && instrumentSpec instanceof GuitarSpec && instrument.instrumentSpec.matches(instrumentSpec)){
+//                ret.add(instrument);
+//            }else if(instrument.instrumentSpec instanceof MandolinSpec && instrumentSpec instanceof MandolinSpec && instrument.instrumentSpec.matches(instrumentSpec)){
+//                ret.add(instrument);
+//            }
+            if(instrument.getSpec().matches(searchSpec)){
                 ret.add(instrument);
             }
         }
         return ret;
-
     }
 
 }

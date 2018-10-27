@@ -1,9 +1,13 @@
-package Guitar_Design;
+package Guitar_Design.Specs;
+
+import Guitar_Design.Enums.Builder;
+import Guitar_Design.Enums.Type;
+import Guitar_Design.Enums.Wood;
 
 /**
  * Created by star on 10/25/18.
  */
-public abstract class InstrumentSpec {
+public class InstrumentSpec {
     private String model;
     private Builder builder;
     private Wood wood;
@@ -18,8 +22,8 @@ public abstract class InstrumentSpec {
 
     public boolean matches(InstrumentSpec spec){
         boolean compareProp = this.builder == spec.builder && this.wood == spec.wood && this.type == spec.type;
+        return compareProp && this.model != null && !this.model.equals("") && spec.model==this.model;
 
-        return compareProp && this.model != null && !this.model.equals("");
     }
 
 

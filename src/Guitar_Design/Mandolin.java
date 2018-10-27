@@ -1,6 +1,8 @@
 package Guitar_Design;
 
 
+import Guitar_Design.Specs.InstrumentSpec;
+
 public class Mandolin extends Instrument {
 
     public Mandolin(String serialNumber, double price, InstrumentSpec instrumentSpec) {

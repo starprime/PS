@@ -1,5 +1,7 @@
 package Guitar_Design;
 
+import Guitar_Design.Specs.InstrumentSpec;
+
 /**
  * Created by star on 10/25/18.
  */

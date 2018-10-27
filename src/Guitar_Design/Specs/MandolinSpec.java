@@ -1,4 +1,9 @@
-package Guitar_Design;
+package Guitar_Design.Specs;
+
+import Guitar_Design.Enums.Builder;
+import Guitar_Design.Enums.Style;
+import Guitar_Design.Enums.Type;
+import Guitar_Design.Enums.Wood;
 
 /**
  * Created by star on 10/25/18.
