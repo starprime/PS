@@ -16,6 +16,7 @@ public class Sol_After_Summer {
         Interval(int s, int e) { start = s; end = e; }
      }
     public static void main(String []args){
+
         Sol_After_Summer s = new Sol_After_Summer();
 //        List<String> li = new numsayList<>();
 //        String [] st = {"hot","dot","dog","lot","log","cog"};
@@ -178,49 +179,55 @@ public class Sol_After_Summer {
                         {5, 6, 7, 8},
                         {9,10,11,12}};
 
-        System.out.println(s.spiralOrder(mat));
-
+        Set<Integer> set = new HashSet<>();
+        List<Integer> li = new ArrayList<>();
+        String url = "https://leetcode.com/problems/design-tinyurl";
+        //System.out.println(s.spiralOrder(mat));
+        List<String> list = new ArrayList<>();
+        list.add("UP");list.add("DOWN");list.add("RIGHT");list.add("RIGHT");list.add("LEFT");list.add("UP");
+        System.out.println(roverMove(4,list));
 
     }
-    List<List<Integer>> ClosestXdestinations(int numDestinations,
-                                             List<List<Integer>> allLocations,
-                                             int numDeliveries)
-    {
-        TreeMap<Double,List<List<Integer>>> treeMap = new TreeMap<>();
-        List<List<Integer>> ret = new ArrayList<>();
 
-        // WRITE YOUR CODE HERE
-        for(int i = 0; i < numDestinations;i++){
-            // calculate distance from 0,0
-            Double dis = EucLidianDistance(allLocations.get(i));
+    public static int roverMove(int matrixSize, List<String> cmds) {
+        // Write your code here
 
-            List<List<Integer>> tempLi;
-            //
-            if(treeMap.containsKey(dis)){
-                tempLi = treeMap.get(dis);
-                tempLi.add(allLocations.get(i));
-                //treeMap.put(dis,tempLi);//
-            }else {
-                tempLi = new ArrayList<>();
-                tempLi.add(allLocations.get(i));
-                treeMap.put(dis,tempLi);
+        int currRows = 0;
+        int currCol = 0;
+        int ret = currRows * matrixSize + currCol;
+
+        for (Iterator<String> it = cmds.iterator(); it.hasNext(); ) {
+            String s = it.next();
+            System.out.println(s);
+
+            if(s.equals("RIGHT")){
+                if(currCol < matrixSize - 1){
+                    currCol++;
+                }
+                ret=currRows * matrixSize + currCol;
+            }else if(s.equals("LEFT")){
+                if(currCol > 0){
+                    currCol--;
+                }
+                ret=currRows * matrixSize + currCol;
+            }else if(s.equals("UP")){
+                if(currRows > 0){
+                    currRows--;
+                }
+                ret=currRows * matrixSize + currCol;
+            }else if(s.equals("DOWN")){
+                if(currRows < matrixSize - 1){
+                    currRows++;
+                }
+                ret=currRows * matrixSize + currCol;
             }
-        }
-
-        int k =0;
-
-        for(Map.Entry<Double, List<List<Integer>>> entry:treeMap.entrySet() ){
-            List<List<Integer>> tmpLit = entry.getValue();
-            if(k == numDeliveries)break;
-            for(int i = 0;i<tmpLit.size();i++){
-                ret.add(tmpLit.get(i));
-                if(++k == numDeliveries)break;
-            }
+            System.out.println(ret);
         }
 
         return ret;
 
     }
+
 
     static List<Integer> freqQuery(List<List<Integer>> queries) {
         Map<Integer,Integer> mp = new HashMap<>();
@@ -278,11 +285,8 @@ public class Sol_After_Summer {
         }
     }
     // METHOD SIGNATURE BEGINS, THIS METHOD IS REQUIRED
-    int removeObstacle(int numRows, int numColumns, List<List<Integer>> lot)
-    {
 
-
-
+    int removeObstacle(int numRows, int numColumns, List<List<Integer>> lot) {
         // to keep track of already visited items
         boolean[][] visited = new boolean[numRows][numColumns];
         // traverse through the matrix to set trenches as visited nodes
@@ -290,7 +294,6 @@ public class Sol_After_Summer {
         for (int i = 0; i < numRows; i++) {
             for (int j = 0; j < numColumns; j++)
             {
-
                 if (lot.get(i).get(j) == 0){
                     visited[i][j] = true;
                     continue;
@@ -300,10 +303,8 @@ public class Sol_After_Summer {
 
         // starting point in the PointsOnMap
         PointsOnMap startingPoint = new PointsOnMap(0,0,0);
-
         // BFS is used here its best to find shortest path.
         Queue<PointsOnMap> queue = new LinkedList<>();
-
         queue.offer(startingPoint);
 
         visited[0][0] = true;

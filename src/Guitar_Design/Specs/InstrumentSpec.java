@@ -1,62 +1,46 @@
 package Guitar_Design.Specs;
 
 import Guitar_Design.Enums.Builder;
+import Guitar_Design.Enums.InstrumentType;
 import Guitar_Design.Enums.Type;
 import Guitar_Design.Enums.Wood;
+import Guitar_Design.Instrument;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Created by star on 10/25/18.
  */
+
 public class InstrumentSpec {
-    private String model;
-    private Builder builder;
-    private Wood wood;
-    private Type type;
+    private Map<String,String> properties;
 
-    public InstrumentSpec(String model, Builder builder, Wood wood, Type type) {
-        this.model = model;
-        this.builder = builder;
-        this.wood = wood;
-        this.type = type;
+    public InstrumentSpec(Map properties) {
+        if(properties == null){
+            this.properties = new HashMap();
+        }else {
+            this.properties = new HashMap(properties);
+        }
     }
 
-    public boolean matches(InstrumentSpec spec){
-        boolean compareProp = this.builder == spec.builder && this.wood == spec.wood && this.type == spec.type;
-        return compareProp && this.model != null && !this.model.equals("") && spec.model==this.model;
-
+    public Object getProperty(String property){
+        return this.properties.get(property);
     }
 
-
-    public String getModel() {
-        return model;
+    public Map getProperties(){
+        return this.properties;
     }
 
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-
-
-    public String getBuilder(){
-        return builder.toString();
-    }
-
-    public void setBuilder(Builder builder){
-        this.builder = builder;
-    }
-
-    public String getWood(){
-        return wood.toString();
-    }
-    public void setWood(Wood wood){
-        this.wood = wood;
-    }
-
-    public String getType(){
-        return type.toString();
-    }
-    public void setType(Type type){
-        this.type = type;
+    public boolean matches(InstrumentSpec otherspec){
+        for (Iterator<String> it = otherspec.properties.keySet().iterator(); it.hasNext(); ) {
+            String key = it.next();
+            if(!this.properties.get(key).equals(otherspec.properties.get(key))){
+                return false;
+            }
+        }
+        return true;
     }
 
 

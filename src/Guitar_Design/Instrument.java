@@ -1,12 +1,13 @@
 package Guitar_Design;
 
+import Guitar_Design.Enums.InstrumentType;
 import Guitar_Design.Specs.InstrumentSpec;
 
 /**
  * Created by star on 10/25/18.
  */
 
-public abstract class Instrument {
+public class Instrument {
 
     protected String serialNumber;
     protected double price;

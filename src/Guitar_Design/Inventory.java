@@ -1,8 +1,7 @@
 package Guitar_Design;
 
-import Guitar_Design.Specs.GuitarSpec;
+import Guitar_Design.Enums.InstrumentType;
 import Guitar_Design.Specs.InstrumentSpec;
-import Guitar_Design.Specs.MandolinSpec;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -19,15 +18,8 @@ public class Inventory {
     }
     public void addInstruments(InstrumentSpec instrumentSpec, String serialNumber, double price){
 
-        Instrument instrument = null;
-
-        if(instrumentSpec instanceof GuitarSpec){
-            instrument = new Guitar(serialNumber,price, (GuitarSpec) instrumentSpec);
-        }else if(instrumentSpec instanceof MandolinSpec){
-            instrument = new Mandolin(serialNumber,price,(MandolinSpec) instrumentSpec);
-        }
+        Instrument instrument = new Instrument(serialNumber,price,instrumentSpec);
         instruments.add(instrument);
-
     }
 
     public Instrument getInstrument(String serialNumber){
