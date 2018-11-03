@@ -3,6 +3,7 @@ package Guitar_Design;
 import Guitar_Design.Enums.InstrumentType;
 import Guitar_Design.Specs.InstrumentSpec;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,10 +15,9 @@ public class Inventory {
     List<Instrument> instruments;
 
     public Inventory() {
-
+        instruments = new ArrayList<>();
     }
     public void addInstruments(InstrumentSpec instrumentSpec, String serialNumber, double price){
-
         Instrument instrument = new Instrument(serialNumber,price,instrumentSpec);
         instruments.add(instrument);
     }

@@ -34,11 +34,14 @@ public class InstrumentSpec {
     }
 
     public boolean matches(InstrumentSpec otherspec){
+
         for (Iterator<String> it = otherspec.properties.keySet().iterator(); it.hasNext(); ) {
             String key = it.next();
+
             if(!this.properties.get(key).equals(otherspec.properties.get(key))){
                 return false;
             }
+
         }
         return true;
     }

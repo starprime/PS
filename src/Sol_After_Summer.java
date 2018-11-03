@@ -185,7 +185,9 @@ public class Sol_After_Summer {
         //System.out.println(s.spiralOrder(mat));
         List<String> list = new ArrayList<>();
         list.add("UP");list.add("DOWN");list.add("RIGHT");list.add("RIGHT");list.add("LEFT");list.add("UP");
-        System.out.println(roverMove(4,list));
+        //System.out.println(roverMove(4,list));
+
+        System.out.println(s.compareVersion("7.5.2.4","7.5.2.2"));
 
     }
 
@@ -284,6 +286,33 @@ public class Sol_After_Summer {
             this.distance = d;
         }
     }
+
+
+
+    public int compareVersion(String version1, String version2) {
+        String []arr1 = version1.split("\\.");
+        String []arr2 = version2.split("\\.");
+        int l1 = arr1.length;
+        int l2 = arr2.length;
+        int i = 0;
+        while (l1 > 0 && l2 > 0){
+            if(Character.getNumericValue(Integer.parseInt(arr1[i])) == Character.getNumericValue(Integer.parseInt(arr1[i]))){
+                i++;
+            }else if(Character.getNumericValue(Integer.parseInt(arr1[i])) > Character.getNumericValue(Integer.parseInt(arr1[i]))){
+                return 1;
+            }else if(Character.getNumericValue(Integer.parseInt(arr1[i])) < Character.getNumericValue(Integer.parseInt(arr1[i]))){
+                return -1;
+            }
+            i++;l1--;l2--;
+        }
+
+        if(l1 > 0) return 1;
+        else if(l2 > 0) return -1;
+        else return 0;
+
+
+    }
+
     // METHOD SIGNATURE BEGINS, THIS METHOD IS REQUIRED
 
     int removeObstacle(int numRows, int numColumns, List<List<Integer>> lot) {
