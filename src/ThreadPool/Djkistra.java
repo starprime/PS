@@ -45,7 +45,6 @@ class Djkistra
     {
         int dist[] = new int[V]; // The output array. dist[i] will hold
         // the shortest distance from src to i
-
         // sptSet[i] will true if vertex i is included in shortest
         // path tree or shortest distance from src to i is finalized
         Boolean sptSet[] = new Boolean[V];
@@ -74,7 +73,6 @@ class Djkistra
             // Update dist value of the adjacent vertices of the
             // picked vertex.
             for (int v = 0; v < V; v++)
-
                 // Update dist[v] only if is not in sptSet, there is an
                 // edge from u to v, and total weight of path from src to
                 // v through u is smaller than current value of dist[v]

@@ -139,10 +139,10 @@ public class Solution_win_2 {
         }
     }
     private final TrieNode root;
+
     public String longestWord(String [] words){
-        Solution s=new Solution();
         for(int i=0;i<words.length;i++){
-            s.insert(words[i]);
+            insert(words[i]);
         }
         Arrays.sort(words);
         return "lol";

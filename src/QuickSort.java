@@ -4,7 +4,7 @@
 public class QuickSort {
     public static void main(String[] args) {
         int[] arr = {2, 4, 6, 11, 5, 23, 12};
-        Solution s = new Solution();
+        Solution6 s = new Solution6();
 
         System.out.println(kthLarger(arr, 0, arr.length - 1, 4));
         s.printArray(arr);
@@ -17,7 +17,7 @@ public class QuickSort {
         int piv = partitionFunc(arr, l, r);
 
         System.out.println(piv);
-        Solution s = new Solution();
+        Solution6 s = new Solution6();
         s.printArray(arr);
 
         if (piv == tgt) return arr[piv];

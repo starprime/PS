@@ -51,6 +51,7 @@ public class Sol_After_Summer {
         int[] nums = {0,0,1,2,3,3,4,7,7,8};
                     //0,1,2,3,4,5,6,7,8
         //System.out.println(shiftednumsSearch(nums,2));
+        StringBuilder sb = new StringBuilder(strn);
 
         int[] duplicate = {1, 6, 5, 2, 4, 2, 3};
 
@@ -178,17 +179,313 @@ public class Sol_After_Summer {
         int [][]mat = { {1, 2, 3, 4},
                         {5, 6, 7, 8},
                         {9,10,11,12}};
+//
+//        Set<Integer> set = new HashSet<>();
+//        List<Integer> li = new ArrayList<>();
+//        String url = "https://leetcode.com/problems/design-tinyurl";
+//        //System.out.println(s.spiralOrder(mat));
+//        List<String> list = new ArrayList<>();
+//        list.add("UP");list.add("DOWN");list.add("RIGHT");list.add("RIGHT");list.add("LEFT");list.add("UP");
+//        //System.out.println(roverMove(4,list));
+//        System.out.println(s.compareVersion("7.5.2.4","7.5.2.2"));
 
-        Set<Integer> set = new HashSet<>();
+        //System.out.println(s.customSortString("cbfag","abcd"));
+
+        List<List<Integer>> table1 = new LinkedList<>();
+        List<Integer> l1 = new LinkedList<>();
+        l1.add(1);l1.add(342141);table1.add(l1);l1 = new LinkedList<>();
+        l1.add(2);l1.add(23412);table1.add(l1);l1 = new LinkedList<>();
+        l1.add(4);l1.add(1231);table1.add(l1);l1 = new LinkedList<>();
+        l1.add(5);l1.add(23122);table1.add(l1);l1 = new LinkedList<>();
+        l1.add(7);l1.add(35453);table1.add(l1);l1 = new LinkedList<>();
+        l1.add(8);l1.add(838221);table1.add(l1);l1 = new LinkedList<>();
+
+        List<List<Integer>> table2 = new LinkedList<>();
+        l1.add(1);l1.add(1212);table2.add(l1);l1 = new LinkedList<>();
+        l1.add(2);l1.add(342);table2.add(l1);l1 = new LinkedList<>();
+        l1.add(4);l1.add(123);table2.add(l1);l1 = new LinkedList<>();
+        l1.add(8);l1.add(234);table2.add(l1);l1 = new LinkedList<>();
+//
+//        System.out.println(table1);
+//        System.out.println(table2);
+//
+//        System.out.println(s.merge(table1,table2));
+//
+//        Map<Integer,Integer> mp = new Hashtable<>();
+
+
+
+//        int [] scores = {1,3,5,6,8};
+//        int []lower = {2};
+//        int [] hi = {7};
+//        PrintArray.printArray(jobOffers(scores,lower,hi));
+
+        //System.out.println(s.combinationSum3(3,7));
+        List<String> li = new ArrayList<>();
+        li.add("1,3500");
+        li.add("2,2500");
+        li.add("3,2500");
+        li.add("4,5500");
+        li.add("5,7500");
+        System.out.println(findIdWithKthLargestBudget(li,4));
+        li = new ArrayList<>();
+        li.add("0,500");
+        li.add("1,1000");
+        li.add("2,1000");
+        li.add("3,1000");
+        li.add("4,1000");
+        li.add("5,1000");
+        System.out.println(findIdWithKthLargestBudget(li,4));
+
+    }
+
+    static int findIdWithKthLargestBudget(List<String> advertisers, int k) {
+//        TreeMap<Integer,List<Integer>> tmp = new TreeMap<>();
+//
+//        for(String st:advertisers){
+//            String []arr = st.split(",");
+//            int id = Integer.valueOf(arr[0]);
+//            int val = Integer.valueOf(arr[1]);
+//            List<Integer> li;
+//            if(tmp.containsKey(val)){
+//                li = tmp.get(val);
+//                li.add(id);
+//                tmp.put(val,li);
+//            }else{
+//                li = new ArrayList<>();
+//                li.add(id);
+//                tmp.put(val,li);
+//            }
+//        }
+
+        int[] out = new int[advertisers.size()];
+        Map<Integer,Integer> hm = new HashMap<Integer, Integer>();
+        for (int i = 0;i < advertisers.size(); i++)
+        {
+            String tempBudget = advertisers.get(i).split(",")[1];
+            String tempID = advertisers.get(i).split(",")[0];
+            System.out.println(tempID+" "+tempBudget);
+            int id = Integer.parseInt(tempID);
+            int budget = Integer.parseInt(tempBudget);
+            System.out.println(id+" "+budget);
+
+
+            if(hm.containsKey(id))
+            {
+                if(budget > hm.get(id))
+                {
+                    hm.put(budget,id);
+
+                }
+
+            }
+            else
+            {
+                hm.put(budget,id);
+
+            }
+
+            out[i] = budget;
+            System.out.println(" out"+out[i]);
+
+        }
+
+        Arrays.sort(out);
+        int result = out[k];
+
+
+        return hm.get(result);
+
+
+    }
+
+
+
+
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        List<List<Integer>> ret = new ArrayList<>();
         List<Integer> li = new ArrayList<>();
-        String url = "https://leetcode.com/problems/design-tinyurl";
-        //System.out.println(s.spiralOrder(mat));
-        List<String> list = new ArrayList<>();
-        list.add("UP");list.add("DOWN");list.add("RIGHT");list.add("RIGHT");list.add("LEFT");list.add("UP");
-        //System.out.println(roverMove(4,list));
+        for(int i = 1;i<10;i++)li.add(i);
+        rec(ret,k,n,1,new ArrayList<>());
+        return ret;
+    }
+    public void rec(List<List<Integer>> ret,int k,int n,int start,List<Integer> res){
+        if(n == 0 && k == res.size()) {
+            List<Integer> tmp = new ArrayList<Integer>(res);
+            ret.add(tmp);
+            return;
+        }
+        for(int i = start;i<10;i++){
+            res.add(i);
+            rec(ret,k,n-i,i+1,res);
+            res.remove(res.size()-1);
+        }
+    }
 
-        System.out.println(s.compareVersion("7.5.2.4","7.5.2.2"));
+    static int[] jobOffers(int []scores,int []lower,int []upper){
+        Arrays.sort(scores);
+        int []result = new int[lower.length];
 
+        for(int i = 0;i<lower.length;i++){
+            int l = binSeaLo(scores,lower[i]);
+            int r = binSeaHi(scores,upper[i]);
+            System.out.println(l+","+r);
+            result[i] = r - l+1;
+        }
+        return result;
+    }
+
+    public static int lower(int []scores,int f){
+        int i;
+
+        for(i = 0;i<scores.length;i++){
+            if(scores[i]>=f){
+                break;
+            }
+        }
+        return i;
+    }
+
+    public static int higher(int []scores,int f){
+        int i;
+        for(i = scores.length-1;i>=0;i--){
+            if(scores[i]<=f){
+                break;
+            }
+        }
+        return i;
+    }
+
+    static int binSeaLo(int []nums,int f){
+        int l = 0,r = nums.length;
+        int mid = l+(r-l)/2;
+        while(l<=r){
+            mid = l+(r-l)/2;
+            if(nums[mid] == f){
+                while(mid > 0 && nums[mid-1] == f){
+                    mid--;
+                }
+                return mid;
+            }else if(nums[mid]>f){
+                r = mid-1;
+            }else{
+                l=mid+1;
+            }
+        }
+        return -l;
+    }
+
+    static int binSeaHi(int []nums,int f){
+
+        int l = 0,r = nums.length;
+        int mid = l+(r-l)/2;
+        while(l<=r){
+            mid = l+(r-l)/2;
+            if(nums[mid] == f){
+                while(mid < nums.length-1 && nums[mid+1] == f){
+                    mid++;
+                }
+                return mid;
+            }else if(nums[mid]>f){
+                r = mid-1;
+            }else{
+                l=mid+1;
+            }
+        }
+        return -l;
+    }
+
+    public static String isPossible(int a,int b,int c,int d){
+        if(isPoss(a,b,c,d)){
+            return "yes";
+        }else{
+            return "no";
+        }
+    }
+    public static boolean isPoss(int a,int b,int c,int d){
+        if((a>c) || (b>d))return false;
+        if((a==c) && (b==d)){
+            return true;
+        }
+        else {
+            return isPoss(a+b,b,c,d) || isPoss(a,a+b,c,d);
+        }
+    }
+
+    public List<List<Integer>> merge(List<List<Integer>> table1,List<List<Integer>> table2){
+
+        int l1 = table1.size();
+        int l2 = table2.size();
+
+        int i1 = 0,i2 = 0;
+
+        while(l1>i1 && l2>i2){
+            System.out.print(table1.get(i1).get(0)+" ,");
+            System.out.println(table2.get(i2).get(0));
+
+            if(table1.get(i1).get(0) == table2.get(i2).get(0)){
+                table1.get(i1).add(table1.get(i1).size(),table2.get(i2).get(1));
+                i1++;i2++;
+            }
+            else if(table1.get(i1).get(0) > table2.get(i2).get(0)){
+                table1.add(i1,table2.get(i2));
+                i2++;
+            }else{
+                i1++;
+            }
+        }
+        while (l2>i2){
+            table1.add(table1.size(),table2.get(i2));
+            i2++;
+        }
+        return table1;
+    }
+
+    public String customSortString(String S, String T) {
+
+        StringBuilder sb = new StringBuilder();
+        int []cntr = new int[26];
+
+        for(char c:T.toCharArray()){
+            cntr[c-'a']++;
+        }
+
+        for(int i = 0;i < S.length();i++){
+            if(cntr[S.charAt(i) - 'a'] == 0){
+                //sb.deleteCharAt(i);
+            }else{
+                sb.append((char)(S.charAt(i)));
+                cntr[S.charAt(i) - 'a'] = 0;
+            }
+        }
+
+        StringBuilder tmp = new StringBuilder();
+
+        for(int i=0;i<cntr.length;i++){
+            if(cntr[i] > 0)
+                tmp.append((char)(i+'a'));
+        }
+
+        return sb.toString()+tmp.toString();
+
+    }
+
+    public int uniqueMorseRepresentations(String[] words) {
+        String []mc = ".-,-...,-.-.,-..,.,..-.,--.,....,..,.---,-.-,.-..,--,-.,---,.--.,--.-,.-.,...,-,..-,...-,.--,-..-,-.--,--..".split(",");
+        Set<String> st = new HashSet<>();
+
+
+
+        StringBuilder sb;
+
+        for(String s:words){
+            sb = new StringBuilder();
+            for(char c:s.toCharArray()){
+                sb.append(mc['a'-c]);
+            }
+            st.add(sb.toString());
+        }
+        return st.size();
     }
 
     public static int roverMove(int matrixSize, List<String> cmds) {
@@ -229,7 +526,6 @@ public class Sol_After_Summer {
         return ret;
 
     }
-
 
     static List<Integer> freqQuery(List<List<Integer>> queries) {
         Map<Integer,Integer> mp = new HashMap<>();
@@ -273,8 +569,6 @@ public class Sol_After_Summer {
         return -1;
     }
 
-
-
     // create PointsOnMap class to represent a point and distnce of it from 0,0
     private class PointsOnMap{
         private int x;
@@ -286,8 +580,6 @@ public class Sol_After_Summer {
             this.distance = d;
         }
     }
-
-
 
     public int compareVersion(String version1, String version2) {
         String []arr1 = version1.split("\\.");
@@ -376,12 +668,6 @@ public class Sol_After_Summer {
         return -1;
     }
 
-
-    
-
-
-
-
     public List<Integer> spiralOrder(int[][] matrix) {
 
             List ans = new ArrayList();
@@ -462,8 +748,6 @@ public class Sol_After_Summer {
 
     }
 
-
-
     Map<Integer, Integer> dist;
     public int networkDelayTime(int[][] times, int N, int K) {
         Map<Integer,List<int[]>> grph = new HashMap<>();
@@ -501,7 +785,6 @@ public class Sol_After_Summer {
         return 6;
     }
 
-
     public boolean validTree(int n, int[][] edges) {
         // initialize n isolated islands
         int[] nums = new int[n];
@@ -530,7 +813,6 @@ public class Sol_After_Summer {
         if (nums[i] == -1) return i;
         return find(nums, nums[i]);
     }
-
 
     public String decodeString(String s) {
         StringBuilder sb = new StringBuilder();
@@ -788,7 +1070,6 @@ public class Sol_After_Summer {
         return ret;
     }
 
-
     public static int deleteProducts(List<Integer> ids, int m) {
         // Write your code here
         HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
@@ -898,7 +1179,6 @@ public class Sol_After_Summer {
         }
 
     }
-
 
     class TrieNode{
         char c;
@@ -1064,7 +1344,6 @@ public class Sol_After_Summer {
 
     }
 
-
     public int findIndex(List<Integer> list,int val){
         for(int i  = 0;i<list.size();i++){
             if(list.get(i)==val){
@@ -1073,7 +1352,6 @@ public class Sol_After_Summer {
         }
         return -1;
     }
-
 
     public int minMeetingRooms(Interval[] intervals) {
         Queue<Integer> qu = new PriorityQueue<Integer>(intervals.length, new Comparator<Integer>() {
@@ -1200,7 +1478,6 @@ public class Sol_After_Summer {
         return cntr==1;
     }
 
-
     public List<String> generateParenthesis(int n) {
         List<String> li = new ArrayList<>();
         dfs("",li,n,n);
@@ -1256,7 +1533,6 @@ public class Sol_After_Summer {
 
         return li;
     }
-
 
     public List<String> topKFrequent(String[] words, int k) {
         Map<String,Integer> mp = new HashMap<>();
