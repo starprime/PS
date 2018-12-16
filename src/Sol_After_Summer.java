@@ -221,22 +221,106 @@ public class Sol_After_Summer {
 //        PrintArray.printArray(jobOffers(scores,lower,hi));
 
         //System.out.println(s.combinationSum3(3,7));
-        List<String> li = new ArrayList<>();
-        li.add("1,3500");
-        li.add("2,2500");
-        li.add("3,2500");
-        li.add("4,5500");
-        li.add("5,7500");
-        System.out.println(findIdWithKthLargestBudget(li,4));
-        li = new ArrayList<>();
-        li.add("0,500");
-        li.add("1,1000");
-        li.add("2,1000");
-        li.add("3,1000");
-        li.add("4,1000");
-        li.add("5,1000");
-        System.out.println(findIdWithKthLargestBudget(li,4));
+//        List<String> li = new ArrayList<>();
+//        li.add("1,3500");
+//        li.add("2,2500");
+//        li.add("3,2500");
+//        li.add("4,5500");
+//        li.add("5,7500");
+//        System.out.println(findIdWithKthLargestBudget(li,4));
+//        li = new ArrayList<>();
+//        li.add("0,500");
+//        li.add("1,1000");
+//        li.add("2,1000");
+//        li.add("3,1000");
+//        li.add("4,1000");
+//        li.add("5,1000");
+//        System.out.println(findIdWithKthLargestBudget(li,4));
+//         System.out.println(minWindow("ADOBECODEBANC","ABC"));
+        System.out.println(findAnagrams("baa","aa"));
+    }
 
+    public static List<Integer> findAnagrams(String s, String p) {
+
+        Map<Character,Integer> map = new HashMap<>();
+
+        for(char c:p.toCharArray()){
+            map.put(c, map.getOrDefault(c, 0) + 1);
+        }
+
+        List<Integer> li = new ArrayList<>();
+
+        int i = 0, j = 0;
+        int cntr = map.size();
+        Map<Character,Integer> mp = new HashMap<>(map);
+
+        while (j<s.length()){
+            char c = s.charAt(j);
+            if(map.containsKey(c) && map.get(c) >= 1){
+                mp.put(c, mp.get(c)-1);
+                if(mp.get(c) == 0)cntr--;
+            }
+            j++;
+            // abacbabc
+            while (cntr == 0) {
+                if((j - i) == p.length()){
+                    li.add(i);
+                }
+                char beg = s.charAt(i);
+                if(mp.containsKey(beg)){
+                    mp.put(beg, mp.get(beg)+1);
+                    if(mp.get(beg) > 0)cntr++;
+                }
+                i++;
+            }
+        }
+
+        return li;
+
+    }
+
+    public static String minWindow(String s,String t){
+        Map<Character, Integer> map = new HashMap<>();
+
+        for(char c:t.toCharArray()){
+            map.put(c, map.getOrDefault(c, 0)+1);
+        }
+
+        int i = 0, j = 0;
+        int cntr = map.size();
+        int maxLen = Integer.MAX_VALUE;
+        String ans = "";
+
+        while (j<s.length() ){
+            char c = s.charAt(j);
+
+            if(map.containsKey(c) ){ //
+                map.put(c,map.get(c)-1);
+                if(map.get(c) == 0){
+                    cntr--;
+                }
+            }
+
+            j++;
+            //  ADOBECODEBANC       ABC
+
+            while (cntr == 0){
+                if(j-i<maxLen){
+                    maxLen = j-i;
+                    ans = s.substring(i,j);
+                }
+
+                char beg = s.charAt(i);
+
+                if( map.containsKey(beg) ){
+                    map.put(beg,map.get(beg)+1);
+                    if(map.get(beg) > 0)cntr++;
+                }
+                i++;
+            }
+        }
+
+        return ans;
     }
 
     static int findIdWithKthLargestBudget(List<String> advertisers, int k) {
@@ -298,8 +382,6 @@ public class Sol_After_Summer {
 
 
     }
-
-
 
 
     public List<List<Integer>> combinationSum3(int k, int n) {

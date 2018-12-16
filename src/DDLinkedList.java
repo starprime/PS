@@ -14,15 +14,20 @@ public class DDLinkedList{
         }
     }
 
+    // putting in the front ,
     public void push(int data){
+        // create new node
         DDLinkedListNode nw = new DDLinkedListNode(data);
+        // set next to head
         nw.next=head;
         nw.prev=null;
+
         if(head!=null){head.prev=nw;
         head.next=null;}
         head=nw;
         return;
     }
+    // put in the last
     public void append(int data){
         DDLinkedListNode lst = head;
         while (lst.next != null){
@@ -34,6 +39,7 @@ public class DDLinkedList{
         nw.prev = lst;
         return;
     }
+
     public void walkTh() {
         DDLinkedListNode tmp = head;
         while (tmp != null){
@@ -94,10 +100,6 @@ public class DDLinkedList{
 
 
     public void removeNode(int val){
-        if(head.val==val){
-            head=null;
-            return;
-        }
 
         DDLinkedListNode dd = head;
 
@@ -109,12 +111,14 @@ public class DDLinkedList{
         if(dd!=null){
             DDLinkedListNode prv = dd.prev;
             DDLinkedListNode nxt = dd.next;
-            prv.next=nxt;
+            if(prv==null)head=nxt;
+            else prv.next=nxt;
             if(nxt!=null)nxt.prev=prv;
         }
 
         return;
     }
+
     public void bringToFront(int val){
         if(head.val==val)return;
         DDLinkedListNode tmp=head;

@@ -12,7 +12,8 @@ public class stringcompression1p6 {
         for(int i = 1;i<st.length();i++){
             if(st.charAt(prv)!=st.charAt(i)){
                 sb.append(st.charAt(prv));
-                sb.append(i-prv);
+                if((i-prv) > 1)
+                    sb.append(i-prv);
                 prv = i;
             }
         }

@@ -1,3 +1,5 @@
+import org.junit.runners.JUnit4;
+
 import java.util.HashMap;
 
 class LRUCache {
@@ -17,48 +19,51 @@ class LRUCache {
 
     public int get(int key) {
         if(mp.containsKey(key)){
-            dl.removeNode(key);
+            dl.bringToFront(key);
             int ret = mp.get(key);
-            mp.remove(key);
             return ret;
         }
         return -1;
     }
 
     public void put(int key, int value) {
+        System.out.println(key+" , "+curr);
         if(mp.containsKey(key)){
             mp.replace(key,value);
-            dl.bringToFront(value);
+            dl.bringToFront(key);
             return;
         }
         else if(curr<cap){
             dl.push(key);
             curr++;
-        }else if(curr>=cap){
+        }else {
             int k = dl.removeEndVal();
-            if (k>0){
+            if (k>-1){
                 mp.remove(k);
             }
-            dl.push(value);
-            curr++;
+            dl.push(key);
         }
         mp.put(key,value);
     }
 
-    public static void main(String [] args){
-        LRUCache lr = new LRUCache(2);
+    public static void main(String []args){
+        LRUCache lr = new LRUCache(3);
         lr.put(1,1);
         lr.put(2,2);
-
-        System.out.println(lr.get(1));
         lr.put(3,3);
-
-        System.out.println(lr.get(2));
         lr.put(4,4);
+        lr.get(4);
+        lr.get(3);
+        lr.get(2);
+        lr.get(1);
 
-        System.out.println(lr.get(1));
-        System.out.println(lr.get(3));
-        System.out.println(lr.get(4));
+        lr.put(5,5);
+        lr.get(1);
+        lr.get(2);
+        lr.get(3);
+        lr.get(4);
+        lr.get(5);
 
     }
+
 }
