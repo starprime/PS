@@ -191,20 +191,21 @@ public class Sol_After_Summer {
 
         //System.out.println(s.customSortString("cbfag","abcd"));
 
-        List<List<Integer>> table1 = new LinkedList<>();
-        List<Integer> l1 = new LinkedList<>();
-        l1.add(1);l1.add(342141);table1.add(l1);l1 = new LinkedList<>();
-        l1.add(2);l1.add(23412);table1.add(l1);l1 = new LinkedList<>();
-        l1.add(4);l1.add(1231);table1.add(l1);l1 = new LinkedList<>();
-        l1.add(5);l1.add(23122);table1.add(l1);l1 = new LinkedList<>();
-        l1.add(7);l1.add(35453);table1.add(l1);l1 = new LinkedList<>();
-        l1.add(8);l1.add(838221);table1.add(l1);l1 = new LinkedList<>();
+//        List<List<Integer>> table1 = new LinkedList<>();
+//        List<Integer> l1 = new LinkedList<>();
+//        l1.add(1);l1.add(342141);table1.add(l1);l1 = new LinkedList<>();
+//        l1.add(2);l1.add(23412);table1.add(l1);l1 = new LinkedList<>();
+//        l1.add(4);l1.add(1231);table1.add(l1);l1 = new LinkedList<>();
+//        l1.add(5);l1.add(23122);table1.add(l1);l1 = new LinkedList<>();
+//        l1.add(7);l1.add(35453);table1.add(l1);l1 = new LinkedList<>();
+//        l1.add(8);l1.add(838221);table1.add(l1);l1 = new LinkedList<>();
+//
+//        List<List<Integer>> table2 = new LinkedList<>();
+//        l1.add(1);l1.add(1212);table2.add(l1);l1 = new LinkedList<>();
+//        l1.add(2);l1.add(342);table2.add(l1);l1 = new LinkedList<>();
+//        l1.add(4);l1.add(123);table2.add(l1);l1 = new LinkedList<>();
+//        l1.add(8);l1.add(234);table2.add(l1);l1 = new LinkedList<>();
 
-        List<List<Integer>> table2 = new LinkedList<>();
-        l1.add(1);l1.add(1212);table2.add(l1);l1 = new LinkedList<>();
-        l1.add(2);l1.add(342);table2.add(l1);l1 = new LinkedList<>();
-        l1.add(4);l1.add(123);table2.add(l1);l1 = new LinkedList<>();
-        l1.add(8);l1.add(234);table2.add(l1);l1 = new LinkedList<>();
 //
 //        System.out.println(table1);
 //        System.out.println(table2);
@@ -237,7 +238,48 @@ public class Sol_After_Summer {
 //        li.add("5,1000");
 //        System.out.println(findIdWithKthLargestBudget(li,4));
 //         System.out.println(minWindow("ADOBECODEBANC","ABC"));
-        System.out.println(findAnagrams("baa","aa"));
+        //System.out.println(findAnagrams("baa","aa"));
+
+        System.out.println(partitionLabels("ababcbacadefegdehijhklij"));
+    }
+
+    public static List<Integer> partitionLabels(String S) {
+        // will use left to right , right to left strategy
+        int [] start = new int[26];
+        java.util.Arrays.fill(start,-1);
+        int [] end = new int[26];
+        java.util.Arrays.fill(end,-1);
+        // save last position of occurance
+        for(int i = 0;i<S.length();i++){
+            end[S.charAt(i) - 'a'] = i;
+        }
+
+        List<Integer> li = new ArrayList<>();
+        // ancher of starting position
+        int anchor = 0;
+        //
+        int lon = end[S.charAt(0) - 'a'];
+        int range = lon - anchor;
+
+        //
+        for(int i  = 0;i < S.length();i++) {
+            int tlon = end[S.charAt(i) - 'a'];
+            //
+            if( (lon < tlon || lon > tlon ) && (i < lon ) ) {
+                anchor = Math.min(anchor,i);
+                lon = Math.max(lon,tlon);
+            }
+
+            else if(i == lon){
+                li.add((lon - anchor) + 1);
+                if ((i+1)==S.length()) break;
+                anchor = i+1;
+                lon = end[S.charAt(i+1) - 'a'];
+            }
+
+        }
+
+        return li;
     }
 
     public static List<Integer> findAnagrams(String s, String p) {
@@ -1583,38 +1625,6 @@ public class Sol_After_Summer {
         }
     }
 
-    public List<Integer> partitionLabels(String S) {
-        int [] start = new int[26];
-
-        java.util.Arrays.fill(start,-1);
-        int [] end = new int[26];
-        java.util.Arrays.fill(end,-1);
-
-        for(int i = 0;i<S.length();i++){
-            end[S.charAt(i) - 'a'] = i;
-        }
-        List<Integer> li = new ArrayList<>();
-        int anchor = 0;
-        int lon = end[S.charAt(0) - 'a'];
-
-        for(int i  = 0;i < S.length();i++) {
-            int tlon = end[S.charAt(i) - 'a'];
-
-            if((lon < tlon || lon > tlon ) && (i < lon )) {
-                anchor = Math.min(anchor,i);
-                lon = Math.max(lon,tlon);
-            }
-
-            else if(i == lon){
-                li.add((lon - anchor) + 1);
-                if ((i+1)==S.length()) break;
-                anchor = i+1;
-                lon = end[S.charAt(i+1) - 'a'];
-            }
-        }
-
-        return li;
-    }
 
     public List<String> topKFrequent(String[] words, int k) {
         Map<String,Integer> mp = new HashMap<>();

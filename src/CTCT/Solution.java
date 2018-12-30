@@ -11,6 +11,7 @@ public class Solution {
         /* Enter your code here. Read input from STDIN. Print output to STDOUT */
         int [] arr1 = new int[]{0, 1, 3, 3, 3, 4, 5};
         int [] arr2 = new int []{2, 3, 3, 5};
+        Arrays.binarySearch(arr1,2);
 
         HashMap<Integer,Integer> mp = new HashMap();
         int i =0, j = 0;

@@ -5,8 +5,7 @@ import java.util.*;
 // CLASS BEGINS, THIS CLASS IS REQUIRED
 public class Solution5
 {
-    class Coordinates implements Comparable<Coordinates>
-    {
+    class Coordinates implements Comparable<Coordinates> {
         List<Integer> coord;
         int distance;
         public Coordinates(List<Integer> coord,int distance){
