@@ -1,6 +1,5 @@
 // Add standard Java imports as needed
 
-import com.sun.org.apache.regexp.internal.RE;
 
 import java.util.*;
 

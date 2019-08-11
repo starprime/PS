@@ -1,4 +1,4 @@
-import javafx.util.Pair;
+//import javafx.util.Pair;
 
 import java.util.*;
 
@@ -25,17 +25,17 @@ public class Solution {
         sb.insert(0,"hrtgr");
         System.out.println(findNum("am"));
 
-        Map<Integer, List<Integer> mp = new HashMap<>();
+        Map<Integer, List<Integer>> mp = new HashMap<>();
     }
 
-    public List<String> addOperators(String num, int target) {
-
-        StringBuilder sb = new StringBuilder(num);
-        rec(sb, 1, "+", target);
-        rec(sb, 1, "-", target);
-        rec(sb, 1, "*", target);
-
-    }
+//    public List<String> addOperators(String num, int target) {
+//
+//        StringBuilder sb = new StringBuilder(num);
+//        rec(sb, 1, "+", target);
+//        rec(sb, 1, "-", target);
+//        rec(sb, 1, "*", target);
+//
+//    }
 
     private void rec(StringBuilder sb, int indx, String sig, int tgt){
         if(indx >= sb.length()){
@@ -56,7 +56,7 @@ public class Solution {
     private void cal(String s){
         int sm = 0;
         for(char c:s.toCharArray()){
-            if(c == '*')
+            //sif(c == '*')
         }
     }
 
