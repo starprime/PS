@@ -40,6 +40,7 @@ public class Solution_Mac {
                 { 7, 8, 9 }
         };
         int []longarr =new int[]{10,9,2,5,3,7,101,19,11};
+        Arrays.binarySearch(longarr , 5);
         //System.out.println(s.longestIncSub(longarr));
         //System.out.println(s.inorderTraversal(s.buildTree(ino,pos)));
         //ListNode head=new ListNode(2);head.next=new ListNode(1);head.next.next=new ListNode(5);head.next.next.next=new ListNode(3);
